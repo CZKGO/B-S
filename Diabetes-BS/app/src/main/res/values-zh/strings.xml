@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">糖尿病-毕设</string>
+    <string name="setting">设置</string>
+    <string name="about">关于</string>
+    <string name="general">一般</string>
+    <string name="language">语言</string>
+    <string name="not_logged_in">未登录</string>
+    <string name="blood_sugar">血糖</string>
+    <string name="before_sleep">睡前</string>
+    <string name="before_dawn">凌晨</string>
+    <string name="before_breakfast">早餐前</string>
+    <string name="after_breakfast">早餐后</string>
+    <string name="before_lunch">午餐前</string>
+    <string name="after_lunch">午餐后</string>
+    <string name="before_dinner">晚餐前</string>
+    <string name="after_dinner">晚餐后</string>
+</resources>

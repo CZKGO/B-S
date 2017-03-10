@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <diabetes.czk.com.setting.MyPreferenceCategory
+        android:title="@string/general"
+        android:textStyle="bold">
+
+        <PreferenceScreen
+            android:title="@string/language"
+            android:summary="@string/language"
+            android:layout="@layout/preference_general"
+            android:key="language">
+            <intent
+                android:targetPackage="diabetes.czk.com"
+                android:targetClass="diabetes.czk.com.setting.LanguageSettingActivity" />
+        </PreferenceScreen>
+
+    </diabetes.czk.com.setting.MyPreferenceCategory>
+</PreferenceScreen>

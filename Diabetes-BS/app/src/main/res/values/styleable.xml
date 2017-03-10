@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FontIconDrawable">
+        <attr name="fonttext" format="string|reference" />
+        <attr name="fonttextColor" format="color|reference" />
+        <attr name="fonttextSize" format="dimension|reference" />
+        <attr name="fontautoMirrored" format="boolean|reference" />
+        <attr name="fontneedMirroring" format="boolean|reference" />
+    </declare-styleable>
+
+</resources>

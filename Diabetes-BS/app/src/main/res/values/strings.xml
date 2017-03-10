@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Diabetes-BS</string>
+    <string name="setting">Setting</string>
+    <string name="about">About</string>
+    <string name="general">general</string>
+    <string name="language">Language</string>
+    <string name="not_logged_in">Not logged in</string>
+    <string name="blood_sugar">BLOOD SUGAR</string>
+    <string name="before_sleep">At bedtime</string>
+    <string name="before_dawn">Before dawn</string>
+    <string name="before_breakfast">Before breakfast</string>
+    <string name="after_breakfast">After breakfast</string>
+    <string name="before_lunch">Before lunch</string>
+    <string name="after_lunch">After lunch</string>
+    <string name="before_dinner">Before dinner</string>
+    <string name="after_dinner">After dinner</string>
+</resources>

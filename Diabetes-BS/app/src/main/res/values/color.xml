@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 主题色 -->
+    <color name="theme_color">#6082E6</color>
+    <color name="theme_color_light">#806082e6</color>
+
+    <color name="safe_color">#70AA39</color>
+    <color name="waring_color">#F2A670</color>
+    <color name="eorr_color">#9999ff</color>
+    <!-- 背景色 -->
+    <color name="background_white">#FFFFFFFF</color>
+    <color name="background_white_light">#e1f4ff</color>
+    <color name="onclick_white">#7d949494</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="tip_green">#70AA39</color>
+    <color name="tip_pink">#FFC0CB</color>
+    <color name="tip_purple">#9999ff</color>
+    <!-- 文字色 -->
+    <color name="txt_black">#FF000000</color>
+    <color name="txt_light_color">#81000000</color>
+    <color name="divide_line">#cfcfcf</color>
+</resources>
