@@ -67,16 +67,16 @@ public class MainActivity extends BaseFragmentActivity {
         ivIcon.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_menu));
         ivIconRight = (ImageView) findViewById(R.id.icon_right);
         ivIconRight.setVisibility(View.VISIBLE);
-        ivIconRight.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_clipboard));
+        ivIconRight.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_alarm));
         //底部
         icon_bottom1 = (ImageView) findViewById(R.id.icon_bottom1);
         fontDrawable1 = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_home);
         icon_bottom1.setImageDrawable(fontDrawable1);
         icon_bottom2 = (ImageView) findViewById(R.id.icon_bottom2);
-        fontDrawable2 = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_heart);
+        fontDrawable2 = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_pill);
         icon_bottom2.setImageDrawable(fontDrawable2);
         icon_bottom3 = (ImageView) findViewById(R.id.icon_bottom3);
-        fontDrawable3 = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_file);
+        fontDrawable3 = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_clipboard_edit);
         icon_bottom3.setImageDrawable(fontDrawable3);
         icon_bottom4 = (ImageView) findViewById(R.id.icon_bottom4);
         fontDrawable4 = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_bubbles);

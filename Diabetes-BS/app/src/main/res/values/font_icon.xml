@@ -13,4 +13,13 @@
     <string name="icon_clipboard" translatable="false">&#xe9b8;</string>
     <string name="icon_book" translatable="false">&#xe900;</string>
     <string name="icon_droplet" translatable="false">&#xe90b;</string>
+    <string name="icon_chevron_thin_right" translatable="false">&#xe902;</string>
+    <string name="icon_pill" translatable="false">&#xe903;</string>
+    <string name="icon_clipboard_edit" translatable="false">&#xe904;</string>
+    <string name="icon_alarm" translatable="false">&#xe950;</string>
+    <string name="icon_pie_chart" translatable="false">&#xe99a;</string>
+    <string name="icon_stats_dots" translatable="false">&#xe99b;</string>
+    <string name="icon_stats_bars" translatable="false">&#xe99c;</string>
+    <string name="icon_plus" translatable="false">&#xea0a;</string>
+    <!--21-->
 </resources>
