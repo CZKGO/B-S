@@ -9,4 +9,7 @@
         <attr name="value" format="float" />
         <attr name="max_value" format="float" />
     </declare-styleable>
+    <declare-styleable name="PieChartView">
+        <attr name="start_angle" format="float" />
+    </declare-styleable>
 </resources>
