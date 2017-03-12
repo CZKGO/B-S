@@ -1,5 +1,6 @@
 package diabetes.czk.com;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import diabetes.czk.com.signin.SignActivity;
 import diabetes.czk.com.util.FontIconDrawable;
 import diabetes.czk.com.util.TimeUtil;
 
@@ -32,6 +34,7 @@ public class MainFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initView();
+        dealEvent();
     }
 
     @Override
@@ -42,25 +45,25 @@ public class MainFragment extends Fragment {
     }
 
     private void setCircularTile(TextView oneTile, TextView towTile, int hourOfTheDay) {
-        if (0 < hourOfTheDay && hourOfTheDay >=6){
+        if (0 < hourOfTheDay && hourOfTheDay <= 6) {
             oneTile.setText(getResources().getString(R.string.before_dawn));
             towTile.setText(getResources().getString(R.string.before_breakfast));
-        }else if(6 < hourOfTheDay && hourOfTheDay >=8){
+        } else if (6 < hourOfTheDay && hourOfTheDay <= 8) {
             oneTile.setText(getResources().getString(R.string.before_breakfast));
             towTile.setText(getResources().getString(R.string.after_breakfast));
-        }else if(8 < hourOfTheDay && hourOfTheDay >=11){
+        } else if (8 < hourOfTheDay && hourOfTheDay <= 11) {
             oneTile.setText(getResources().getString(R.string.after_breakfast));
             towTile.setText(getResources().getString(R.string.before_lunch));
-        }else if(11 < hourOfTheDay && hourOfTheDay >=15){
+        } else if (11 < hourOfTheDay && hourOfTheDay <= 15) {
             oneTile.setText(getResources().getString(R.string.before_lunch));
             towTile.setText(getResources().getString(R.string.after_lunch));
-        }else if(15 < hourOfTheDay && hourOfTheDay >= 17){
+        } else if (15 < hourOfTheDay && hourOfTheDay <= 17) {
             oneTile.setText(getResources().getString(R.string.after_lunch));
             towTile.setText(getResources().getString(R.string.before_dinner));
-        }else if(17 < hourOfTheDay && hourOfTheDay >= 22){
+        } else if (17 < hourOfTheDay && hourOfTheDay <= 22) {
             oneTile.setText(getResources().getString(R.string.before_dinner));
             towTile.setText(getResources().getString(R.string.after_dinner));
-        }else {
+        } else {
             oneTile.setText(getResources().getString(R.string.after_dinner));
             towTile.setText(getResources().getString(R.string.before_sleep));
         }
@@ -73,6 +76,10 @@ public class MainFragment extends Fragment {
         userIVfontDrawable.setTextColor(getResources().getColor(R.color.theme_color_light));
         userIV.setImageDrawable(userIVfontDrawable);
 
+        ImageView chevronRightIV = (ImageView) fragment.findViewById(R.id.img_sig_chevron_right);
+        FontIconDrawable chevronRightDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_chevron_thin_right);
+        chevronRightDrawable.setTextColor(getResources().getColor(R.color.txt_light_color));
+        chevronRightIV.setImageDrawable(chevronRightDrawable);
         //每日一读
         ImageView cozyTipIcon = (ImageView) fragment.findViewById(R.id.cozy_tip_icon);
         FontIconDrawable cozyTipIconfontDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_heart);
@@ -96,6 +103,29 @@ public class MainFragment extends Fragment {
         oneIcon.setImageDrawable(bloodTipIconfontDrawable);
         ImageView towIcon = (ImageView) fragment.findViewById(R.id.circular_tow_icon);
         towIcon.setImageDrawable(bloodTipIconfontDrawable);
+        chevronRightIV = (ImageView) fragment.findViewById(R.id.img_blood_chevron_right);
+        chevronRightIV.setImageDrawable(chevronRightDrawable);
     }
 
+    private void dealEvent() {
+        //登录卡片
+        View signCard = fragment.findViewById(R.id.sign_card);
+        signCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SignActivity.class));
+            }
+        });
+        //每日一读
+
+
+        //输入血糖
+        View bloodSugarCard = fragment.findViewById(R.id.blood_sugar_card);
+        bloodSugarCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), AddValueActivity.class));
+            }
+        });
+    }
 }

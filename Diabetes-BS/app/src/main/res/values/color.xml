@@ -18,6 +18,7 @@
     <color name="tip_purple">#9999ff</color>
     <!-- 文字色 -->
     <color name="txt_black">#FF000000</color>
+    <color name="txt_white">#ffffff</color>
     <color name="txt_light_color">#81000000</color>
     <color name="divide_line">#cfcfcf</color>
 </resources>

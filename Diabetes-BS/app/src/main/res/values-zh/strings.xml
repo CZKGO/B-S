@@ -14,4 +14,11 @@
     <string name="after_lunch">午餐后</string>
     <string name="before_dinner">晚餐前</string>
     <string name="after_dinner">晚餐后</string>
+    <string name="sign_in">登录</string>
+    <string name="user_name">用户名</string>
+    <string name="password">密码</string>
+    <string name="safe_range">安全范围: 4.4-10.0 mmol/L</string>
+    <string name="measured_value">测量值</string>
+    <string name="input_measured_value">输入测量值</string>
+    <string name="delete">删除</string>
 </resources>

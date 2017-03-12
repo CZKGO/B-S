@@ -17,9 +17,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".setting.SettingActvity"/>
+        <activity android:name=".setting.SettingActvity" />
 
-        <activity android:name=".setting.LanguageSettingActivity"/>
+        <activity android:name=".setting.LanguageSettingActivity" />
+
+        <activity android:name=".signin.SignActivity" />
+
+        <activity android:name=".AddValueActivity" />
     </application>
 
 </manifest>

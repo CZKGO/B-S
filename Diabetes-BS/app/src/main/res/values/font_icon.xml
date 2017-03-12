@@ -21,5 +21,6 @@
     <string name="icon_stats_dots" translatable="false">&#xe99b;</string>
     <string name="icon_stats_bars" translatable="false">&#xe99c;</string>
     <string name="icon_plus" translatable="false">&#xea0a;</string>
-    <!--21-->
+    <string name="icon_lock_rounded" translatable="false">&#xe905;</string>
+    <!--22-->
 </resources>
