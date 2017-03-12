@@ -13,4 +13,12 @@
     <declare-styleable name="PieChartView">
         <attr name="start_angle" />
     </declare-styleable>
+    <declare-styleable name="LineChartView">
+        <attr name="line_color" format="color|reference" />
+        <attr name="xline_color" format="color|reference" />
+        <attr name="yline_color" format="color|reference" />
+        <attr name="line_width" format="dimension|reference" />
+        <attr name="xline_width" format="dimension|reference" />
+        <attr name="yline_width" format="dimension|reference" />
+    </declare-styleable>
 </resources>

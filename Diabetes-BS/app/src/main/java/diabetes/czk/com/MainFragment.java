@@ -23,6 +23,7 @@ public class MainFragment extends Fragment {
     private ImageView userIV;
     private TextView circularOneTile;
     private TextView circularTowTile;
+    private long currentTime;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class MainFragment extends Fragment {
     public void onResume() {
         super.onResume();
         //输入血糖
+        currentTime = System.currentTimeMillis();
         setCircularTile(circularOneTile, circularTowTile, TimeUtil.getHourOfTheDay(System.currentTimeMillis()));
     }
 
@@ -124,7 +126,9 @@ public class MainFragment extends Fragment {
         bloodSugarCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AddValueActivity.class));
+                Intent intent =new Intent(getActivity(), AddValueActivity.class);
+                intent.putExtra("currentTime",currentTime);
+                startActivity(intent);
             }
         });
     }
