@@ -156,10 +156,16 @@ public class AddValueActivity extends BaseActivity {
                         } else if (value.length() < 2 || (value.contains(".") && value.length() < 3)) {
                             value = value + i;
                         }
-                        if(Float.parseFloat(value)<=25){
+                        if (value.length() > 0) {
+                            if (Float.parseFloat(value) <= 25) {
+                                etValue.setText(value);
+                                etValue.setSelection(value.length());
+                            }
+                        } else {
                             etValue.setText(value);
                             etValue.setSelection(value.length());
                         }
+
                         break;
                 }
                 return true;
