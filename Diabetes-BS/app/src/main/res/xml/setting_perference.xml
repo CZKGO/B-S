@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <diabetes.czk.com.setting.MyPreferenceCategory
+    <com.czk.diabetes.setting.MyPreferenceCategory
         android:title="@string/general"
         android:textStyle="bold">
 
@@ -14,5 +14,5 @@
                 android:targetClass="diabetes.czk.com.setting.LanguageSettingActivity" />
         </PreferenceScreen>
 
-    </diabetes.czk.com.setting.MyPreferenceCategory>
+    </com.czk.diabetes.setting.MyPreferenceCategory>
 </PreferenceScreen>
