@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.czk.diabetes.view.CircleProgressBar xmlns:cpb="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/circular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            cpb:max_value="25"
+            cpb:progress_background_color="@color/background_white_light"
+            cpb:progress_color="@color/safe_color"
+            cpb:progress_width="8dp"
+            cpb:start_angle="270"
+            cpb:value="0" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/circular"
+            android:layout_alignEnd="@+id/circular"
+            android:layout_alignLeft="@+id/circular"
+            android:layout_alignRight="@+id/circular"
+            android:layout_alignStart="@+id/circular"
+            android:layout_alignTop="@+id/circular"
+            android:layout_centerVertical="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="24dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/value"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="0.0"
+                android:textColor="@color/background_white_light"
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/uint"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="mmol/L"
+                android:textColor="@color/txt_light_color"
+                android:textSize="12dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:text="@string/before_sleep"
+        android:textColor="@color/txt_light_color"
+        android:textSize="14sp" />
+</LinearLayout>

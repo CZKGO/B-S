@@ -21,4 +21,11 @@
         <attr name="xline_width" format="dimension|reference" />
         <attr name="yline_width" format="dimension|reference" />
     </declare-styleable>
+    <declare-styleable name="MeterView">
+        <attr name="title_visible">
+            <enum name="visble" value="0"/>
+            <enum name="invisble" value="4"/>
+            <enum name="gone" value="8"/>
+        </attr>
+    </declare-styleable>
 </resources>

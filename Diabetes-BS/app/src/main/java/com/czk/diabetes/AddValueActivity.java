@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -15,6 +16,8 @@ import java.lang.reflect.Method;
 
 import com.czk.diabetes.util.FontIconDrawable;
 import com.czk.diabetes.util.TimeUtil;
+import com.czk.diabetes.view.Digitalkeyboard;
+import com.czk.diabetes.view.MeterView;
 
 /**
  * Created by 陈忠凯 on 2017/3/12.
@@ -23,25 +26,14 @@ public class AddValueActivity extends BaseActivity {
     private ImageView ivIcon;
     private ImageView ivIconAdd;
     private EditText etValue;
-    private TextView tvNumber0;
-    private TextView tvNumber1;
-    private TextView tvNumber2;
-    private TextView tvNumber3;
-    private TextView tvNumber4;
-    private TextView tvNumber5;
-    private TextView tvNumber6;
-    private TextView tvNumber7;
-    private TextView tvNumber8;
-    private TextView tvNumber9;
-    private TextView tvNumberDelete;
-    private TextView tvNumberPoint;
+    private Digitalkeyboard digitalkeyboard;
     private long currentTime;
-    private TextView tvValue;
+    private MeterView meterView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.czk.diabetes.R.layout.activity_add_value);
+        setContentView(R.layout.activity_add_value);
         initData();
         initView();
         dealEvent();
@@ -53,12 +45,12 @@ public class AddValueActivity extends BaseActivity {
 
     private void initView() {
         //头部
-        ivIcon = (ImageView) findViewById(com.czk.diabetes.R.id.icon);
+        ivIcon = (ImageView) findViewById(R.id.icon);
         ivIcon.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), com.czk.diabetes.R.xml.icon_arrow_left));
         TextView tvTitle = (TextView) findViewById(com.czk.diabetes.R.id.title);
         tvTitle.setText(getResources().getString(com.czk.diabetes.R.string.input_measured_value));
         //主体
-        tvValue = (TextView) findViewById(com.czk.diabetes.R.id.add_value);
+        meterView = (MeterView) findViewById(R.id.meter);
         TextView tvDate = (TextView) findViewById(com.czk.diabetes.R.id.tv_date);
         tvDate.setText(TimeUtil.getYearMonthDay(currentTime));
         TextView tvTimeSlot = (TextView) findViewById(com.czk.diabetes.R.id.tv_time_slot);
@@ -80,18 +72,7 @@ public class AddValueActivity extends BaseActivity {
             }
         }
         //键盘
-        tvNumber0 = (TextView) findViewById(com.czk.diabetes.R.id.number_0);
-        tvNumber1 = (TextView) findViewById(com.czk.diabetes.R.id.number_1);
-        tvNumber2 = (TextView) findViewById(com.czk.diabetes.R.id.number_2);
-        tvNumber3 = (TextView) findViewById(com.czk.diabetes.R.id.number_3);
-        tvNumber4 = (TextView) findViewById(com.czk.diabetes.R.id.number_4);
-        tvNumber5 = (TextView) findViewById(com.czk.diabetes.R.id.number_5);
-        tvNumber6 = (TextView) findViewById(com.czk.diabetes.R.id.number_6);
-        tvNumber7 = (TextView) findViewById(com.czk.diabetes.R.id.number_7);
-        tvNumber8 = (TextView) findViewById(com.czk.diabetes.R.id.number_8);
-        tvNumber9 = (TextView) findViewById(com.czk.diabetes.R.id.number_9);
-        tvNumberDelete = (TextView) findViewById(com.czk.diabetes.R.id.number_delete);
-        tvNumberPoint = (TextView) findViewById(com.czk.diabetes.R.id.number_point);
+        digitalkeyboard = (Digitalkeyboard) findViewById(R.id.digitalkeyboard);
 
     }
 
@@ -111,7 +92,10 @@ public class AddValueActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                tvValue.setText(s);
+                if(!s.toString().isEmpty())
+                    meterView.setValue(Float.valueOf(s.toString()));
+                else
+                    meterView.setValue(0);
             }
 
             @Override
@@ -120,58 +104,32 @@ public class AddValueActivity extends BaseActivity {
             }
         });
         //键盘
-        setKeyOnClickListener(tvNumber0, 0);
-        setKeyOnClickListener(tvNumber1, 1);
-        setKeyOnClickListener(tvNumber2, 2);
-        setKeyOnClickListener(tvNumber3, 3);
-        setKeyOnClickListener(tvNumber4, 4);
-        setKeyOnClickListener(tvNumber5, 5);
-        setKeyOnClickListener(tvNumber6, 6);
-        setKeyOnClickListener(tvNumber7, 7);
-        setKeyOnClickListener(tvNumber8, 8);
-        setKeyOnClickListener(tvNumber9, 9);
-        setKeyOnClickListener(tvNumberDelete, -1);
-        setKeyOnClickListener(tvNumberPoint, -2);
-    }
-
-    private void setKeyOnClickListener(final TextView view, final int i) {
-        view.setOnTouchListener(new View.OnTouchListener() {
+        digitalkeyboard.setKeyClickListener(new Digitalkeyboard.OnKeyClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        view.setTextColor(getResources().getColor(com.czk.diabetes.R.color.txt_white));
-                        view.setBackgroundResource(com.czk.diabetes.R.drawable.button_key_onclick);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        view.setTextColor(getResources().getColor(com.czk.diabetes.R.color.theme_color));
-                        view.setBackgroundResource(com.czk.diabetes.R.drawable.button_key_default);
-                        String value = etValue.getText().toString();
-                        if (-1 == i) {
-                            if (value.length() > 0)
-                                value = value.substring(0, value.length() - 1);
-                        } else if (-2 == i) {
-                            if (value.length() < 2 && value.length() > 0)
-                                value = value + ".";
-                        } else if (value.length() < 2 || (value.contains(".") && value.length() < 3)) {
-                            value = value + i;
-                        }
-                        if (value.length() > 0) {
-                            if (Float.parseFloat(value) <= 25) {
-                                etValue.setText(value);
-                                etValue.setSelection(value.length());
-                            }
-                        } else {
-                            etValue.setText(value);
-                            etValue.setSelection(value.length());
-                        }
-
-                        break;
+            public void onClick(int key) {
+                String value = etValue.getText().toString();
+                if (-1 == key) {
+                    if (value.length() > 0)
+                        value = value.substring(0, value.length() - 1);
+                } else if (-2 == key) {
+                    if (value.length() < 2 && value.length() > 0)
+                        value = value + ".";
+                } else if (value.length() < 2 || (value.contains(".") && value.length() < 3)) {
+                    value = value + key;
                 }
-                return true;
+                if (value.length() > 0) {
+                    if (Float.parseFloat(value) <= 25) {
+                        etValue.setText(value);
+                        etValue.setSelection(value.length());
+                    }
+                } else {
+                    etValue.setText(value);
+                    etValue.setSelection(value.length());
+                }
             }
         });
     }
+
 
     private void setCircularTile(TextView oneTile, int hourOfTheDay) {
         if (0 < hourOfTheDay && hourOfTheDay <= 6) {

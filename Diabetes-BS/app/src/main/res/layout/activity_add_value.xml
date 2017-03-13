@@ -34,55 +34,15 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <LinearLayout
+                <com.czk.diabetes.view.MeterView xmlns:mv="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/meter"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
-                    android:paddingRight="4dp">
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <com.czk.diabetes.view.CircleProgressBar xmlns:cpb="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/circular_add"
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:padding="10dp"
-                            cpb:max_value="25"
-                            cpb:progress_background_color="@color/background_white_light"
-                            cpb:progress_color="@color/safe_color"
-                            cpb:progress_width="8dp"
-                            cpb:start_angle="270"
-                            cpb:value="0" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:gravity="center_horizontal"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/add_value"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="8dp"
-                                android:text="0.0"
-                                android:textColor="@color/background_white_light"
-                                android:textSize="24dp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="mmol/L"
-                                android:textColor="@color/txt_light_color"
-                                android:textSize="12dp" />
-                        </LinearLayout>
-                    </RelativeLayout>
-                </LinearLayout>
+                    android:paddingRight="4dp"
+                    mv:title_visible="gone" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -171,173 +131,8 @@
     </LinearLayout>
 
     <!--键盘-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="256dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/background_white"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/number_1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/button_key_default"
-                android:gravity="center"
-                android:text="1"
-                android:textColor="@color/theme_color"
-                android:textSize="24dp" />
-
-            <TextView
-                android:id="@+id/number_2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/button_key_default"
-                android:gravity="center"
-                android:text="2"
-                android:textColor="@color/theme_color"
-                android:textSize="24dp" />
-
-            <TextView
-                android:id="@+id/number_3"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/button_key_default"
-                android:gravity="center"
-                android:text="3"
-                android:textColor="@color/theme_color"
-                android:textSize="24dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/number_4"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/button_key_default"
-                android:gravity="center"
-                android:text="4"
-                android:textColor="@color/theme_color"
-                android:textSize="24dp" />
-
-            <TextView
-                android:id="@+id/number_5"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/button_key_default"
-                android:gravity="center"
-                android:text="5"
-                android:textColor="@color/theme_color"
-                android:textSize="24dp" />
-
-            <TextView
-                android:id="@+id/number_6"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/button_key_default"
-                android:gravity="center"
-                android:text="6"
-                android:textColor="@color/theme_color"
-                android:textSize="24dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/number_7"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/button_key_default"
-                android:gravity="center"
-                android:text="7"
-                android:textColor="@color/theme_color"
-                android:textSize="24dp" />
-
-            <TextView
-                android:id="@+id/number_8"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/button_key_default"
-                android:gravity="center"
-                android:text="8"
-                android:textColor="@color/theme_color"
-                android:textSize="24dp" />
-
-            <TextView
-                android:id="@+id/number_9"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/button_key_default"
-                android:gravity="center"
-                android:text="9"
-                android:textColor="@color/theme_color"
-                android:textSize="24dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/number_delete"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/button_key_default"
-                android:gravity="center"
-                android:text="@string/delete"
-                android:textColor="@color/theme_color"
-                android:textSize="24dp" />
-
-            <TextView
-                android:id="@+id/number_0"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/button_key_default"
-                android:gravity="center"
-                android:text="0"
-                android:textColor="@color/theme_color"
-                android:textSize="24dp" />
-
-            <TextView
-                android:id="@+id/number_point"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/button_key_default"
-                android:gravity="center"
-                android:text="."
-                android:textColor="@color/theme_color"
-                android:textSize="24dp" />
-        </LinearLayout>
-    </LinearLayout>
-
     <com.czk.diabetes.view.Digitalkeyboard
+        android:id="@+id/digitalkeyboard"
         android:layout_width="match_parent"
         android:layout_height="256dp"
         android:layout_alignParentBottom="true"

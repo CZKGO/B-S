@@ -176,131 +176,23 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <LinearLayout
+                    <com.czk.diabetes.view.MeterView
+                        android:id="@+id/meter_one"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:orientation="vertical"
-                        android:paddingRight="4dp">
+                        android:paddingRight="4dp" />
 
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <com.czk.diabetes.view.CircleProgressBar xmlns:cpb="http://schemas.android.com/apk/res-auto"
-                                android:id="@+id/circular_one"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:padding="20dp"
-                                cpb:max_value="25"
-                                cpb:progress_background_color="@color/background_white_light"
-                                cpb:progress_color="@color/safe_color"
-                                cpb:progress_width="8dp"
-                                cpb:start_angle="270"
-                                cpb:value="0" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:gravity="center_horizontal"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/circular_one_icon"
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp" />
-
-                                <TextView
-                                    android:id="@+id/circular_one_value"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="0.0"
-                                    android:textColor="@color/background_white_light"
-                                    android:textSize="24dp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="mmol/L"
-                                    android:textColor="@color/txt_light_color"
-                                    android:textSize="12dp" />
-                            </LinearLayout>
-                        </RelativeLayout>
-
-                        <TextView
-                            android:id="@+id/circular_one_tile"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingTop="8dp"
-                            android:text="@string/before_sleep"
-                            android:textColor="@color/txt_light_color"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <com.czk.diabetes.view.MeterView
+                        android:id="@+id/meter_tow"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:orientation="vertical"
-                        android:paddingLeft="4dp">
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <com.czk.diabetes.view.CircleProgressBar xmlns:cpb="http://schemas.android.com/apk/res-auto"
-                                android:id="@+id/circular_tow"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:padding="20dp"
-                                cpb:max_value="25"
-                                cpb:progress_background_color="@color/background_white_light"
-                                cpb:progress_color="@color/safe_color"
-                                cpb:progress_width="8dp"
-                                cpb:start_angle="270"
-                                cpb:value="0" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:gravity="center_horizontal"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/circular_tow_icon"
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp" />
-
-                                <TextView
-                                    android:id="@+id/circular_tow_value"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="0.0"
-                                    android:textColor="@color/background_white_light"
-                                    android:textSize="24dp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="mmol/L"
-                                    android:textColor="@color/txt_light_color"
-                                    android:textSize="12dp" />
-                            </LinearLayout>
-                        </RelativeLayout>
-
-                        <TextView
-                            android:id="@+id/circular_tow_tile"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingTop="8dp"
-                            android:text="@string/before_dawn"
-                            android:textColor="@color/txt_light_color"
-                            android:textSize="14sp" />
-                    </LinearLayout>
+                        android:paddingRight="4dp" />
                 </LinearLayout>
 
             </LinearLayout>

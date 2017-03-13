@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,7 +14,7 @@ import com.czk.diabetes.R;
 /**
  * Created by 陈忠凯 on 2017/3/13.
  */
-public class Digitalkeyboard extends LinearLayout implements View.OnClickListener {
+public class Digitalkeyboard extends LinearLayout {
     private static final String NAMESPACE = "http://schemas.android.com/apk/res/diabetes";
     private TextView tvNumber0;
     private TextView tvNumber1;
@@ -27,6 +28,8 @@ public class Digitalkeyboard extends LinearLayout implements View.OnClickListene
     private TextView tvNumber9;
     private TextView tvNumberDelete;
     private TextView tvNumberPoint;
+    private OnKeyClickListener keyClickListener;
+
     public Digitalkeyboard(Context context) {
         super(context);
         initView();
@@ -64,10 +67,48 @@ public class Digitalkeyboard extends LinearLayout implements View.OnClickListene
         tvNumber9 = (TextView) findViewById(com.czk.diabetes.R.id.number_9);
         tvNumberDelete = (TextView) findViewById(com.czk.diabetes.R.id.number_delete);
         tvNumberPoint = (TextView) findViewById(com.czk.diabetes.R.id.number_point);
+
+        setKeyOnClickListener(tvNumber0, 0);
+        setKeyOnClickListener(tvNumber1, 1);
+        setKeyOnClickListener(tvNumber2, 2);
+        setKeyOnClickListener(tvNumber3, 3);
+        setKeyOnClickListener(tvNumber4, 4);
+        setKeyOnClickListener(tvNumber5, 5);
+        setKeyOnClickListener(tvNumber6, 6);
+        setKeyOnClickListener(tvNumber7, 7);
+        setKeyOnClickListener(tvNumber8, 8);
+        setKeyOnClickListener(tvNumber9, 9);
+        setKeyOnClickListener(tvNumberDelete, -1);
+        setKeyOnClickListener(tvNumberPoint, -2);
     }
 
-    @Override
-    public void onClick(View v) {
+    private void setKeyOnClickListener(final TextView view, final int i) {
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        view.setTextColor(getResources().getColor(com.czk.diabetes.R.color.txt_white));
+                        view.setBackgroundResource(com.czk.diabetes.R.drawable.button_key_onclick);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        view.setTextColor(getResources().getColor(com.czk.diabetes.R.color.theme_color));
+                        view.setBackgroundResource(com.czk.diabetes.R.drawable.button_key_default);
+                        if (null != keyClickListener) {
+                            keyClickListener.onClick(i);
+                        }
+                        break;
+                }
+                return true;
+            }
+        });
+    }
 
+    public void setKeyClickListener(OnKeyClickListener keyClickListener) {
+        this.keyClickListener = keyClickListener;
+    }
+
+    public interface OnKeyClickListener {
+        public void onClick(int key);
     }
 }

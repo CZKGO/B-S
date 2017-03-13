@@ -110,7 +110,10 @@ public class CircleProgressBar extends View {
         paint = initProgeessPaint(paint);
         canvas.drawArc(mProgressRectF, mProgressStartAngle, 360.0f * getProgress() / getMax(), false, paint);
     }
-
+    public void setProgress(float progressValue) {
+        this.progressValue = progressValue;
+        invalidate();
+    }
     public float getProgress() {
         return progressValue;
     }
