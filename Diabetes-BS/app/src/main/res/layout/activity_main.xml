@@ -170,6 +170,7 @@
                 android:id="@+id/settiong_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:padding="2dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:background="@color/transparent" />
@@ -195,6 +196,7 @@
                 android:id="@+id/about_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:padding="2dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:background="@color/transparent" />

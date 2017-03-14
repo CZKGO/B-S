@@ -522,6 +522,9 @@ public class WheelPicker extends View implements Runnable{
 
     @Override
     protected void onDraw(Canvas canvas) {
+        try {
+
+
         if (null != mOnWheelChangeListener)
             mOnWheelChangeListener.onWheelScrolled(mScrollOffsetY);
         int drawnDataStartPos = -mScrollOffsetY / mItemHeight - mHalfDrawnItemCount;
@@ -658,7 +661,7 @@ public class WheelPicker extends View implements Runnable{
             canvas.drawRect(0, 0, getWidth(), getPaddingTop(), mPaint);
             canvas.drawRect(getWidth() - getPaddingRight(), 0, getWidth(), getHeight(), mPaint);
             canvas.drawRect(0, getHeight() - getPaddingBottom(), getWidth(), getHeight(), mPaint);
-        }
+        }}catch (Exception e){}
     }
 
     private boolean isPosInRang(int position) {

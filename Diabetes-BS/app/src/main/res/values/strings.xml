@@ -22,4 +22,5 @@
     <string name="measured_value">Measured value</string>
     <string name="input_measured_value">Input value</string>
     <string name="delete">Delete</string>
+    <string name="next">Next</string>
 </resources>

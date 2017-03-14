@@ -129,25 +129,43 @@
                 android:textColor="@color/txt_light_color"
                 android:textSize="14sp" />
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/button_background"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="@string/next"
+            android:textColor="@color/txt_white"
+            android:textSize="16sp">
+        </TextView>
+
+        <!--键盘-->
+        <com.czk.diabetes.view.Digitalkeyboard
+            android:id="@+id/digitalkeyboard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal" />
+
+        <com.czk.diabetes.view.WheelPicker xmlns:wp="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/wheelpicker"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:background="@color/background_white"
+            android:gravity="center_horizontal"
+            android:visibility="gone"
+            wp:wheel_visible_item_count="3" />
     </LinearLayout>
 
-    <!--键盘-->
-    <com.czk.diabetes.view.Digitalkeyboard
-        android:id="@+id/digitalkeyboard"
-        android:layout_width="match_parent"
-        android:layout_height="256dp"
-        android:layout_alignParentBottom="true"
-        android:gravity="center_horizontal"
-        android:visibility="gone"/>
 
-    <com.czk.diabetes.view.WheelPicker
-        xmlns:wp="http://schemas.android.com/apk/res-auto"
-        android:background="@color/background_white"
-        android:layout_width="match_parent"
-        android:layout_height="256dp"
-        android:layout_alignParentBottom="true"
-        android:gravity="center_horizontal"
-        wp:wheel_visible_item_count="3"/>
+
 
 
     <View

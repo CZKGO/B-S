@@ -1,11 +1,16 @@
 package com.czk.diabetes;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +19,7 @@ import com.czk.diabetes.util.FontIconDrawable;
 import com.czk.diabetes.util.TimeUtil;
 import com.czk.diabetes.view.Digitalkeyboard;
 import com.czk.diabetes.view.MeterView;
+import com.czk.diabetes.view.WheelPicker;
 
 import java.lang.reflect.Method;
 
@@ -28,6 +34,7 @@ public class AddValueActivity extends BaseActivity {
     private long currentTime;
     private MeterView meterView;
     private TextView tvDate;
+    private WheelPicker wheelpicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +79,7 @@ public class AddValueActivity extends BaseActivity {
         }
         //键盘
         digitalkeyboard = (Digitalkeyboard) findViewById(R.id.digitalkeyboard);
+        wheelpicker = (WheelPicker) findViewById(R.id.wheelpicker);
 
     }
 
@@ -86,7 +94,14 @@ public class AddValueActivity extends BaseActivity {
         tvDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(View.VISIBLE == digitalkeyboard.getVisibility()){
+                if (View.VISIBLE == digitalkeyboard.getVisibility()) {
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(
+                            digitalkeyboard,
+                            "rotationY",
+                            0,
+                            180);
+                    animator.setDuration(500);
+                    animator.start();
 
                 }
             }
@@ -99,7 +114,7 @@ public class AddValueActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(!s.toString().isEmpty())
+                if (!s.toString().isEmpty())
                     meterView.setValue(Float.valueOf(s.toString()));
                 else
                     meterView.setValue(0);
