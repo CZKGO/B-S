@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.czk.diabetes.signin.SignActivity;
 import com.czk.diabetes.util.FontIconDrawable;
@@ -76,7 +75,7 @@ public class MainFragment extends Fragment {
         //登录卡片
         userIV = (ImageView) fragment.findViewById(R.id.user_icon);
         FontIconDrawable userIVfontDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_user);
-        userIVfontDrawable.setTextColor(getResources().getColor(R.color.theme_color_light));
+        userIVfontDrawable.setTextColor(getResources().getColor(R.color.background_white));
         userIV.setImageDrawable(userIVfontDrawable);
 
         ImageView chevronRightIV = (ImageView) fragment.findViewById(R.id.img_sig_chevron_right);

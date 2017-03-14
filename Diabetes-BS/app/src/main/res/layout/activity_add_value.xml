@@ -42,6 +42,7 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:paddingRight="4dp"
+                    mv:icon_visible="gone"
                     mv:title_visible="gone" />
 
                 <LinearLayout
@@ -136,7 +137,18 @@
         android:layout_width="match_parent"
         android:layout_height="256dp"
         android:layout_alignParentBottom="true"
-        android:gravity="center_horizontal" />
+        android:gravity="center_horizontal"
+        android:visibility="gone"/>
+
+    <com.czk.diabetes.view.WheelPicker
+        xmlns:wp="http://schemas.android.com/apk/res-auto"
+        android:background="@color/background_white"
+        android:layout_width="match_parent"
+        android:layout_height="256dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal"
+        wp:wheel_visible_item_count="3"/>
+
 
     <View
         android:id="@+id/shadow_layout"

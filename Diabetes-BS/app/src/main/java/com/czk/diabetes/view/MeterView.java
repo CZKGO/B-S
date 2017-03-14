@@ -16,7 +16,7 @@ import com.czk.diabetes.R;
 
 /**
  * Created by xuezaishao on 2017/3/13.
- * <p>
+ * <p/>
  * 作为测量值显示的表盘
  */
 
@@ -25,43 +25,46 @@ public class MeterView extends LinearLayout {
     private ImageView ivIcon;
     private TextView tvTitle;
     private int titleVisible;
+    private int iconVisible;
     private TextView tvValue;
     private CircleProgressBar progressBar;
 
     public MeterView(Context context) {
         super(context);
-        initAtrr(context,null);
+        initAtrr(context, null);
         initView();
     }
 
     public MeterView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initAtrr(context,attrs);
+        initAtrr(context, attrs);
         initView();
     }
 
     public MeterView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initAtrr(context,attrs);
+        initAtrr(context, attrs);
         initView();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public MeterView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initAtrr(context,attrs);
+        initAtrr(context, attrs);
         initView();
     }
 
     private void initAtrr(Context context, AttributeSet attrs) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MeterView);
-        titleVisible = a.getInt(R.styleable.MeterView_title_visible,VISIBLE);
+        titleVisible = a.getInt(R.styleable.MeterView_title_visible, VISIBLE);
+        iconVisible = a.getInt(R.styleable.MeterView_icon_visible, VISIBLE);
         a.recycle();
     }
 
     private void initView() {
         View.inflate(getContext(), R.layout.view_meter, this);
         ivIcon = (ImageView) findViewById(R.id.icon);
+        ivIcon.setVisibility(iconVisible);
         tvTitle = (TextView) findViewById(R.id.tile);
         tvTitle.setVisibility(titleVisible);
         tvValue = (TextView) findViewById(R.id.value);

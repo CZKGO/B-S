@@ -4,20 +4,18 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.lang.reflect.Method;
-
 import com.czk.diabetes.util.FontIconDrawable;
 import com.czk.diabetes.util.TimeUtil;
 import com.czk.diabetes.view.Digitalkeyboard;
 import com.czk.diabetes.view.MeterView;
+
+import java.lang.reflect.Method;
 
 /**
  * Created by 陈忠凯 on 2017/3/12.
@@ -29,6 +27,7 @@ public class AddValueActivity extends BaseActivity {
     private Digitalkeyboard digitalkeyboard;
     private long currentTime;
     private MeterView meterView;
+    private TextView tvDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +50,7 @@ public class AddValueActivity extends BaseActivity {
         tvTitle.setText(getResources().getString(com.czk.diabetes.R.string.input_measured_value));
         //主体
         meterView = (MeterView) findViewById(R.id.meter);
-        TextView tvDate = (TextView) findViewById(com.czk.diabetes.R.id.tv_date);
+        tvDate = (TextView) findViewById(com.czk.diabetes.R.id.tv_date);
         tvDate.setText(TimeUtil.getYearMonthDay(currentTime));
         TextView tvTimeSlot = (TextView) findViewById(com.czk.diabetes.R.id.tv_time_slot);
         setCircularTile(tvTimeSlot, TimeUtil.getHourOfTheDay(currentTime));
@@ -84,6 +83,14 @@ public class AddValueActivity extends BaseActivity {
             }
         });
         //主体
+        tvDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(View.VISIBLE == digitalkeyboard.getVisibility()){
+
+                }
+            }
+        });
         etValue.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -124,6 +131,7 @@ public class AddValueActivity extends BaseActivity {
                     }
                 } else {
                     etValue.setText(value);
+                    //移动光标
                     etValue.setSelection(value.length());
                 }
             }

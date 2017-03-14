@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- 主题色 -->
-    <color name="theme_color">#6082E6</color>
-    <color name="theme_color_light">#806082e6</color>
+    <color name="theme_color">#3f51b5</color>
+    <color name="theme_color_light">#c5cae9</color>
 
     <color name="safe_color">#70AA39</color>
     <color name="waring_color">#F2A670</color>
