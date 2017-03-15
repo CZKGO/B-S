@@ -842,6 +842,10 @@ public class WheelPicker extends View implements Runnable{
         return mCurrentItemPosition;
     }
 
+    public Object getCurrentItem() {
+        return mData.get(mCurrentItemPosition);
+    }
+
     public List getData() {
         return mData;
     }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.czk.diabetes.util.FontIconDrawable;
 import com.czk.diabetes.util.TimeUtil;
+import com.czk.diabetes.view.DateWheelPicker;
 import com.czk.diabetes.view.Digitalkeyboard;
 import com.czk.diabetes.view.MeterView;
 import com.czk.diabetes.view.WheelPicker;
@@ -38,7 +39,7 @@ public class AddValueActivity extends BaseActivity {
     private View viewValue;
     private TextView tvTimeSlot;
     private List<String> timeSlots;
-    private WheelPicker dateWheelpicker;
+    private DateWheelPicker dateWheelpicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +89,12 @@ public class AddValueActivity extends BaseActivity {
         //键盘
         digitalkeyboard = (Digitalkeyboard) findViewById(R.id.digitalkeyboard);
         wheelpicker = (WheelPicker) findViewById(R.id.wheelpicker);
-        dateWheelpicker = (WheelPicker) findViewById(R.id.date_wheelpicker);
-
+        wheelpicker.setData(timeSlots);
+        wheelpicker.setSelectedItemPosition(timeSlots.indexOf(tvTimeSlot.getText()));
+        dateWheelpicker = (DateWheelPicker) findViewById(R.id.date_wheelpicker);
+        dateWheelpicker.setSelectedYear(TimeUtil.getYear(currentTime));
+        dateWheelpicker.setSelectedMonth(TimeUtil.getMonth(currentTime));
+        dateWheelpicker.setSelectedDay(TimeUtil.getDay(currentTime));
     }
 
     private void dealEvent() {
@@ -103,72 +108,33 @@ public class AddValueActivity extends BaseActivity {
         tvDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (keyBoardType == KeyBoardType.DIGITAL_TYPE) {
+                    keyBoardType = keyBoardType.DATE_TYPE;
+                    rotationAnimator(digitalkeyboard,dateWheelpicker);
+                    tvDate.setTextColor(getResources().getColor(R.color.theme_color));
+                    etValue.setEnabled(false);
+                }else if (keyBoardType == KeyBoardType.TIME_TYPE) {
+                    keyBoardType = keyBoardType.DATE_TYPE;
+                    rotationAnimator(wheelpicker,dateWheelpicker);
+                    tvTimeSlot.setTextColor(getResources().getColor(R.color.txt_light_color));
+                    tvDate.setTextColor(getResources().getColor(R.color.theme_color));
+                    etValue.setEnabled(false);
+                }
             }
         });
         tvTimeSlot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (keyBoardType == KeyBoardType.DIGITAL_TYPE) {
-                    wheelpicker.setData(timeSlots);
-                    keyBoardType = keyBoardType.DATE_TYPE;
-                    ObjectAnimator animator = ObjectAnimator.ofFloat(
-                            digitalkeyboard,
-                            "rotationY",
-                            0,
-                            90);
-                    animator.setDuration(300);
-                    animator.start();
-                    final ObjectAnimator animator2 = ObjectAnimator.ofFloat(
-                            wheelpicker,
-                            "rotationY",
-                            -90,
-                            0);
-                    animator2.setDuration(300);
-                    animator.addListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
-                            digitalkeyboard.setVisibility(View.GONE);
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            animator2.start();
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-
-                        }
-                    });
-                    animator2.addListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
-                            wheelpicker.setVisibility(View.VISIBLE);
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-
-                        }
-                    });
-
+                    keyBoardType = keyBoardType.TIME_TYPE;
+                    rotationAnimator(digitalkeyboard,wheelpicker);
                     tvTimeSlot.setTextColor(getResources().getColor(R.color.theme_color));
+                    etValue.setEnabled(false);
+                }else if (keyBoardType == KeyBoardType.DATE_TYPE) {
+                    keyBoardType = keyBoardType.TIME_TYPE;
+                    rotationAnimator(dateWheelpicker,wheelpicker);
+                    tvTimeSlot.setTextColor(getResources().getColor(R.color.theme_color));
+                    tvDate.setTextColor(getResources().getColor(R.color.txt_light_color));
                     etValue.setEnabled(false);
                 }
             }
@@ -179,62 +145,12 @@ public class AddValueActivity extends BaseActivity {
             public void onClick(View v) {
                 if (keyBoardType == KeyBoardType.DATE_TYPE) {
                     keyBoardType = keyBoardType.DIGITAL_TYPE;
-                    ObjectAnimator animator = ObjectAnimator.ofFloat(
-                            wheelpicker,
-                            "rotationY",
-                            0,
-                            90);
-                    animator.setDuration(300);
-                    animator.start();
-                    final ObjectAnimator animator2 = ObjectAnimator.ofFloat(
-                            digitalkeyboard,
-                            "rotationY",
-                            -90,
-                            0);
-                    animator2.setDuration(300);
-                    animator.addListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
-                            wheelpicker.setVisibility(View.GONE);
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            animator2.start();
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-
-                        }
-                    });
-                    animator2.addListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
-                            digitalkeyboard.setVisibility(View.VISIBLE);
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-
-                        }
-                    });
-
+                    rotationAnimator(dateWheelpicker,digitalkeyboard);
+                    tvDate.setTextColor(getResources().getColor(R.color.txt_light_color));
+                    etValue.setEnabled(true);
+                }else if (keyBoardType == KeyBoardType.TIME_TYPE) {
+                    keyBoardType = keyBoardType.DIGITAL_TYPE;
+                    rotationAnimator(wheelpicker,digitalkeyboard);
                     tvTimeSlot.setTextColor(getResources().getColor(R.color.txt_light_color));
                     etValue.setEnabled(true);
                 }
@@ -287,19 +203,79 @@ public class AddValueActivity extends BaseActivity {
             }
         });
 
-        wheelpicker.setOnWheelChangeListener(new WheelPicker.OnWheelChangeListener() {
+        wheelpicker.setOnItemSelectedListener(new WheelPicker.OnItemSelectedListener() {
             @Override
-            public void onWheelScrolled(int offset) {
+            public void onItemSelected(WheelPicker picker, Object data, int position) {
+                tvTimeSlot.setText(data.toString());
+            }
+        });
+
+        dateWheelpicker.setOnItemSelectedListener(new DateWheelPicker.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(String data) {
+                tvDate.setText(data);
+            }
+        });
+    }
+
+    /**
+     * 翻转切换view
+     * @param view1
+     * @param view2
+     */
+    private void rotationAnimator(final View view1, final View view2) {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(
+                view1,
+                "rotationY",
+                0,
+                90);
+        animator.setDuration(300);
+        animator.start();
+        final ObjectAnimator animator2 = ObjectAnimator.ofFloat(
+                view2,
+                "rotationY",
+                -90,
+                0);
+        animator2.setDuration(300);
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                view1.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                animator2.start();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
 
             }
 
             @Override
-            public void onWheelSelected(int position) {
-                tvTimeSlot.setText(timeSlots.get(position));
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        animator2.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                view2.setVisibility(View.VISIBLE);
             }
 
             @Override
-            public void onWheelScrollStateChanged(int state) {
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
 
             }
         });
