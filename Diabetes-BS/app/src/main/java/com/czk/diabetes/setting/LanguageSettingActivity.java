@@ -31,7 +31,7 @@ public class LanguageSettingActivity extends BaseActivity {
     }
 
     private void initData() {
-        languageList = getResources().getStringArray(R.array.countries);
+        languageList = getResources().getStringArray(R.array.languages);
         adapter = new LanguageSettingAdapter(LanguageSettingActivity.this,languageList,0);
     }
 

@@ -63,39 +63,39 @@ public class MainActivity extends BaseFragmentActivity {
 
     private void initView() {
         //头部
-        ivIcon = (ImageView) findViewById(com.czk.diabetes.R.id.icon);
+        ivIcon = (ImageView) findViewById(R.id.icon);
         ivIcon.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), com.czk.diabetes.R.xml.icon_menu));
-        ivIconRight = (ImageView) findViewById(com.czk.diabetes.R.id.icon_right);
+        ivIconRight = (ImageView) findViewById(R.id.icon_right);
         ivIconRight.setVisibility(View.VISIBLE);
         ivIconRight.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), com.czk.diabetes.R.xml.icon_alarm));
         //底部
-        icon_bottom1 = (ImageView) findViewById(com.czk.diabetes.R.id.icon_bottom1);
+        icon_bottom1 = (ImageView) findViewById(R.id.icon_bottom1);
         fontDrawable1 = FontIconDrawable.inflate(getApplicationContext(), com.czk.diabetes.R.xml.icon_home);
         icon_bottom1.setImageDrawable(fontDrawable1);
-        icon_bottom2 = (ImageView) findViewById(com.czk.diabetes.R.id.icon_bottom2);
+        icon_bottom2 = (ImageView) findViewById(R.id.icon_bottom2);
         fontDrawable2 = FontIconDrawable.inflate(getApplicationContext(), com.czk.diabetes.R.xml.icon_pill);
         icon_bottom2.setImageDrawable(fontDrawable2);
-        icon_bottom3 = (ImageView) findViewById(com.czk.diabetes.R.id.icon_bottom3);
+        icon_bottom3 = (ImageView) findViewById(R.id.icon_bottom3);
         fontDrawable3 = FontIconDrawable.inflate(getApplicationContext(), com.czk.diabetes.R.xml.icon_clipboard_edit);
         icon_bottom3.setImageDrawable(fontDrawable3);
-        icon_bottom4 = (ImageView) findViewById(com.czk.diabetes.R.id.icon_bottom4);
+        icon_bottom4 = (ImageView) findViewById(R.id.icon_bottom4);
         fontDrawable4 = FontIconDrawable.inflate(getApplicationContext(), com.czk.diabetes.R.xml.icon_bubbles);
         icon_bottom4.setImageDrawable(fontDrawable4);
-        tab1 = findViewById(com.czk.diabetes.R.id.page1);
-        tab2 = findViewById(com.czk.diabetes.R.id.page2);
-        tab3 = findViewById(com.czk.diabetes.R.id.page3);
-        tab4 = findViewById(com.czk.diabetes.R.id.page4);
+        tab1 = findViewById(R.id.page1);
+        tab2 = findViewById(R.id.page2);
+        tab3 = findViewById(R.id.page3);
+        tab4 = findViewById(R.id.page4);
         //侧边栏
-        drawerLayout = (DrawerLayout) findViewById(com.czk.diabetes.R.id.drawer_layout);
-        ImageView settiong_icon = (ImageView) findViewById(com.czk.diabetes.R.id.settiong_icon);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ImageView settiong_icon = (ImageView) findViewById(R.id.settiong_icon);
         settiong_icon.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), com.czk.diabetes.R.xml.icon_cog));
-        ImageView about_icon = (ImageView) findViewById(com.czk.diabetes.R.id.about_icon);
+        ImageView about_icon = (ImageView) findViewById(R.id.about_icon);
         about_icon.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), com.czk.diabetes.R.xml.icon_notification));
-        settiongLayout = (LinearLayout) findViewById(com.czk.diabetes.R.id.settiong_layout);
-        LinearLayout about_layout = (LinearLayout) findViewById(com.czk.diabetes.R.id.about_layout);
+        settiongLayout = (LinearLayout) findViewById(R.id.settiong_layout);
+        LinearLayout about_layout = (LinearLayout) findViewById(R.id.about_layout);
 
         //主体
-        mPager = (ViewPager) findViewById(com.czk.diabetes.R.id.main_viewpager);
+        mPager = (ViewPager) findViewById(R.id.main_viewpager);
         mPager.setAdapter(adapter);
 
     }

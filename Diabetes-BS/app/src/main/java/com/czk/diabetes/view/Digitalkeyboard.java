@@ -55,18 +55,18 @@ public class Digitalkeyboard extends LinearLayout {
     private void initView() {
         View.inflate(getContext(), R.layout.view_digital_keyboard, this);
 
-        tvNumber0 = (TextView) findViewById(com.czk.diabetes.R.id.number_0);
-        tvNumber1 = (TextView) findViewById(com.czk.diabetes.R.id.number_1);
-        tvNumber2 = (TextView) findViewById(com.czk.diabetes.R.id.number_2);
-        tvNumber3 = (TextView) findViewById(com.czk.diabetes.R.id.number_3);
-        tvNumber4 = (TextView) findViewById(com.czk.diabetes.R.id.number_4);
-        tvNumber5 = (TextView) findViewById(com.czk.diabetes.R.id.number_5);
-        tvNumber6 = (TextView) findViewById(com.czk.diabetes.R.id.number_6);
-        tvNumber7 = (TextView) findViewById(com.czk.diabetes.R.id.number_7);
-        tvNumber8 = (TextView) findViewById(com.czk.diabetes.R.id.number_8);
-        tvNumber9 = (TextView) findViewById(com.czk.diabetes.R.id.number_9);
-        tvNumberDelete = (TextView) findViewById(com.czk.diabetes.R.id.number_delete);
-        tvNumberPoint = (TextView) findViewById(com.czk.diabetes.R.id.number_point);
+        tvNumber0 = (TextView) findViewById(R.id.number_0);
+        tvNumber1 = (TextView) findViewById(R.id.number_1);
+        tvNumber2 = (TextView) findViewById(R.id.number_2);
+        tvNumber3 = (TextView) findViewById(R.id.number_3);
+        tvNumber4 = (TextView) findViewById(R.id.number_4);
+        tvNumber5 = (TextView) findViewById(R.id.number_5);
+        tvNumber6 = (TextView) findViewById(R.id.number_6);
+        tvNumber7 = (TextView) findViewById(R.id.number_7);
+        tvNumber8 = (TextView) findViewById(R.id.number_8);
+        tvNumber9 = (TextView) findViewById(R.id.number_9);
+        tvNumberDelete = (TextView) findViewById(R.id.number_delete);
+        tvNumberPoint = (TextView) findViewById(R.id.number_point);
 
         setKeyOnClickListener(tvNumber0, 0);
         setKeyOnClickListener(tvNumber1, 1);

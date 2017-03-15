@@ -61,11 +61,12 @@
 
                         <TextView
                             android:id="@+id/tv_date"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="4dp"
                             android:singleLine="true"
                             android:text="2017-03-12"
+                            android:textColor="@color/txt_light_color"
                             android:textSize="16sp" />
 
                         <ImageView
@@ -75,12 +76,13 @@
 
                         <TextView
                             android:id="@+id/tv_time_slot"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="4dp"
                             android:layout_marginTop="12dp"
                             android:singleLine="true"
                             android:text="@string/before_breakfast"
+                            android:textColor="@color/txt_light_color"
                             android:textSize="16sp" />
 
                         <ImageView
@@ -90,6 +92,7 @@
 
 
                         <LinearLayout
+                            android:id="@+id/value_range"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
@@ -133,39 +136,53 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
             android:background="@drawable/button_background"
             android:gravity="center"
             android:padding="8dp"
             android:text="@string/next"
             android:textColor="@color/txt_white"
-            android:textSize="16sp">
-        </TextView>
+            android:textSize="16sp"></TextView>
 
         <!--键盘-->
-        <com.czk.diabetes.view.Digitalkeyboard
-            android:id="@+id/digitalkeyboard"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:gravity="center_horizontal" />
-
-        <com.czk.diabetes.view.WheelPicker xmlns:wp="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/wheelpicker"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:background="@color/background_white"
-            android:gravity="center_horizontal"
-            android:visibility="gone"
-            wp:wheel_visible_item_count="3" />
+            android:layout_height="match_parent">
+            <!--数字键盘-->
+            <com.czk.diabetes.view.Digitalkeyboard
+                android:id="@+id/digitalkeyboard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_horizontal"
+                android:visibility="gone" />
+            <!--时段选择器-->
+            <com.czk.diabetes.view.WheelPicker xmlns:wp="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/wheelpicker"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:background="@color/background_white"
+                android:gravity="center_horizontal"
+                android:padding="16dp"
+                android:visibility="gone"
+                wp:wheel_atmospheric="true"
+                wp:wheel_curved="true"
+                wp:wheel_cyclic="true"
+                wp:wheel_item_text_size="16dp"
+                wp:wheel_selected_item_text_color="@color/theme_color"
+                wp:wheel_visible_item_count="5" />
+            <!--日期选择器-->
+            <com.czk.diabetes.view.DateWheelPicker
+                android:id="@+id/date_wheelpicker"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"/>
+        </RelativeLayout>
     </LinearLayout>
-
-
-
 
 
     <View
