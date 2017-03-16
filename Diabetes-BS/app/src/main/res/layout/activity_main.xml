@@ -13,25 +13,21 @@
 
         <!--主体-->
         <android.support.v4.view.ViewPager
-            android:layout_marginTop="56dp"
+            android:id="@+id/main_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/main_viewpager"
-            android:layout_marginBottom="56dp"/>
-
-        <View
-            android:id="@+id/shadow_layout"
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:layout_marginTop="56dp"
-            android:background="@drawable/item_shadow" />
+            android:layout_marginBottom="56dp"
+            android:layout_marginTop="56dp" />
 
         <!--底部-->
         <LinearLayout
+            android:background="@color/background_white"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_alignParentBottom="true"
-            android:gravity="center_vertical">
+            android:elevation="4dp"
+            android:gravity="center_vertical"
+            android:translationZ="4dp">
 
             <LinearLayout
                 android:id="@+id/page1"
@@ -103,13 +99,6 @@
 
         </LinearLayout>
 
-        <View
-            android:id="@+id/shadow_up_layout"
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="56dp"
-            android:background="@drawable/item_shadow_up" />
     </RelativeLayout>
 
     <!-- 侧边栏 -->
@@ -170,10 +159,10 @@
                 android:id="@+id/settiong_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:padding="2dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:background="@color/transparent" />
+                android:background="@color/transparent"
+                android:padding="2dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -196,10 +185,10 @@
                 android:id="@+id/about_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:padding="2dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:background="@color/transparent" />
+                android:background="@color/transparent"
+                android:padding="2dp" />
 
             <TextView
                 android:layout_width="wrap_content"

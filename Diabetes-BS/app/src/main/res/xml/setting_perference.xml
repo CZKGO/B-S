@@ -10,8 +10,8 @@
             android:layout="@layout/preference_general"
             android:key="language">
             <intent
-                android:targetPackage="diabetes.czk.com"
-                android:targetClass="diabetes.czk.com.setting.LanguageSettingActivity" />
+                android:targetPackage="com.czk.diabetes"
+                android:targetClass="com.czk.diabetes.setting.LanguageSettingActivity" />
         </PreferenceScreen>
 
     </com.czk.diabetes.setting.MyPreferenceCategory>

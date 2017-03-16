@@ -80,7 +80,7 @@ public class MainFragment extends Fragment {
 
         ImageView chevronRightIV = (ImageView) fragment.findViewById(R.id.img_sig_chevron_right);
         FontIconDrawable chevronRightDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_chevron_thin_right);
-        chevronRightDrawable.setTextColor(getResources().getColor(R.color.txt_light_color));
+        chevronRightDrawable.setTextColor(getResources().getColor(R.color.theme_color_light));
         chevronRightIV.setImageDrawable(chevronRightDrawable);
         //每日一读
         ImageView cozyTipIcon = (ImageView) fragment.findViewById(R.id.cozy_tip_icon);

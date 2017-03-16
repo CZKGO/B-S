@@ -22,10 +22,6 @@
             android:listSelector="@color/transparent"
             android:scrollbars="none" />
 
-        <View
-            android:id="@+id/shadow_layout"
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:background="@drawable/item_shadow" />
+
     </RelativeLayout>
 </LinearLayout>

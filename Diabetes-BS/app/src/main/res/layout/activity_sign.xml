@@ -96,27 +96,22 @@
             </LinearLayout>
 
             <TextView
+                android:elevation="1dp"
+                android:translationX="1dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="24dp"
                 android:layout_marginLeft="24dp"
-                android:gravity="center"
-                android:textSize="16sp"
+                android:layout_marginRight="24dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/button_background"
-                android:text="@string/sign_in"
+                android:gravity="center"
                 android:padding="8dp"
-                android:textColor="@color/txt_white">
+                android:text="@string/sign_in"
+                android:textColor="@color/txt_white"
+                android:textSize="16sp">
 
             </TextView>
         </LinearLayout>
     </ScrollView>
-
-    <View
-        android:id="@+id/shadow_layout"
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:layout_marginTop="56dp"
-        android:background="@drawable/item_shadow" />
 
 </RelativeLayout>

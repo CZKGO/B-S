@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="56dp"
-    android:background="@color/background_white">
+    android:background="@color/theme_color"
+    android:elevation="4dp"
+    android:translationZ="4dp">
 
     <ImageView
         android:id="@+id/icon"
@@ -21,7 +23,7 @@
         android:layout_toRightOf="@+id/icon"
         android:gravity="bottom"
         android:text="@string/app_name"
-        android:textColor="@color/txt_black"
+        android:textColor="@color/txt_white"
         android:textSize="16sp"
         android:textStyle="bold" />
 

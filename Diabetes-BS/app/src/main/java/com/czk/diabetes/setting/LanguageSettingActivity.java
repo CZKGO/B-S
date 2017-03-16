@@ -32,7 +32,7 @@ public class LanguageSettingActivity extends BaseActivity {
 
     private void initData() {
         languageList = getResources().getStringArray(R.array.languages);
-        adapter = new LanguageSettingAdapter(LanguageSettingActivity.this,languageList,0);
+        adapter = new LanguageSettingAdapter(LanguageSettingActivity.this, languageList, 0);
     }
 
     private void initView() {

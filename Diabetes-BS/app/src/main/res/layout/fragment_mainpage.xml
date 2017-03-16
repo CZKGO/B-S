@@ -23,9 +23,11 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/card_circular_bead"
+                android:elevation="1dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="8dp"
+                android:translationZ="1dp">
 
                 <RelativeLayout
                     android:id="@+id/user_icon_back"
@@ -72,9 +74,11 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/card_circular_bead"
+                android:elevation="1dp"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:padding="8dp">
+                android:padding="8dp"
+                android:translationZ="1dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -135,10 +139,13 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:background="@drawable/card_circular_bead"
+                android:elevation="1dp"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:padding="8dp">
+                android:padding="8dp"
+                android:translationZ="1dp">
                 <!--标题-->
                 <LinearLayout
                     android:layout_width="match_parent"

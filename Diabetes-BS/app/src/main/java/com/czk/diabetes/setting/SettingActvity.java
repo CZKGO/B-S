@@ -2,6 +2,7 @@ package com.czk.diabetes.setting;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,8 +23,14 @@ public class SettingActvity extends PreferenceActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         addPreferencesFromResource(R.xml.setting_perference);
+        initData();
         initView();
         dealEvent();
+    }
+
+    private void initData() {
+        Preference languagePre = findPreference("language");
+//        languagePre.setSummary();
     }
 
     private void initView() {

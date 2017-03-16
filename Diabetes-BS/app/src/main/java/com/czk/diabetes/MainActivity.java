@@ -41,7 +41,7 @@ public class MainActivity extends BaseFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.czk.diabetes.R.layout.activity_main);
+        setContentView(R.layout.activity_main);
         initData();
         initView();
         setTabSelection(0);
@@ -64,22 +64,22 @@ public class MainActivity extends BaseFragmentActivity {
     private void initView() {
         //头部
         ivIcon = (ImageView) findViewById(R.id.icon);
-        ivIcon.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), com.czk.diabetes.R.xml.icon_menu));
+        ivIcon.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_menu));
         ivIconRight = (ImageView) findViewById(R.id.icon_right);
         ivIconRight.setVisibility(View.VISIBLE);
-        ivIconRight.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), com.czk.diabetes.R.xml.icon_alarm));
+        ivIconRight.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_alarm));
         //底部
         icon_bottom1 = (ImageView) findViewById(R.id.icon_bottom1);
-        fontDrawable1 = FontIconDrawable.inflate(getApplicationContext(), com.czk.diabetes.R.xml.icon_home);
+        fontDrawable1 = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_home);
         icon_bottom1.setImageDrawable(fontDrawable1);
         icon_bottom2 = (ImageView) findViewById(R.id.icon_bottom2);
-        fontDrawable2 = FontIconDrawable.inflate(getApplicationContext(), com.czk.diabetes.R.xml.icon_pill);
+        fontDrawable2 = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_pill);
         icon_bottom2.setImageDrawable(fontDrawable2);
         icon_bottom3 = (ImageView) findViewById(R.id.icon_bottom3);
-        fontDrawable3 = FontIconDrawable.inflate(getApplicationContext(), com.czk.diabetes.R.xml.icon_clipboard_edit);
+        fontDrawable3 = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_clipboard_edit);
         icon_bottom3.setImageDrawable(fontDrawable3);
         icon_bottom4 = (ImageView) findViewById(R.id.icon_bottom4);
-        fontDrawable4 = FontIconDrawable.inflate(getApplicationContext(), com.czk.diabetes.R.xml.icon_bubbles);
+        fontDrawable4 = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_bubbles);
         icon_bottom4.setImageDrawable(fontDrawable4);
         tab1 = findViewById(R.id.page1);
         tab2 = findViewById(R.id.page2);
@@ -88,9 +88,9 @@ public class MainActivity extends BaseFragmentActivity {
         //侧边栏
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ImageView settiong_icon = (ImageView) findViewById(R.id.settiong_icon);
-        settiong_icon.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), com.czk.diabetes.R.xml.icon_cog));
+        settiong_icon.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_cog));
         ImageView about_icon = (ImageView) findViewById(R.id.about_icon);
-        about_icon.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), com.czk.diabetes.R.xml.icon_notification));
+        about_icon.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_notification));
         settiongLayout = (LinearLayout) findViewById(R.id.settiong_layout);
         LinearLayout about_layout = (LinearLayout) findViewById(R.id.about_layout);
 
@@ -168,13 +168,13 @@ public class MainActivity extends BaseFragmentActivity {
      */
     private void setTabSelection(int index) {
         // 每次选中之前先清楚掉上次的选中状态
-        fontDrawable1.setTextColor(getResources().getColor(com.czk.diabetes.R.color.theme_color_light));
+        fontDrawable1.setTextColor(getResources().getColor(R.color.theme_color_light));
         icon_bottom1.setImageDrawable(fontDrawable1);
-        fontDrawable2.setTextColor(getResources().getColor(com.czk.diabetes.R.color.theme_color_light));
+        fontDrawable2.setTextColor(getResources().getColor(R.color.theme_color_light));
         icon_bottom2.setImageDrawable(fontDrawable2);
-        fontDrawable3.setTextColor(getResources().getColor(com.czk.diabetes.R.color.theme_color_light));
+        fontDrawable3.setTextColor(getResources().getColor(R.color.theme_color_light));
         icon_bottom3.setImageDrawable(fontDrawable3);
-        fontDrawable4.setTextColor(getResources().getColor(com.czk.diabetes.R.color.theme_color_light));
+        fontDrawable4.setTextColor(getResources().getColor(R.color.theme_color_light));
         icon_bottom4.setImageDrawable(fontDrawable4);
         switch (index) {
             case 0:
@@ -197,7 +197,7 @@ public class MainActivity extends BaseFragmentActivity {
     }
 
     private void setTabChose(FontIconDrawable fontDrawable, ImageView imageView) {
-        fontDrawable.setTextColor(getResources().getColor(com.czk.diabetes.R.color.theme_color));
+        fontDrawable.setTextColor(getResources().getColor(R.color.theme_color));
         imageView.setImageDrawable(fontDrawable);
     }
 }
