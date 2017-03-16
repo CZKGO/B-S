@@ -22,4 +22,5 @@
     <string name="input_measured_value">输入测量值</string>
     <string name="delete">删除</string>
     <string name="next">下一步</string>
+    <string name="check_value">请检查你的测量值!</string>
 </resources>

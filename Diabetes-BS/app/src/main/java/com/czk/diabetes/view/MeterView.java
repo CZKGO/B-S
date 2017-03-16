@@ -83,4 +83,8 @@ public class MeterView extends LinearLayout {
         tvValue.setText(String.valueOf(value));
         progressBar.setProgress(value);
     }
+
+    public String getTitle() {
+        return tvTitle.getText().toString();
+    }
 }

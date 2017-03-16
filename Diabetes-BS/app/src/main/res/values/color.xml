@@ -12,6 +12,7 @@
     <color name="background_white_light">#e1f4ff</color>
     <color name="onclick_white">#7d949494</color>
     <color name="transparent">#00000000</color>
+    <color name="background_toast">#FF535353</color>
 
     <color name="tip_green">#70AA39</color>
     <color name="tip_pink">#FFC0CB</color>

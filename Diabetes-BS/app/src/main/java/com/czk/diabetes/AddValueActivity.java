@@ -2,18 +2,23 @@ package com.czk.diabetes;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.czk.diabetes.DB.DBOpenHelper;
 import com.czk.diabetes.util.FontIconDrawable;
 import com.czk.diabetes.util.TimeUtil;
+import com.czk.diabetes.util.ToastUtil;
 import com.czk.diabetes.view.DateWheelPicker;
 import com.czk.diabetes.view.Digitalkeyboard;
 import com.czk.diabetes.view.MeterView;
@@ -40,6 +45,8 @@ public class AddValueActivity extends BaseActivity {
     private TextView tvTimeSlot;
     private List<String> timeSlots;
     private DateWheelPicker dateWheelpicker;
+    private String currentTimeSlotTitl;
+    private TextView tvNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +59,7 @@ public class AddValueActivity extends BaseActivity {
 
     private void initData() {
         currentTime = getIntent().getLongExtra("currentTime", System.currentTimeMillis());
+        currentTimeSlotTitl = getIntent().getStringExtra("timeslot");
         keyBoardType = KeyBoardType.DIGITAL_TYPE;
         timeSlots = Arrays.asList(getResources().getStringArray(R.array.time_slots));
     }
@@ -67,10 +75,10 @@ public class AddValueActivity extends BaseActivity {
         tvDate = (TextView) findViewById(R.id.tv_date);
         tvDate.setText(TimeUtil.getYearMonthDay(currentTime));
         tvTimeSlot = (TextView) findViewById(R.id.tv_time_slot);
-        setCircularTile(tvTimeSlot, TimeUtil.getHourOfTheDay(currentTime));
+        tvTimeSlot.setText(currentTimeSlotTitl);
         etValue = (EditText) findViewById(R.id.et_value);
         viewValue = findViewById(R.id.value_range);
-
+        tvNext = (TextView) findViewById(R.id.button_next);
          /*设置EditText光标可见但不弹出软键盘*/
         if (android.os.Build.VERSION.SDK_INT <= 10) {
             etValue.setInputType(InputType.TYPE_NULL);
@@ -216,6 +224,39 @@ public class AddValueActivity extends BaseActivity {
                 tvDate.setText(data);
             }
         });
+
+        tvNext.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        tvNext.setBackgroundResource(R.drawable.button_state_pressed);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        tvNext.setBackgroundResource(R.drawable.button_state_unpressed);
+                        String value = etValue.getText().toString();
+                        if(!value.isEmpty()&&!(value.contains(".") && value.length() < 3)){
+                            DBOpenHelper helper = new DBOpenHelper(AddValueActivity.this);
+                            SQLiteDatabase db = helper.getWritableDatabase();  //得到的是SQLiteDatabase对象
+                            StringBuffer sBuffer = new StringBuffer();
+                            sBuffer.append("INSERT INTO blood_sugar_record ");
+                            sBuffer.append("(date,time_slot,value) values (");
+                            sBuffer.append("'"+tvDate.getText()+"',");
+                            sBuffer.append("'"+tvTimeSlot.getText()+"',");
+                            sBuffer.append(etValue.getText());
+                            sBuffer.append(")");
+                            // 执行创建表的SQL语句
+                            db.execSQL(sBuffer.toString());
+                        }else {
+                            ToastUtil.showShortToast(AddValueActivity.this
+                                    ,getResources().getString(R.string.check_value));
+                        }
+
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     /**
@@ -281,24 +322,6 @@ public class AddValueActivity extends BaseActivity {
         });
     }
 
-
-    private void setCircularTile(TextView oneTile, int hourOfTheDay) {
-        if (0 < hourOfTheDay && hourOfTheDay <= 6) {
-            oneTile.setText(getResources().getString(R.string.before_dawn));
-        } else if (6 < hourOfTheDay && hourOfTheDay <= 8) {
-            oneTile.setText(getResources().getString(R.string.before_breakfast));
-        } else if (8 < hourOfTheDay && hourOfTheDay <= 11) {
-            oneTile.setText(getResources().getString(R.string.after_breakfast));
-        } else if (11 < hourOfTheDay && hourOfTheDay <= 15) {
-            oneTile.setText(getResources().getString(R.string.before_lunch));
-        } else if (15 < hourOfTheDay && hourOfTheDay <= 17) {
-            oneTile.setText(getResources().getString(R.string.after_lunch));
-        } else if (17 < hourOfTheDay && hourOfTheDay <= 22) {
-            oneTile.setText(getResources().getString(R.string.before_dinner));
-        } else {
-            oneTile.setText(getResources().getString(R.string.after_dinner));
-        }
-    }
 
 
     @Override

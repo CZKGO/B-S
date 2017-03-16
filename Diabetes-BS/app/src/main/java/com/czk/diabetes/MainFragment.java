@@ -121,12 +121,31 @@ public class MainFragment extends Fragment {
 
 
         //输入血糖
-        View bloodSugarCard = fragment.findViewById(R.id.blood_sugar_card);
-        bloodSugarCard.setOnClickListener(new View.OnClickListener() {
+        meterOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(getActivity(), AddValueActivity.class);
                 intent.putExtra("currentTime",currentTime);
+                intent.putExtra("timeslot",meterOne.getTitle());
+                startActivity(intent);
+            }
+        });
+        meterTow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(getActivity(), AddValueActivity.class);
+                intent.putExtra("currentTime",currentTime);
+                intent.putExtra("timeslot",meterTow.getTitle());
+                startActivity(intent);
+            }
+        });
+        fragment.findViewById(R.id.blood_sugar_card_title)
+                .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(getActivity(), AddValueActivity.class);
+                intent.putExtra("currentTime",currentTime);
+                intent.putExtra("timeslot",meterTow.getTitle());
                 startActivity(intent);
             }
         });

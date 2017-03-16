@@ -134,8 +134,8 @@
             <!--输入血糖-->
             <LinearLayout
                 android:id="@+id/blood_sugar_card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="247dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
@@ -148,6 +148,7 @@
                 android:translationZ="1dp">
                 <!--标题-->
                 <LinearLayout
+                    android:id="@+id/blood_sugar_card_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
