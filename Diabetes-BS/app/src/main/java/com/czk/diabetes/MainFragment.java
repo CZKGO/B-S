@@ -44,6 +44,17 @@ public class MainFragment extends Fragment {
         //输入血糖
         currentTime = System.currentTimeMillis();
         setCircularTile(meterOne, meterTow, TimeUtil.getHourOfTheDay(System.currentTimeMillis()));
+        setValue();
+    }
+
+    private void setValue() {
+//        DBOpenHelper helper = new DBOpenHelper(getActivity());
+//        SQLiteDatabase db = helper.getWritableDatabase();
+//        Cursor c = db.rawQuery("SELECT* FROM blood_sugar_record WHERE _id = ?", new String[]{"33"});
+//        while (c.moveToNext()) {
+//            String name = c.getString(c.getColumnIndex("name"));
+//            int age = c.getInt(c.getColumnIndex("age"));
+//        }
     }
 
     private void setCircularTile(MeterView oneTile, MeterView towTile, int hourOfTheDay) {
@@ -100,6 +111,7 @@ public class MainFragment extends Fragment {
         bloodTipIcon.setImageDrawable(bloodTipIconfontDrawable);
         chevronRightIV = (ImageView) fragment.findViewById(R.id.img_blood_chevron_right);
         chevronRightIV.setImageDrawable(chevronRightDrawable);
+
         /*表盘*/
         meterOne = (MeterView) fragment.findViewById(R.id.meter_one);
         meterTow = (MeterView) fragment.findViewById(R.id.meter_tow);

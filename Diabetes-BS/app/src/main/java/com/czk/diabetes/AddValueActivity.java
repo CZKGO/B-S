@@ -13,7 +13,6 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.czk.diabetes.DB.DBOpenHelper;
 import com.czk.diabetes.util.FontIconDrawable;
@@ -239,14 +238,16 @@ public class AddValueActivity extends BaseActivity {
                             DBOpenHelper helper = new DBOpenHelper(AddValueActivity.this);
                             SQLiteDatabase db = helper.getWritableDatabase();  //得到的是SQLiteDatabase对象
                             StringBuffer sBuffer = new StringBuffer();
-                            sBuffer.append("INSERT INTO blood_sugar_record ");
-                            sBuffer.append("(date,time_slot,value) values (");
+                            sBuffer.append("REPLACE INTO blood_sugar_record ");
+                            sBuffer.append("(_id,date,time_slot,value) values (");
+                            sBuffer.append("'"+tvDate.getText()+tvTimeSlot.getText()+"',");
                             sBuffer.append("'"+tvDate.getText()+"',");
                             sBuffer.append("'"+tvTimeSlot.getText()+"',");
                             sBuffer.append(etValue.getText());
                             sBuffer.append(")");
                             // 执行创建表的SQL语句
                             db.execSQL(sBuffer.toString());
+                            db.close();
                         }else {
                             ToastUtil.showShortToast(AddValueActivity.this
                                     ,getResources().getString(R.string.check_value));

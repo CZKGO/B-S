@@ -1,7 +1,6 @@
 package com.czk.diabetes.DB;
 
 import android.content.Context;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -27,7 +26,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         StringBuffer sBuffer = new StringBuffer();
 
         sBuffer.append("CREATE TABLE [blood_sugar_record] (");
-        sBuffer.append("[_id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ");
+        sBuffer.append("[_id] TEXT PRIMARY KEY, ");
         sBuffer.append("[date] TEXT,");
         sBuffer.append("[time_slot] TEXT,");
         sBuffer.append("[value] REAL)");
