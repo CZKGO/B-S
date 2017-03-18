@@ -4,9 +4,10 @@
     <color name="theme_color">#3f51b5</color>
     <color name="theme_color_light">#c5cae9</color>
 
-    <color name="safe_color">#70AA39</color>
-    <color name="waring_color">#F2A670</color>
-    <color name="eorr_color">#9999ff</color>
+    <color name="low_color">#5677fc</color>
+    <color name="safe_color">#259b24</color>
+    <color name="warning_color">#ffeb3b</color>
+    <color name="eorr_color">#e51c23</color>
     <!-- 背景色 -->
     <color name="background_white">#FFFFFFFF</color>
     <color name="background_white_light">#e1f4ff</color>

@@ -1,7 +1,11 @@
 package com.czk.diabetes;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.czk.diabetes.DB.DBOpenHelper;
 import com.czk.diabetes.signin.SignActivity;
 import com.czk.diabetes.util.FontIconDrawable;
 import com.czk.diabetes.util.TimeUtil;
@@ -19,11 +24,26 @@ import com.czk.diabetes.view.MeterView;
  */
 public class MainFragment extends Fragment {
 
+    private final static int SELECT_DATA_FROM_DB = 0;
     private View fragment;
     private ImageView userIV;
     private long currentTime;
     private MeterView meterOne;
     private MeterView meterTow;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case SELECT_DATA_FROM_DB:
+                    float values[] = (float[]) msg.obj;
+                    if (values.length> 0)
+                        meterOne.setValue(values[0]);
+                    if (values.length > 1)
+                        meterTow.setValue(values[1]);
+                    break;
+            }
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,13 +68,33 @@ public class MainFragment extends Fragment {
     }
 
     private void setValue() {
-//        DBOpenHelper helper = new DBOpenHelper(getActivity());
-//        SQLiteDatabase db = helper.getWritableDatabase();
-//        Cursor c = db.rawQuery("SELECT* FROM blood_sugar_record WHERE _id = ?", new String[]{"33"});
-//        while (c.moveToNext()) {
-//            String name = c.getString(c.getColumnIndex("name"));
-//            int age = c.getInt(c.getColumnIndex("age"));
-//        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DBOpenHelper helper = new DBOpenHelper(getActivity());
+                SQLiteDatabase db = helper.getWritableDatabase();
+                float values[] = new float[2];
+                Cursor c = db.query("blood_sugar_record"
+                        , new String[]{"time_slot", "value"}
+                        , "date=?"
+                        , new String[]{TimeUtil.getYearMonthDay(currentTime)}
+                        , null, null, null);
+                while (c.moveToNext()) {
+                    String timeSlot = c.getString(c.getColumnIndex("time_slot"));
+                    if (timeSlot.equals(meterOne.getTitle()))
+                        values[0] = c.getFloat(c.getColumnIndex("value"));
+                    if (timeSlot.equals(meterTow.getTitle()))
+                        values[1] = c.getFloat(c.getColumnIndex("value"));
+                }
+                Message message = new Message();
+                message.obj = values;
+                message.what = SELECT_DATA_FROM_DB;
+                handler.sendMessage(message);
+                c.close();
+                db.close();
+            }
+        }).start();
+
     }
 
     private void setCircularTile(MeterView oneTile, MeterView towTile, int hourOfTheDay) {
@@ -136,30 +176,30 @@ public class MainFragment extends Fragment {
         meterOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(getActivity(), AddValueActivity.class);
-                intent.putExtra("currentTime",currentTime);
-                intent.putExtra("timeslot",meterOne.getTitle());
+                Intent intent = new Intent(getActivity(), AddValueActivity.class);
+                intent.putExtra("currentTime", currentTime);
+                intent.putExtra("timeslot", meterOne.getTitle());
                 startActivity(intent);
             }
         });
         meterTow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(getActivity(), AddValueActivity.class);
-                intent.putExtra("currentTime",currentTime);
-                intent.putExtra("timeslot",meterTow.getTitle());
+                Intent intent = new Intent(getActivity(), AddValueActivity.class);
+                intent.putExtra("currentTime", currentTime);
+                intent.putExtra("timeslot", meterTow.getTitle());
                 startActivity(intent);
             }
         });
         fragment.findViewById(R.id.blood_sugar_card_title)
                 .setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent =new Intent(getActivity(), AddValueActivity.class);
-                intent.putExtra("currentTime",currentTime);
-                intent.putExtra("timeslot",meterTow.getTitle());
-                startActivity(intent);
-            }
-        });
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getActivity(), AddValueActivity.class);
+                        intent.putExtra("currentTime", currentTime);
+                        intent.putExtra("timeslot", meterTow.getTitle());
+                        startActivity(intent);
+                    }
+                });
     }
 }

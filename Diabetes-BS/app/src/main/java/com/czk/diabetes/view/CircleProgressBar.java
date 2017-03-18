@@ -22,7 +22,8 @@ public class CircleProgressBar extends View {
     private int mProgressBackgroundColor = 0xFFD3D3D5;
     private float mProgressWidth = 8;
     private float mProgressStartAngle = 0;
-    private float progressValue = 50;
+
+    private float value = 50;
     private float MaxProgressValue = 100;
     private RectF mProgressRectF = new RectF();
     private float mCenterX;
@@ -58,7 +59,7 @@ public class CircleProgressBar extends View {
         mProgressBackgroundColor = a.getColor(R.styleable.CircleProgressBar_progress_background_color, 0xFFD3D3D5);
         mProgressWidth = a.getDimension(R.styleable.CircleProgressBar_progress_width, 8);
         mProgressStartAngle = a.getFloat(R.styleable.CircleProgressBar_start_angle, 0);
-        progressValue = a.getFloat(R.styleable.CircleProgressBar_value, 50);
+        value = a.getFloat(R.styleable.CircleProgressBar_value, 50);
         MaxProgressValue = a.getFloat(R.styleable.CircleProgressBar_max_value, 100);
         a.recycle();
     }
@@ -108,14 +109,16 @@ public class CircleProgressBar extends View {
         paint = initProgeessBackgroundPaint(paint);
         canvas.drawArc(mProgressRectF, 0.0f, 360.0f, false, paint);
         paint = initProgeessPaint(paint);
-        canvas.drawArc(mProgressRectF, mProgressStartAngle, 360.0f * getProgress() / getMax(), false, paint);
+        canvas.drawArc(mProgressRectF, mProgressStartAngle, 360.0f * getValue() / getMax(), false, paint);
     }
-    public void setProgress(float progressValue) {
-        this.progressValue = progressValue;
+
+    public float getValue() {
+        return value;
+    }
+
+    public void setValue(float value) {
+        this.value = value;
         invalidate();
-    }
-    public float getProgress() {
-        return progressValue;
     }
 
     public float getMax() {

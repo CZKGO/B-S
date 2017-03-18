@@ -32,6 +32,13 @@
             <enum name="invisble" value="4" />
             <enum name="gone" value="8" />
         </attr>
+        <attr name="color_low" format="color|reference"/>
+        <attr name="color_safe" format="color|reference"/>
+        <attr name="color_warning" format="color|reference"/>
+        <attr name="color_eorr" format="color|reference"/>
+        <attr name="threshold_safe_low" format="float"/>
+        <attr name="threshold_safe_warning" format="float"/>
+        <attr name="threshold_warning_eorr" format="float"/>
     </declare-styleable>
     <declare-styleable name="WheelPicker">
         <attr name="wheel_data" format="reference" />
