@@ -10,8 +10,10 @@ import android.view.ViewGroup;
  * Created by 陈忠凯 on 2017/3/7.
  */
 public class QuestionnaireFragment extends Fragment {
+    private View fragment;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View fragment_mainpage = inflater.inflate(com.czk.diabetes.R.layout.fragment_questionnaire, container, false);
-        return fragment_mainpage;
+        fragment = inflater.inflate(com.czk.diabetes.R.layout.fragment_questionnaire, container, false);
+        return fragment;
     }
 }

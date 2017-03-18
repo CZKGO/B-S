@@ -18,6 +18,7 @@ import java.util.List;
 
 public class MainActivity extends BaseFragmentActivity {
 
+    private final static int START_SETTING = 0;
     private DrawerLayout drawerLayout;
     private ImageView ivIcon;
     private LinearLayout settiongLayout;
@@ -111,7 +112,7 @@ public class MainActivity extends BaseFragmentActivity {
         settiongLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SettingActvity.class));
+                startActivityForResult(new Intent(MainActivity.this, SettingActvity.class), START_SETTING);
             }
         });
 
@@ -200,4 +201,15 @@ public class MainActivity extends BaseFragmentActivity {
         fontDrawable.setTextColor(getResources().getColor(R.color.theme_color));
         imageView.setImageDrawable(fontDrawable);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode) {
+            case START_SETTING:
+                recreate();
+                break;
+        }
+    }
+
 }

@@ -1,6 +1,5 @@
 package com.czk.diabetes.setting;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -8,7 +7,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.czk.diabetes.MainActivity;
 import com.czk.diabetes.R;
 import com.czk.diabetes.util.FontIconDrawable;
 
@@ -54,9 +52,5 @@ public class SettingActvity extends PreferenceActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(SettingActvity.this,
-                MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
     }
 }
