@@ -29,6 +29,36 @@
                 android:padding="8dp"
                 android:translationY="1dp">
 
+                <!--标题-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/pie_chart_icon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/tip_purple_circular_bc"
+                        android:padding="6dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/distribution"
+                        android:textColor="@color/txt_light_color"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:id="@+id/img_blood_chevron_right"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:padding="2dp" />
+                </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -37,10 +67,11 @@
                     android:orientation="horizontal">
 
                     <com.czk.diabetes.view.chart.PieChartView
+                        android:id="@+id/pie_chart"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:paddingRight="4dp" />
+                        android:padding="8dp" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -57,12 +88,12 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/tv_date"
+                                android:id="@+id/txt_waring"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="4dp"
                                 android:singleLine="true"
-                                android:text="2017-03-12"
+                                android:text="@string/warning"
                                 android:textColor="@color/txt_light_color"
                                 android:textSize="16sp" />
 
@@ -72,13 +103,13 @@
                                 android:background="@color/divide_line" />
 
                             <TextView
-                                android:id="@+id/tv_time_slot"
+                                android:id="@+id/txt_low"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="4dp"
                                 android:layout_marginTop="12dp"
                                 android:singleLine="true"
-                                android:text="@string/before_breakfast"
+                                android:text="@string/low"
                                 android:textColor="@color/txt_light_color"
                                 android:textSize="16sp" />
 
@@ -87,31 +118,48 @@
                                 android:layout_height="1dp"
                                 android:background="@color/divide_line" />
 
-
-                            <LinearLayout
-                                android:id="@+id/value_range"
+                            <TextView
+                                android:id="@+id/txt_high"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginRight="4dp"
                                 android:layout_marginTop="12dp"
-                                android:orientation="horizontal">
+                                android:singleLine="true"
+                                android:text="@string/high"
+                                android:textColor="@color/txt_light_color"
+                                android:textSize="16sp" />
 
-                                <EditText
-                                    android:id="@+id/et_value"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:background="@null"
-                                    android:hint="@string/measured_value"
-                                    android:padding="2dp"
-                                    android:singleLine="true"
-                                    android:textSize="16sp" />
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/divide_line" />
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:singleLine="true"
-                                    android:text="mmol/L" />
-                            </LinearLayout>
+                            <TextView
+                                android:id="@+id/txt_fine"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="4dp"
+                                android:layout_marginTop="12dp"
+                                android:singleLine="true"
+                                android:text="@string/fine"
+                                android:textColor="@color/txt_light_color"
+                                android:textSize="16sp" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/divide_line" />
+
+                            <TextView
+                                android:id="@+id/txt_total"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="4dp"
+                                android:layout_marginTop="12dp"
+                                android:singleLine="true"
+                                android:text="@string/total"
+                                android:textColor="@color/txt_light_color"
+                                android:textSize="16sp" />
 
                             <ImageView
                                 android:layout_width="match_parent"
@@ -120,14 +168,6 @@
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:text="@string/safe_range"
-                    android:textColor="@color/txt_light_color"
-                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -143,10 +183,39 @@
                 android:orientation="vertical"
                 android:padding="8dp"
                 android:translationY="1dp">
+                <!--标题-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/line_chart_icon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/tip_purple_circular_bc"
+                        android:padding="6dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/trend"
+                        android:textColor="@color/txt_light_color"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:padding="2dp" />
+                </LinearLayout>
 
                 <com.czk.diabetes.view.chart.LineChartView
                     android:layout_width="match_parent"
-                    android:layout_height="300dp" />
+                    android:layout_height="300dp"
+                    android:padding="8dp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

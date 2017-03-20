@@ -11,10 +11,10 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.czk.diabetes.R;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.czk.diabetes.R;
 
 /**
  * Created by 陈忠凯 on 2017/3/10.
@@ -57,8 +57,8 @@ public class PieChartView extends View {
         a.recycle();
 
         List<DataOfPie> datas = new ArrayList<>();
-        DataOfPie data1 = new DataOfPie(1f, Color.LTGRAY);
-        DataOfPie data2 = new DataOfPie(2f, Color.RED);
+        DataOfPie data1 = new DataOfPie(1f, Color.WHITE);
+        DataOfPie data2 = new DataOfPie(2f, Color.LTGRAY);
         DataOfPie data3 = new DataOfPie(3f, Color.GRAY);
         datas.add(data1);
         datas.add(data2);
@@ -66,10 +66,11 @@ public class PieChartView extends View {
         setDatasAndColors(datas);
     }
 
-    private void setDatasAndColors(List<DataOfPie> datas) {
+    public void setDatasAndColors(List<DataOfPie> datas) {
         this.datas = datas;
+        total = 0;
         for (DataOfPie data : datas) {
-            total = +data.portion;
+            total += data.portion;
         }
     }
 
@@ -77,14 +78,13 @@ public class PieChartView extends View {
     protected synchronized void onDraw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
-
         float sweepAngle = 0;
         float startAngle = this.startAngle;
         for (DataOfPie data : datas) {
             paint.setColor(data.corlor);
             sweepAngle = 360.0f * data.portion / total;
             canvas.drawArc(mPieRectF, startAngle, sweepAngle,true,paint);
-            startAngle = sweepAngle;
+            startAngle = sweepAngle + startAngle;
         }
     }
 
@@ -129,7 +129,7 @@ public class PieChartView extends View {
     }
 
 
-    private class DataOfPie {
+    public static class DataOfPie {
         float portion;
         int corlor;
 
