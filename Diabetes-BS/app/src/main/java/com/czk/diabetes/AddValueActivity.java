@@ -242,7 +242,7 @@ public class AddValueActivity extends BaseActivity {
                             sBuffer.append("(_id,date,time_slot,value) values (");
                             sBuffer.append("'"+tvDate.getText()+tvTimeSlot.getText()+"',");
                             sBuffer.append("'"+tvDate.getText()+"',");
-                            sBuffer.append("'"+tvTimeSlot.getText()+"',");
+                            sBuffer.append(timeSlots.indexOf(tvTimeSlot.getText().toString())+",");
                             sBuffer.append(etValue.getText());
                             sBuffer.append(")");
                             // 执行创建表的SQL语句

@@ -28,7 +28,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         sBuffer.append("CREATE TABLE [blood_sugar_record] (");
         sBuffer.append("[_id] TEXT PRIMARY KEY, ");
         sBuffer.append("[date] TEXT,");
-        sBuffer.append("[time_slot] TEXT,");
+        sBuffer.append("[time_slot] INTEGER,");
         sBuffer.append("[value] REAL)");
 
         // 执行创建表的SQL语句

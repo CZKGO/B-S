@@ -15,12 +15,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.czk.diabetes.DB.DBOpenHelper;
-import com.czk.diabetes.data.BloodSugarLevel;
+import com.czk.diabetes.data.ConfigureData;
 import com.czk.diabetes.util.FontIconDrawable;
+import com.czk.diabetes.util.TimeUtil;
+import com.czk.diabetes.view.chart.LineChartView;
 import com.czk.diabetes.view.chart.PieChartView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 陈忠凯 on 2017/3/7.
@@ -34,6 +38,7 @@ public class QuestionnaireFragment extends Fragment {
             super.handleMessage(msg);
             switch (msg.what) {
                 case SELECT_FINSH:
+                    //饼状图
                     List<PieChartView.DataOfPie> datasOfPie = new ArrayList<>();
                     PieChartView.DataOfPie dataLow = new PieChartView.DataOfPie(pieData.low, getResources().getColor(R.color.low_color));
                     datasOfPie.add(dataLow);
@@ -50,12 +55,28 @@ public class QuestionnaireFragment extends Fragment {
                     tvTotal.setText(Html.fromHtml(String.format(getResources().getString(R.string.total), pieData.total)));
                     pieChart.setDatasAndColors(datasOfPie);
                     pieChart.invalidate();
+                    //折线图
+                    lineChart.setLineColor(getResources().getColor(R.color.theme_color));
+                    lineChart.setXSystemPionts(0, 8, 8);
+                    lineChart.setYSystemPionts(ConfigureData.MIN_VALUE, ConfigureData.MAX_VALUE, (int) ConfigureData.MAX_VALUE);
+                    float[] values = lineDataMap.get(TimeUtil.getYearMonthDay(System.currentTimeMillis())).values;
+                    List<LineChartView.UserPoint> userPoints = new ArrayList<>();
+                    for (int i = 0; i < values.length; i++) {
+                        if (values[i] != -1) {
+                            LineChartView.UserPoint userPoint = new LineChartView.UserPoint(i, values[i]);
+                            userPoints.add(userPoint);
+                        }
+                    }
+                    lineChart.setUserPionts(userPoints);
+                    lineChart.invalidate();
                     break;
             }
         }
     };
     private PieData pieData;
+    private Map<String, LineData> lineDataMap;
     private PieChartView pieChart;
+    private LineChartView lineChart;
     private TextView tvLow;
     private TextView tvHigh;
     private TextView tvSafe;
@@ -108,6 +129,7 @@ public class QuestionnaireFragment extends Fragment {
         FontIconDrawable lineChartIconDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_stats_dots);
         lineChartIconDrawable.setTextColor(getResources().getColor(R.color.background_white));
         lineChartIconIV.setImageDrawable(lineChartIconDrawable);
+        lineChart = (LineChartView) fragment.findViewById(R.id.line_chart);
 
         /**************************************************
          * 对照                                           *
@@ -136,20 +158,30 @@ public class QuestionnaireFragment extends Fragment {
                         , null
                         , null, null, null);
                 pieData = new PieData();
+                lineDataMap = new HashMap();
                 while (c.moveToNext()) {
                     BloodSugarData data = new BloodSugarData(
                             c.getString(c.getColumnIndex("date")),
-                            c.getString(c.getColumnIndex("time_slot")),
+                            c.getInt(c.getColumnIndex("time_slot")),
                             c.getFloat(c.getColumnIndex("value")));
+                    //饼状图数据
                     pieData.total = pieData.total + 1;
-                    if (data.value < BloodSugarLevel.THRESHOLD_LOW_SAFE) {
+                    if (data.value < ConfigureData.THRESHOLD_LOW_SAFE) {
                         pieData.low = pieData.low + 1;
-                    } else if (data.value < BloodSugarLevel.THRESHOLD_SAFE_HIGH) {
+                    } else if (data.value < ConfigureData.THRESHOLD_SAFE_HIGH) {
                         pieData.safe = pieData.safe + 1;
-                    } else if (data.value < BloodSugarLevel.THRESHOLD_HIGH_WARING) {
+                    } else if (data.value < ConfigureData.THRESHOLD_HIGH_WARING) {
                         pieData.high = pieData.high + 1;
                     } else {
                         pieData.waring = pieData.waring + 1;
+                    }
+                    //折线图数据
+                    if (lineDataMap.containsKey(data.date)) {
+                        lineDataMap.get(data.date).values[data.timeSlot] = data.value;
+                    } else {
+                        LineData lineData = new LineData();
+                        lineData.values[data.timeSlot] = data.value;
+                        lineDataMap.put(data.date, lineData);
                     }
                 }
                 handler.sendEmptyMessage(SELECT_FINSH);
@@ -162,10 +194,10 @@ public class QuestionnaireFragment extends Fragment {
 
     private class BloodSugarData {
         private final String date;
-        private final String timeSlot;
+        private final int timeSlot;
         private final float value;
 
-        public BloodSugarData(String date, String timeSlot, float value) {
+        public BloodSugarData(String date, int timeSlot, float value) {
             this.date = date;
             this.timeSlot = timeSlot;
             this.value = value;
@@ -178,5 +210,9 @@ public class QuestionnaireFragment extends Fragment {
         public int high;
         public int waring;
         public int total;
+    }
+
+    private class LineData {
+        public float[] values = new float[]{-1, -1, -1, -1, -1, -1, -1, -1};
     }
 }

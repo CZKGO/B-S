@@ -19,6 +19,9 @@ import com.czk.diabetes.util.FontIconDrawable;
 import com.czk.diabetes.util.TimeUtil;
 import com.czk.diabetes.view.MeterView;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by 陈忠凯 on 2017/3/7.
  */
@@ -30,6 +33,7 @@ public class MainFragment extends Fragment {
     private long currentTime;
     private MeterView meterOne;
     private MeterView meterTow;
+    private List<String> timeSlots;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -54,8 +58,13 @@ public class MainFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        initData();
         initView();
         dealEvent();
+    }
+
+    private void initData() {
+        timeSlots = Arrays.asList(getResources().getStringArray(R.array.time_slots));
     }
 
     @Override
@@ -80,10 +89,10 @@ public class MainFragment extends Fragment {
                         , new String[]{TimeUtil.getYearMonthDay(currentTime)}
                         , null, null, null);
                 while (c.moveToNext()) {
-                    String timeSlot = c.getString(c.getColumnIndex("time_slot"));
-                    if (timeSlot.equals(meterOne.getTitle()))
+                    int timeSlot = c.getInt(c.getColumnIndex("time_slot"));
+                    if (timeSlot == timeSlots.indexOf(meterOne.getTitle()))
                         values[0] = c.getFloat(c.getColumnIndex("value"));
-                    if (timeSlot.equals(meterTow.getTitle()))
+                    if (timeSlot == timeSlots.indexOf(meterTow.getTitle()))
                         values[1] = c.getFloat(c.getColumnIndex("value"));
                 }
                 Message message = new Message();

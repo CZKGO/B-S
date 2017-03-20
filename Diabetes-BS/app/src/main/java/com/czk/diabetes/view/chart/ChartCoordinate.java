@@ -32,16 +32,19 @@ public class ChartCoordinate extends View {
      */
     private List<Float> ySystemPionts;
 
-    protected float mChartHeight;
-    protected float mChartWidth;
+    //图表的起始终止位置
+    protected float xStart;
+    protected float yStart;
+    protected float yEnd;
+    protected float xEnd;
     /**
      * x坐标系的起始点和结束点
      */
-    private float minX, maxX;
+    protected float minX, maxX;
     /**
      * y坐标系的起始点和结束点
      */
-    private float minY, maxY;
+    protected float minY, maxY;
 
     public ChartCoordinate(Context context) {
         super(context);
@@ -80,7 +83,7 @@ public class ChartCoordinate extends View {
      * @param endValue   结束坐标
      * @param number     坐标个数
      */
-    private void setXSystemPionts(float startValue, float endValue, int number) {
+    public void setXSystemPionts(float startValue, float endValue, int number) {
         ArrayList<Float> systemPionts = new ArrayList<>();
         for (int i = 0; i < number; i++) {
             systemPionts.add(startValue + (endValue - startValue) / (number - 1) * i);
@@ -95,7 +98,7 @@ public class ChartCoordinate extends View {
      * @param endValue   结束坐标
      * @param number     坐标个数
      */
-    private void setYSystemPionts(float startValue, float endValue, int number) {
+    public void setYSystemPionts(float startValue, float endValue, int number) {
         ArrayList<Float> systemPionts = new ArrayList<>();
         for (int i = 0; i < number; i++) {
             systemPionts.add(startValue + (endValue - startValue) / (number - 1) * i);
@@ -120,9 +123,11 @@ public class ChartCoordinate extends View {
      * @param ySystemPionts
      */
     private void setYSystemPionts(ArrayList<Float> ySystemPionts) {
-        this.ySystemPionts = ySystemPionts;
-        minY = ySystemPionts.get(0);
-        maxY = ySystemPionts.get(ySystemPionts.size() - 1);
+        if (ySystemPionts.size() > 0) {
+            this.ySystemPionts = ySystemPionts;
+            minY = ySystemPionts.get(0);
+            maxY = ySystemPionts.get(ySystemPionts.size() - 1);
+        }
     }
 
     /**
@@ -145,21 +150,12 @@ public class ChartCoordinate extends View {
 
     private void drawYSystem(Canvas canvas, Paint paint) {
         paint = initPaint(paint, mYLineWidth, mYLineColor);
-        float startX = mYLineWidth / 2 + getPaddingLeft();
-        float startY = mXLineWidth / 2 + getPaddingTop();
-        float stopX = mYLineWidth / 2 + getPaddingLeft();
-        float stopY = mChartHeight;
-        canvas.drawLine(startX, startY, stopX, stopY, paint);
+        canvas.drawLine(xStart, yStart, xStart, yEnd, paint);
     }
 
     private void drawXSystem(Canvas canvas, Paint paint) {
         paint = initPaint(paint, mXLineWidth, mXLineColor);
-        float startX = getPaddingLeft();
-        float startY = mChartHeight;
-        float stopX = mChartWidth;
-        float stopY = mChartHeight;
-        canvas.drawLine(startX, startY, stopX, stopY, paint);
-        canvas.drawLine(startX, startY, stopX, stopY, paint);
+        canvas.drawLine(xStart, yEnd, xEnd, yEnd, paint);
     }
 
     @Override
@@ -188,8 +184,10 @@ public class ChartCoordinate extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        mChartWidth = w - mXLineWidth - getPaddingRight();
-        mChartHeight = h - mYLineWidth - getPaddingBottom();
+        xStart = mXLineWidth / 2 + getPaddingLeft();
+        yStart = mYLineWidth / 2 + getPaddingTop();
+        xEnd = w - mXLineWidth / 2 - getPaddingRight();
+        yEnd = h - mYLineWidth / 2 - getPaddingBottom();
     }
 
 }

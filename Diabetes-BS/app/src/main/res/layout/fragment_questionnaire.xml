@@ -210,10 +210,14 @@
                         android:padding="2dp" />
                 </LinearLayout>
 
-                <com.czk.diabetes.view.chart.LineChartView
+                <com.czk.diabetes.view.chart.LineChartView xmlns:lc="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/line_chart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp" />
+                    android:padding="8dp"
+                    lc:line_width="2dp"
+                    lc:xline_width="1dp"
+                    lc:yline_width="1dp" />
 
             </LinearLayout>
 

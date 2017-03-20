@@ -34,15 +34,6 @@ public class LineChartView extends ChartCoordinate {
      */
     private List<UserPoint> userPionts;
 
-    /**
-     * x坐标系的起始点和结束点
-     */
-    private float minX, maxX;
-    /**
-     * y坐标系的起始点和结束点
-     */
-    private float minY, maxY;
-
     public LineChartView(Context context) {
         super(context);
         initAttributes(context, null);
@@ -85,61 +76,9 @@ public class LineChartView extends ChartCoordinate {
     }
 
     /**
-     * 设置等分的x坐标轴
-     *
-     * @param startValue 开始坐标
-     * @param endValue   结束坐标
-     * @param number     坐标个数
-     */
-    private void setXSystemPionts(float startValue, float endValue, int number) {
-        ArrayList<Float> systemPionts = new ArrayList<>();
-        for (int i = 0; i < number; i++) {
-            systemPionts.add(startValue + (endValue - startValue) / (number - 1) * i);
-        }
-        setXSystemPionts(systemPionts);
-    }
-
-    /**
-     * 设置等分的y坐标轴
-     *
-     * @param startValue 开始坐标
-     * @param endValue   结束坐标
-     * @param number     坐标个数
-     */
-    private void setYSystemPionts(float startValue, float endValue, int number) {
-        ArrayList<Float> systemPionts = new ArrayList<>();
-        for (int i = 0; i < number; i++) {
-            systemPionts.add(startValue + (endValue - startValue) / (number - 1) * i);
-        }
-        setYSystemPionts(systemPionts);
-    }
-
-    /**
-     * 设置x坐标轴
-     *
-     * @param xSystemPionts
-     */
-    private void setXSystemPionts(ArrayList<Float> xSystemPionts) {
-        this.xSystemPionts = xSystemPionts;
-        minX = xSystemPionts.get(0);
-        maxX = xSystemPionts.get(xSystemPionts.size() - 1);
-    }
-
-    /**
-     * 设置y坐标轴
-     *
-     * @param ySystemPionts
-     */
-    private void setYSystemPionts(ArrayList<Float> ySystemPionts) {
-        this.ySystemPionts = ySystemPionts;
-        minY = ySystemPionts.get(0);
-        maxY = ySystemPionts.get(ySystemPionts.size() - 1);
-    }
-
-    /**
      * @param userPionts
      */
-    private void setUserPionts(List<UserPoint> userPionts) {
+    public void setUserPionts(List<UserPoint> userPionts) {
         this.userPionts = userPionts;
     }
 
@@ -159,16 +98,17 @@ public class LineChartView extends ChartCoordinate {
         super.onDraw(canvas);
         Paint paint = new Paint();
         paint.setAntiAlias(true);
+        paint.setStrokeCap(Paint.Cap.ROUND);
         drawPointLine(canvas, paint);
     }
 
     private void drawPointLine(Canvas canvas, Paint paint) {
         paint = initPaint(paint, mLineWidth, mLineColor);
         for (int i = 1; i < userPionts.size(); i++) {
-            canvas.drawLine((userPionts.get(i - 1).x - minX) / (maxX - minX) * mChartHeight,
-                    (userPionts.get(i - 1).y - minY) / (maxY - minY) * mChartWidth,
-                    (userPionts.get(i).x - minX) / (maxX - minX) * mChartHeight,
-                    (userPionts.get(i).y - minY) / (maxY - minY) * mChartWidth,
+            canvas.drawLine((userPionts.get(i - 1).x - minX) / (maxX - minX) * (xEnd - xStart) + xStart,
+                    yEnd - (userPionts.get(i - 1).y - minY) / (maxY - minY) * (yEnd - yStart),
+                    (userPionts.get(i).x - minX) / (maxX - minX) * (xEnd - xStart) + xStart,
+                    yEnd - (userPionts.get(i).y - minY) / (maxY - minY) * (yEnd - yStart),
                     paint);
         }
 
@@ -198,7 +138,11 @@ public class LineChartView extends ChartCoordinate {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
-    private class UserPoint {
+    public void setLineColor(int lineColor) {
+        this.mLineColor = lineColor;
+    }
+
+    public static class UserPoint {
         float x;
         float y;
 
