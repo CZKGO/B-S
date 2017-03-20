@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class PieChartView extends View {
 
-    private float startAngle = 0;
+    private float startAngle = 90;
     private List<DataOfPie> datas;
     private float total;
     private RectF mPieRectF = new RectF();
@@ -53,12 +53,12 @@ public class PieChartView extends View {
 
     private void init(Context context, AttributeSet attrs) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PieChartView);
-        startAngle = a.getFloat(R.styleable.PieChartView_start_angle, 0);
+        startAngle = a.getFloat(R.styleable.PieChartView_start_angle, 90);
         a.recycle();
 
         List<DataOfPie> datas = new ArrayList<>();
         DataOfPie data1 = new DataOfPie(1f, Color.WHITE);
-        DataOfPie data2 = new DataOfPie(2f, Color.LTGRAY);
+        DataOfPie data2 = new DataOfPie(3f, Color.LTGRAY);
         DataOfPie data3 = new DataOfPie(3f, Color.GRAY);
         datas.add(data1);
         datas.add(data2);

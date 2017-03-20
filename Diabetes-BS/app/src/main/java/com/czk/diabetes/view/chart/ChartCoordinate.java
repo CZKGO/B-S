@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.View;
 
 import com.czk.diabetes.R;
 
@@ -15,12 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by xuezaishao on 2017/3/9.
+ * Created by 陈忠凯 on 2017/3/20.
  */
-
-public class LineChartView extends ChartCoordinate {
-    private int mLineColor;
-    private float mLineWidth;
+public class ChartCoordinate extends View {
+    private int mXLineColor;
+    private int mYLineColor;
+    private float mXLineWidth;
+    private float mYLineWidth;
     /**
      * x轴的坐标点
      */
@@ -29,11 +31,9 @@ public class LineChartView extends ChartCoordinate {
      * y轴的坐标点
      */
     private List<Float> ySystemPionts;
-    /**
-     * 需要绘制的坐标点
-     */
-    private List<UserPoint> userPionts;
 
+    protected float mChartHeight;
+    protected float mChartWidth;
     /**
      * x坐标系的起始点和结束点
      */
@@ -43,45 +43,34 @@ public class LineChartView extends ChartCoordinate {
      */
     private float minY, maxY;
 
-    public LineChartView(Context context) {
+    public ChartCoordinate(Context context) {
         super(context);
         initAttributes(context, null);
     }
 
-    public LineChartView(Context context, AttributeSet attrs) {
+    public ChartCoordinate(Context context, AttributeSet attrs) {
         super(context, attrs);
         initAttributes(context, attrs);
     }
 
-    public LineChartView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ChartCoordinate(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initAttributes(context, attrs);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public LineChartView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public ChartCoordinate(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initAttributes(context, attrs);
     }
 
     private void initAttributes(Context context, AttributeSet attrs) {
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LineChartView);
-        mLineColor = a.getColor(R.styleable.LineChartView_line_color, Color.LTGRAY);
-        mLineWidth = a.getDimension(R.styleable.LineChartView_line_width, 8);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ChartCoordinate);
+        mXLineColor = a.getColor(R.styleable.ChartCoordinate_xline_color, Color.LTGRAY);
+        mYLineColor = a.getColor(R.styleable.ChartCoordinate_yline_color, Color.LTGRAY);
+        mXLineWidth = a.getDimension(R.styleable.ChartCoordinate_xline_width, 8);
+        mYLineWidth = a.getDimension(R.styleable.ChartCoordinate_yline_width, 8);
         a.recycle();
-
-        setXSystemPionts(0, 5, 6);
-        setYSystemPionts(0, 5, 6);
-        List<UserPoint> userPionts = new ArrayList<>();
-        UserPoint point = new UserPoint(1f, 4f);
-        UserPoint point2 = new UserPoint(2f, 2f);
-        UserPoint point3 = new UserPoint(3f, 4f);
-        UserPoint point4 = new UserPoint(4f, 2f);
-        userPionts.add(point);
-        userPionts.add(point2);
-        userPionts.add(point3);
-        userPionts.add(point4);
-        setUserPionts(userPionts);
     }
 
     /**
@@ -137,14 +126,6 @@ public class LineChartView extends ChartCoordinate {
     }
 
     /**
-     * @param userPionts
-     */
-    private void setUserPionts(List<UserPoint> userPionts) {
-        this.userPionts = userPionts;
-    }
-
-
-    /**
      * Paint initialization
      */
     private Paint initPaint(Paint paint, float width, int color) {
@@ -156,24 +137,30 @@ public class LineChartView extends ChartCoordinate {
 
     @Override
     protected synchronized void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
         Paint paint = new Paint();
         paint.setAntiAlias(true);
-        drawPointLine(canvas, paint);
+        drawXSystem(canvas, paint);
+        drawYSystem(canvas, paint);
     }
 
-    private void drawPointLine(Canvas canvas, Paint paint) {
-        paint = initPaint(paint, mLineWidth, mLineColor);
-        for (int i = 1; i < userPionts.size(); i++) {
-            canvas.drawLine((userPionts.get(i - 1).x - minX) / (maxX - minX) * mChartHeight,
-                    (userPionts.get(i - 1).y - minY) / (maxY - minY) * mChartWidth,
-                    (userPionts.get(i).x - minX) / (maxX - minX) * mChartHeight,
-                    (userPionts.get(i).y - minY) / (maxY - minY) * mChartWidth,
-                    paint);
-        }
-
+    private void drawYSystem(Canvas canvas, Paint paint) {
+        paint = initPaint(paint, mYLineWidth, mYLineColor);
+        float startX = mYLineWidth / 2 + getPaddingLeft();
+        float startY = mXLineWidth / 2 + getPaddingTop();
+        float stopX = mYLineWidth / 2 + getPaddingLeft();
+        float stopY = mChartHeight;
+        canvas.drawLine(startX, startY, stopX, stopY, paint);
     }
 
+    private void drawXSystem(Canvas canvas, Paint paint) {
+        paint = initPaint(paint, mXLineWidth, mXLineColor);
+        float startX = getPaddingLeft();
+        float startY = mChartHeight;
+        float stopX = mChartWidth;
+        float stopY = mChartHeight;
+        canvas.drawLine(startX, startY, stopX, stopY, paint);
+        canvas.drawLine(startX, startY, stopX, stopY, paint);
+    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -198,13 +185,11 @@ public class LineChartView extends ChartCoordinate {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
-    private class UserPoint {
-        float x;
-        float y;
-
-        public UserPoint(float x, float y) {
-            this.x = x;
-            this.y = y;
-        }
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        mChartWidth = w - mXLineWidth - getPaddingRight();
+        mChartHeight = h - mYLineWidth - getPaddingBottom();
     }
+
 }

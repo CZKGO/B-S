@@ -31,4 +31,5 @@
     <string name="fine">Fine: %1$s</string>
     <string name="total">Total: %1$s</string>
     <string name="warning">Warning: %1$s</string>
+    <string name="compare">Compare</string>
 </resources>

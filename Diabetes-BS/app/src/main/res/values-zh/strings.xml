@@ -25,6 +25,7 @@
     <string name="check_value">请检查你的测量值!</string>
     <string name="distribution">分布</string>
     <string name="trend">趋势</string>
+    <string name="compare">对照</string>
     <string name="low">过低：%1$s</string>
     <string name="high">过高：%1$s</string>
     <string name="fine">良好：%1$s</string>

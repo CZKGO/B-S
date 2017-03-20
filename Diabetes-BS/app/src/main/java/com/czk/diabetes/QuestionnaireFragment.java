@@ -113,10 +113,10 @@ public class QuestionnaireFragment extends Fragment {
          * 对照                                           *
          **************************************************/
         //标题
-//        ImageView pieChartIconIV = (ImageView) fragment.findViewById(R.id.pie_chart_icon);
-//        FontIconDrawable pieChartIconDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_pie_chart);
-//        pieChartIconDrawable.setTextColor(getResources().getColor(R.color.background_white));
-//        pieChartIconIV.setImageDrawable(pieChartIconDrawable);
+        ImageView barChartIconIV = (ImageView) fragment.findViewById(R.id.bar_chart_icon);
+        FontIconDrawable barChartIconDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_stats_bars);
+        barChartIconDrawable.setTextColor(getResources().getColor(R.color.background_white));
+        barChartIconIV.setImageDrawable(barChartIconDrawable);
 
     }
 

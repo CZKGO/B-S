@@ -13,13 +13,15 @@
     <declare-styleable name="PieChartView">
         <attr name="start_angle" />
     </declare-styleable>
-    <declare-styleable name="LineChartView">
-        <attr name="line_color" format="color|reference" />
+    <declare-styleable name="ChartCoordinate">
         <attr name="xline_color" format="color|reference" />
         <attr name="yline_color" format="color|reference" />
-        <attr name="line_width" format="dimension|reference" />
         <attr name="xline_width" format="dimension|reference" />
         <attr name="yline_width" format="dimension|reference" />
+    </declare-styleable>
+    <declare-styleable name="LineChartView">
+        <attr name="line_color" format="color|reference" />
+        <attr name="line_width" format="dimension|reference" />
     </declare-styleable>
     <declare-styleable name="MeterView">
         <attr name="title_visible">
@@ -32,13 +34,13 @@
             <enum name="invisble" value="4" />
             <enum name="gone" value="8" />
         </attr>
-        <attr name="color_low" format="color|reference"/>
-        <attr name="color_safe" format="color|reference"/>
-        <attr name="color_warning" format="color|reference"/>
-        <attr name="color_eorr" format="color|reference"/>
-        <attr name="threshold_safe_low" format="float"/>
-        <attr name="threshold_safe_warning" format="float"/>
-        <attr name="threshold_warning_eorr" format="float"/>
+        <attr name="color_low" format="color|reference" />
+        <attr name="color_safe" format="color|reference" />
+        <attr name="color_warning" format="color|reference" />
+        <attr name="color_eorr" format="color|reference" />
+        <attr name="threshold_safe_low" format="float" />
+        <attr name="threshold_safe_warning" format="float" />
+        <attr name="threshold_warning_eorr" format="float" />
     </declare-styleable>
     <declare-styleable name="WheelPicker">
         <attr name="wheel_data" format="reference" />
