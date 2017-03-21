@@ -30,8 +30,17 @@ import java.util.Map;
  * Created by 陈忠凯 on 2017/3/7.
  */
 public class QuestionnaireFragment extends Fragment {
-    private View fragment;
     private final static int SELECT_FINSH = 0;
+    private View fragment;
+    private TextView tvLow;
+    private TextView tvHigh;
+    private TextView tvSafe;
+    private TextView tvTotal;
+    private TextView tvWaring;
+    private PieChartView pieChart;
+    private LineChartView lineChart;
+    private PieData pieData;
+    private Map<String, LineData> lineDataMap;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -39,49 +48,44 @@ public class QuestionnaireFragment extends Fragment {
             switch (msg.what) {
                 case SELECT_FINSH:
                     //饼状图
-                    List<PieChartView.DataOfPie> datasOfPie = new ArrayList<>();
-                    PieChartView.DataOfPie dataLow = new PieChartView.DataOfPie(pieData.low, getResources().getColor(R.color.low_color));
-                    datasOfPie.add(dataLow);
-                    PieChartView.DataOfPie dataSafe = new PieChartView.DataOfPie(pieData.safe, getResources().getColor(R.color.safe_color));
-                    datasOfPie.add(dataSafe);
-                    PieChartView.DataOfPie dataHigh = new PieChartView.DataOfPie(pieData.high, getResources().getColor(R.color.warning_color));
-                    datasOfPie.add(dataHigh);
-                    PieChartView.DataOfPie dataWaring = new PieChartView.DataOfPie(pieData.waring, getResources().getColor(R.color.eorr_color));
-                    datasOfPie.add(dataWaring);
                     tvLow.setText(Html.fromHtml(String.format(getResources().getString(R.string.low), pieData.low)));
                     tvHigh.setText(Html.fromHtml(String.format(getResources().getString(R.string.high), pieData.high)));
                     tvSafe.setText(Html.fromHtml(String.format(getResources().getString(R.string.fine), pieData.safe)));
                     tvWaring.setText(Html.fromHtml(String.format(getResources().getString(R.string.warning), pieData.waring)));
                     tvTotal.setText(Html.fromHtml(String.format(getResources().getString(R.string.total), pieData.total)));
-                    pieChart.setDatasAndColors(datasOfPie);
                     pieChart.invalidate();
-                    //折线图
-                    lineChart.setLineColor(getResources().getColor(R.color.theme_color));
-                    lineChart.setXSystemPionts(0, 8, 8);
-                    lineChart.setYSystemPionts(ConfigureData.MIN_VALUE, ConfigureData.MAX_VALUE, (int) ConfigureData.MAX_VALUE);
-                    float[] values = lineDataMap.get(TimeUtil.getYearMonthDay(System.currentTimeMillis())).values;
-                    List<LineChartView.UserPoint> userPoints = new ArrayList<>();
-                    for (int i = 0; i < values.length; i++) {
-                        if (values[i] != -1) {
-                            LineChartView.UserPoint userPoint = new LineChartView.UserPoint(i, values[i]);
-                            userPoints.add(userPoint);
-                        }
+                    if (pieData.total != 0) {
+                        List<PieChartView.DataOfPie> datasOfPie = new ArrayList<>();
+                        PieChartView.DataOfPie dataLow = new PieChartView.DataOfPie(pieData.low, getResources().getColor(R.color.low_color));
+                        datasOfPie.add(dataLow);
+                        PieChartView.DataOfPie dataSafe = new PieChartView.DataOfPie(pieData.safe, getResources().getColor(R.color.safe_color));
+                        datasOfPie.add(dataSafe);
+                        PieChartView.DataOfPie dataHigh = new PieChartView.DataOfPie(pieData.high, getResources().getColor(R.color.warning_color));
+                        datasOfPie.add(dataHigh);
+                        PieChartView.DataOfPie dataWaring = new PieChartView.DataOfPie(pieData.waring, getResources().getColor(R.color.eorr_color));
+                        datasOfPie.add(dataWaring);
+                        pieChart.setDatasAndColors(datasOfPie);
                     }
-                    lineChart.setUserPionts(userPoints);
-                    lineChart.invalidate();
+                    //折线图
+                    if (null != lineDataMap.get(TimeUtil.getYearMonthDay(System.currentTimeMillis()))) {
+                        lineChart.setLineColor(getResources().getColor(R.color.theme_color));
+                        lineChart.setXSystemPionts(0, 8, 8);
+                        lineChart.setYSystemPionts(ConfigureData.MIN_VALUE, ConfigureData.MAX_VALUE, (int) ConfigureData.MAX_VALUE);
+                        float[] values = lineDataMap.get(TimeUtil.getYearMonthDay(System.currentTimeMillis())).values;
+                        List<LineChartView.UserPoint> userPoints = new ArrayList<>();
+                        for (int i = 0; i < values.length; i++) {
+                            if (values[i] != -1) {
+                                LineChartView.UserPoint userPoint = new LineChartView.UserPoint(i, values[i]);
+                                userPoints.add(userPoint);
+                            }
+                        }
+                        lineChart.setUserPionts(userPoints);
+                        lineChart.invalidate();
+                    }
                     break;
             }
         }
     };
-    private PieData pieData;
-    private Map<String, LineData> lineDataMap;
-    private PieChartView pieChart;
-    private LineChartView lineChart;
-    private TextView tvLow;
-    private TextView tvHigh;
-    private TextView tvSafe;
-    private TextView tvTotal;
-    private TextView tvWaring;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragment = inflater.inflate(com.czk.diabetes.R.layout.fragment_questionnaire, container, false);

@@ -22,6 +22,8 @@
     <declare-styleable name="LineChartView">
         <attr name="line_color" format="color|reference" />
         <attr name="line_width" format="dimension|reference" />
+        <attr name="point_color" format="color|reference" />
+        <attr name="point_radius" format="dimension|reference" />
     </declare-styleable>
     <declare-styleable name="MeterView">
         <attr name="title_visible">

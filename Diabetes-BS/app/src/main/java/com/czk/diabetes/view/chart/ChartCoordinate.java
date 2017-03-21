@@ -31,6 +31,10 @@ public class ChartCoordinate extends View {
      * y轴的坐标点
      */
     private List<Float> ySystemPionts;
+    /**
+     * 需要绘制的坐标点
+     */
+    protected List<UserPoint> userPionts;
 
     //图表的起始终止位置
     protected float xStart;
@@ -74,6 +78,26 @@ public class ChartCoordinate extends View {
         mXLineWidth = a.getDimension(R.styleable.ChartCoordinate_xline_width, 8);
         mYLineWidth = a.getDimension(R.styleable.ChartCoordinate_yline_width, 8);
         a.recycle();
+
+        setXSystemPionts(0, 5, 6);
+        setYSystemPionts(0, 5, 6);
+        List<UserPoint> userPionts = new ArrayList<>();
+        UserPoint point = new UserPoint(1f, 4f);
+        UserPoint point2 = new UserPoint(2f, 2f);
+        UserPoint point3 = new UserPoint(3f, 4f);
+        UserPoint point4 = new UserPoint(4f, 2f);
+        userPionts.add(point);
+        userPionts.add(point2);
+        userPionts.add(point3);
+        userPionts.add(point4);
+        setUserPionts(userPionts);
+    }
+
+    /**
+     * @param userPionts
+     */
+    public void setUserPionts(List<UserPoint> userPionts) {
+        this.userPionts = userPionts;
     }
 
     /**
@@ -190,4 +214,13 @@ public class ChartCoordinate extends View {
         yEnd = h - mYLineWidth / 2 - getPaddingBottom();
     }
 
+    public static class UserPoint {
+        float x;
+        float y;
+
+        public UserPoint(float x, float y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
 }

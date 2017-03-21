@@ -57,12 +57,10 @@ public class PieChartView extends View {
         a.recycle();
 
         List<DataOfPie> datas = new ArrayList<>();
-        DataOfPie data1 = new DataOfPie(1f, Color.WHITE);
-        DataOfPie data2 = new DataOfPie(3f, Color.LTGRAY);
-        DataOfPie data3 = new DataOfPie(3f, Color.GRAY);
+        DataOfPie data1 = new DataOfPie(6f, Color.LTGRAY);
+        DataOfPie data2 = new DataOfPie(1f, Color.GRAY);
         datas.add(data1);
         datas.add(data2);
-        datas.add(data3);
         setDatasAndColors(datas);
     }
 

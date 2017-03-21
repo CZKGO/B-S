@@ -11,9 +11,6 @@ import android.util.AttributeSet;
 
 import com.czk.diabetes.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by xuezaishao on 2017/3/9.
  */
@@ -21,18 +18,8 @@ import java.util.List;
 public class LineChartView extends ChartCoordinate {
     private int mLineColor;
     private float mLineWidth;
-    /**
-     * x轴的坐标点
-     */
-    private List<Float> xSystemPionts;
-    /**
-     * y轴的坐标点
-     */
-    private List<Float> ySystemPionts;
-    /**
-     * 需要绘制的坐标点
-     */
-    private List<UserPoint> userPionts;
+    private float pointRadius;
+    private int pointColor;
 
     public LineChartView(Context context) {
         super(context);
@@ -59,29 +46,11 @@ public class LineChartView extends ChartCoordinate {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LineChartView);
         mLineColor = a.getColor(R.styleable.LineChartView_line_color, Color.LTGRAY);
         mLineWidth = a.getDimension(R.styleable.LineChartView_line_width, 8);
+        pointColor = a.getColor(R.styleable.LineChartView_point_color, Color.LTGRAY);
+        pointRadius = a.getDimension(R.styleable.LineChartView_point_radius, 8);
         a.recycle();
 
-        setXSystemPionts(0, 5, 6);
-        setYSystemPionts(0, 5, 6);
-        List<UserPoint> userPionts = new ArrayList<>();
-        UserPoint point = new UserPoint(1f, 4f);
-        UserPoint point2 = new UserPoint(2f, 2f);
-        UserPoint point3 = new UserPoint(3f, 4f);
-        UserPoint point4 = new UserPoint(4f, 2f);
-        userPionts.add(point);
-        userPionts.add(point2);
-        userPionts.add(point3);
-        userPionts.add(point4);
-        setUserPionts(userPionts);
     }
-
-    /**
-     * @param userPionts
-     */
-    public void setUserPionts(List<UserPoint> userPionts) {
-        this.userPionts = userPionts;
-    }
-
 
     /**
      * Paint initialization
@@ -100,6 +69,7 @@ public class LineChartView extends ChartCoordinate {
         paint.setAntiAlias(true);
         paint.setStrokeCap(Paint.Cap.ROUND);
         drawPointLine(canvas, paint);
+        drawPoint(canvas, paint);
     }
 
     private void drawPointLine(Canvas canvas, Paint paint) {
@@ -109,6 +79,18 @@ public class LineChartView extends ChartCoordinate {
                     yEnd - (userPionts.get(i - 1).y - minY) / (maxY - minY) * (yEnd - yStart),
                     (userPionts.get(i).x - minX) / (maxX - minX) * (xEnd - xStart) + xStart,
                     yEnd - (userPionts.get(i).y - minY) / (maxY - minY) * (yEnd - yStart),
+                    paint);
+        }
+
+    }
+
+    private void drawPoint(Canvas canvas, Paint paint) {
+        paint.setColor(pointColor);
+        paint.setStyle(Paint.Style.FILL);
+        for (int i = 0; i < userPionts.size(); i++) {
+            canvas.drawCircle((userPionts.get(i).x - minX) / (maxX - minX) * (xEnd - xStart) + xStart,
+                    yEnd - (userPionts.get(i).y - minY) / (maxY - minY) * (yEnd - yStart),
+                    pointRadius,
                     paint);
         }
 
@@ -142,13 +124,5 @@ public class LineChartView extends ChartCoordinate {
         this.mLineColor = lineColor;
     }
 
-    public static class UserPoint {
-        float x;
-        float y;
 
-        public UserPoint(float x, float y) {
-            this.x = x;
-            this.y = y;
-        }
-    }
 }
