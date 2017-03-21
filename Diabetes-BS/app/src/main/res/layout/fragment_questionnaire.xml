@@ -66,11 +66,13 @@
                     android:orientation="horizontal">
 
                     <com.czk.diabetes.view.chart.PieChartView
+                        xmlns:pc="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/pie_chart"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:padding="8dp" />
+                        android:padding="8dp"
+                        pc:txt_size="16sp"/>
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -265,6 +267,7 @@
                 </LinearLayout>
 
                 <com.czk.diabetes.view.chart.BarChartView xmlns:bc="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/bar_chart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="8dp"

@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.czk.diabetes.R;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,8 @@ public class PieChartView extends View {
     private float mCenterX;
     private float mCenterY;
     private float mRadius;
+    private int txtColor;
+    private float txtSize;
 
     public PieChartView(Context context) {
         super(context);
@@ -54,11 +57,13 @@ public class PieChartView extends View {
     private void init(Context context, AttributeSet attrs) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PieChartView);
         startAngle = a.getFloat(R.styleable.PieChartView_start_angle, 90);
+        txtColor = a.getColor(R.styleable.PieChartView_txt_color, Color.WHITE);
+        txtSize = a.getDimension(R.styleable.PieChartView_txt_size, 16);
         a.recycle();
 
         List<DataOfPie> datas = new ArrayList<>();
-        DataOfPie data1 = new DataOfPie(6f, Color.LTGRAY);
-        DataOfPie data2 = new DataOfPie(1f, Color.GRAY);
+        DataOfPie data1 = new DataOfPie(6f, Color.LTGRAY,new DecimalFormat("#.0").format(6f/7f*100)+"%");
+        DataOfPie data2 = new DataOfPie(1f, Color.GRAY,new DecimalFormat("#.0").format(1f/7f*100)+"%");
         datas.add(data1);
         datas.add(data2);
         setDatasAndColors(datas);
@@ -81,7 +86,13 @@ public class PieChartView extends View {
         for (DataOfPie data : datas) {
             paint.setColor(data.corlor);
             sweepAngle = 360.0f * data.portion / total;
-            canvas.drawArc(mPieRectF, startAngle, sweepAngle,true,paint);
+            canvas.drawArc(mPieRectF, startAngle, sweepAngle, true, paint);
+            paint.setColor(txtColor);
+            paint.setTextSize(txtSize);
+            canvas.drawText(data.text
+                    , (float) (mPieRectF.centerX()+Math.sin((sweepAngle-startAngle)/180*Math.PI)*mRadius/2)
+                    , (float) (mPieRectF.centerX()+Math.cos((sweepAngle-startAngle)/180*Math.PI)*mRadius/2)
+                    , paint);
             startAngle = sweepAngle + startAngle;
         }
     }
@@ -128,12 +139,14 @@ public class PieChartView extends View {
 
 
     public static class DataOfPie {
+        String text;
         float portion;
         int corlor;
 
-        public DataOfPie(float portion, int corlor) {
+        public DataOfPie(float portion, int corlor, String text) {
             this.portion = portion;
             this.corlor = corlor;
+            this.text = text;
         }
     }
 }

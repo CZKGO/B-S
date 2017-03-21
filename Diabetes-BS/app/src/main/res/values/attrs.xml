@@ -12,6 +12,8 @@
     </declare-styleable>
     <declare-styleable name="PieChartView">
         <attr name="start_angle" />
+        <attr name="txt_color" format="color|reference" />
+        <attr name="txt_size" format="dimension|reference" />
     </declare-styleable>
     <declare-styleable name="ChartCoordinate">
         <attr name="xline_color" format="color|reference" />
@@ -24,6 +26,12 @@
         <attr name="line_width" format="dimension|reference" />
         <attr name="point_color" format="color|reference" />
         <attr name="point_radius" format="dimension|reference" />
+    </declare-styleable>
+    <declare-styleable name="BarChartView">
+        <attr name="bar_one_color" format="color|reference" />
+        <attr name="bar_tow_color" format="color|reference" />
+        <attr name="bar_width" format="dimension|reference" />
+        <attr name="bar_interval" format="dimension|reference" />
     </declare-styleable>
     <declare-styleable name="MeterView">
         <attr name="title_visible">
