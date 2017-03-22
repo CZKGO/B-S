@@ -62,8 +62,8 @@ public class PieChartView extends View {
         a.recycle();
 
         List<DataOfPie> datas = new ArrayList<>();
-        DataOfPie data1 = new DataOfPie(6f, Color.LTGRAY,new DecimalFormat("#.0").format(6f/7f*100)+"%");
-        DataOfPie data2 = new DataOfPie(1f, Color.GRAY,new DecimalFormat("#.0").format(1f/7f*100)+"%");
+        DataOfPie data1 = new DataOfPie(6f, Color.LTGRAY,new DecimalFormat("#").format(6f/7f*100)+"%");
+        DataOfPie data2 = new DataOfPie(1f, Color.GRAY,new DecimalFormat("#").format(1f/7f*100)+"%");
         datas.add(data1);
         datas.add(data2);
         setDatasAndColors(datas);
@@ -89,9 +89,11 @@ public class PieChartView extends View {
             canvas.drawArc(mPieRectF, startAngle, sweepAngle, true, paint);
             paint.setColor(txtColor);
             paint.setTextSize(txtSize);
+            float textWidth = paint.measureText(data.text);
+            double textAngle = (sweepAngle / 2 + startAngle) / 180 * Math.PI;
             canvas.drawText(data.text
-                    , (float) (mPieRectF.centerX()+Math.sin((sweepAngle-startAngle)/180*Math.PI)*mRadius/2)
-                    , (float) (mPieRectF.centerX()+Math.cos((sweepAngle-startAngle)/180*Math.PI)*mRadius/2)
+                    , (float) (mPieRectF.centerX()+Math.cos(textAngle)*mRadius/2-textWidth/2)
+                    , (float) (mPieRectF.centerY()+Math.sin(textAngle)*mRadius/2+txtSize/2)
                     , paint);
             startAngle = sweepAngle + startAngle;
         }

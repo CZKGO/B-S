@@ -59,13 +59,13 @@ public class QuestionnaireFragment extends Fragment {
                     pieChart.invalidate();
                     if (pieData.total != 0) {
                         List<PieChartView.DataOfPie> datasOfPie = new ArrayList<>();
-                        PieChartView.DataOfPie dataLow = new PieChartView.DataOfPie(pieData.low, getResources().getColor(R.color.low_color),new DecimalFormat("#.00").format(pieData.low/pieData.total*100)+"%");
+                        PieChartView.DataOfPie dataLow = new PieChartView.DataOfPie(pieData.low, getResources().getColor(R.color.low_color),new DecimalFormat("#").format((float)pieData.low/(float)pieData.total*100)+"%");
                         datasOfPie.add(dataLow);
-                        PieChartView.DataOfPie dataSafe = new PieChartView.DataOfPie(pieData.safe, getResources().getColor(R.color.safe_color),new DecimalFormat("#.00").format(pieData.safe/pieData.total*100)+"%");
+                        PieChartView.DataOfPie dataSafe = new PieChartView.DataOfPie(pieData.safe, getResources().getColor(R.color.safe_color),new DecimalFormat("#").format((float)pieData.safe/(float)pieData.total*100)+"%");
                         datasOfPie.add(dataSafe);
-                        PieChartView.DataOfPie dataHigh = new PieChartView.DataOfPie(pieData.high, getResources().getColor(R.color.warning_color),new DecimalFormat("#.00").format(pieData.high/pieData.total*100)+"%");
+                        PieChartView.DataOfPie dataHigh = new PieChartView.DataOfPie(pieData.high, getResources().getColor(R.color.warning_color),new DecimalFormat("#").format((float)pieData.high/(float)pieData.total*100)+"%");
                         datasOfPie.add(dataHigh);
-                        PieChartView.DataOfPie dataWaring = new PieChartView.DataOfPie(pieData.waring, getResources().getColor(R.color.eorr_color),new DecimalFormat("#.00").format(pieData.waring/pieData.total*100)+"%");
+                        PieChartView.DataOfPie dataWaring = new PieChartView.DataOfPie(pieData.waring, getResources().getColor(R.color.eorr_color),new DecimalFormat("#").format((float)pieData.waring/(float)pieData.total*100)+"%");
                         datasOfPie.add(dataWaring);
                         pieChart.setDatasAndColors(datasOfPie);
                     }
@@ -85,22 +85,22 @@ public class QuestionnaireFragment extends Fragment {
                         lineChart.setUserPionts(userPoints);
                         lineChart.invalidate();
                     }
-//                    //柱状图
-//                    if (null != lineDataMap.get(TimeUtil.getYearMonthDay(System.currentTimeMillis()))) {
-//                        lineChart.setLineColor(getResources().getColor(R.color.theme_color));
-//                        lineChart.setXSystemPionts(0, 6, 6);
-//                        lineChart.setYSystemPionts(ConfigureData.MIN_VALUE, ConfigureData.MAX_VALUE, (int) ConfigureData.MAX_VALUE);
-//                        float[] values = lineDataMap.get(TimeUtil.getYearMonthDay(System.currentTimeMillis())).values;
-//                        List<LineChartView.UserPoint> userPoints = new ArrayList<>();
-//                        for (int i = 0; i < values.length; i++) {
-//                            if (values[i] != -1) {
-//                                LineChartView.UserPoint userPoint = new LineChartView.UserPoint(i, values[i]);
-//                                userPoints.add(userPoint);
-//                            }
-//                        }
-//                        lineChart.setUserPionts(userPoints);
-//                        lineChart.invalidate();
-//                    }
+                    //柱状图
+                    if (null != lineDataMap.get(TimeUtil.getYearMonthDay(System.currentTimeMillis()))) {
+                        lineChart.setLineColor(getResources().getColor(R.color.theme_color));
+                        lineChart.setXSystemPionts(0, 6, 6);
+                        lineChart.setYSystemPionts(ConfigureData.MIN_VALUE, ConfigureData.MAX_VALUE, (int) ConfigureData.MAX_VALUE);
+                        float[] values = lineDataMap.get(TimeUtil.getYearMonthDay(System.currentTimeMillis())).values;
+                        List<LineChartView.UserPoint> userPoints = new ArrayList<>();
+                        for (int i = 0; i < values.length; i++) {
+                            if (values[i] != -1) {
+                                LineChartView.UserPoint userPoint = new LineChartView.UserPoint(i, values[i]);
+                                userPoints.add(userPoint);
+                            }
+                        }
+                        barChart.setUserPionts(userPoints);
+                        barChart.invalidate();
+                    }
                     break;
             }
         }
