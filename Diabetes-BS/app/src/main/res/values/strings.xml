@@ -16,7 +16,6 @@
     <string name="after_dinner">After dinner</string>
     <string name="sign_in">Sign in</string>
     <string name="user_name">User name</string>
-    <string name="paw">User name</string>
     <string name="password">Password</string>
     <string name="safe_range">Safe range: 4.4-10.0 mmol/L</string>
     <string name="measured_value">Measured value</string>

@@ -57,20 +57,26 @@ public class BarChartView extends ChartCoordinate {
     }
 
     private void drawPointBar(Canvas canvas, Paint paint) {
-        for (int i = 1; i < userPionts.size() / 2; i++) {
+        for (int i = 1; i < userPionts.size() / 2+1; i++) {
             paint.setStrokeWidth(barWidth);
+            paint.setStrokeCap(Paint.Cap.SQUARE);
             paint.setColor(barOneColor);
-            canvas.drawLine((minX + i) / (maxX - minX) * (xEnd - xStart) + xStart - barWidth - barInterval/2,
-                    yEnd - (userPionts.get(i * 2 - 1).y - minY) / (maxY - minY) * (yEnd - yStart),
-                    (minX + i) / (maxX - minX) * (xEnd - xStart) + xStart - barWidth - barInterval/2,
-                    yEnd,
-                    paint);
-            paint.setColor(barTowColor);
-            canvas.drawLine((minX + i) / (maxX - minX) * (xEnd - xStart) + xStart +  barWidth +barInterval/2,
-                    yEnd - (userPionts.get(i * 2).y - minY) / (maxY - minY) * (yEnd - yStart),
-                    (minX + i) / (maxX - minX) * (xEnd - xStart) + xStart +  barWidth +barInterval/2,
-                    yEnd,
-                    paint);
+            if (userPionts.get((i-1) * 2).y != -1) {
+                canvas.drawLine((minX + i) / (maxX - minX) * (xEnd - xStart) + xStart - barWidth - barInterval / 2,
+                        yEnd - (userPionts.get((i-1) * 2).y - minY) / (maxY - minY) * (yEnd - yStart),
+                        (minX + i) / (maxX - minX) * (xEnd - xStart) + xStart - barWidth - barInterval / 2,
+                        yEnd - barWidth / 2,
+                        paint);
+            }
+
+            if (userPionts.get((i-1) * 2+1).y != -1) {
+                paint.setColor(barTowColor);
+                canvas.drawLine((minX + i) / (maxX - minX) * (xEnd - xStart) + xStart + barWidth + barInterval / 2,
+                        yEnd - (userPionts.get((i-1) * 2+1).y - minY) / (maxY - minY) * (yEnd - yStart),
+                        (minX + i) / (maxX - minX) * (xEnd - xStart) + xStart + barWidth + barInterval / 2,
+                        yEnd - barWidth / 2,
+                        paint);
+            }
         }
     }
 }

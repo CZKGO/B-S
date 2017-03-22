@@ -110,7 +110,7 @@ public class ChartCoordinate extends View {
     public void setXSystemPionts(float startValue, float endValue, int number) {
         ArrayList<Float> systemPionts = new ArrayList<>();
         for (int i = 0; i < number; i++) {
-            systemPionts.add(startValue + (endValue - startValue) / (number - 1) * i);
+            systemPionts.add(startValue + (endValue - startValue) / number * i);
         }
         setXSystemPionts(systemPionts);
     }
@@ -125,7 +125,7 @@ public class ChartCoordinate extends View {
     public void setYSystemPionts(float startValue, float endValue, int number) {
         ArrayList<Float> systemPionts = new ArrayList<>();
         for (int i = 0; i < number; i++) {
-            systemPionts.add(startValue + (endValue - startValue) / (number - 1) * i);
+            systemPionts.add(startValue + (endValue - startValue) / number * i);
         }
         setYSystemPionts(systemPionts);
     }

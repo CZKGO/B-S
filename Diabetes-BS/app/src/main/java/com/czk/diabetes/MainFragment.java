@@ -107,22 +107,22 @@ public class MainFragment extends Fragment {
     }
 
     private void setCircularTile(MeterView oneTile, MeterView towTile, int hourOfTheDay) {
-        if (0 < hourOfTheDay && hourOfTheDay <= 6) {
+        if (0 <= hourOfTheDay && hourOfTheDay < 6) {
             oneTile.setTile(getResources().getString(R.string.before_dawn));
             towTile.setTile(getResources().getString(R.string.before_breakfast));
-        } else if (6 < hourOfTheDay && hourOfTheDay <= 8) {
+        } else if (6 <= hourOfTheDay && hourOfTheDay < 8) {
             oneTile.setTile(getResources().getString(R.string.before_breakfast));
             towTile.setTile(getResources().getString(R.string.after_breakfast));
-        } else if (8 < hourOfTheDay && hourOfTheDay <= 11) {
+        } else if (8 <= hourOfTheDay && hourOfTheDay < 11) {
             oneTile.setTile(getResources().getString(R.string.after_breakfast));
             towTile.setTile(getResources().getString(R.string.before_lunch));
-        } else if (11 < hourOfTheDay && hourOfTheDay <= 15) {
+        } else if (11 <= hourOfTheDay && hourOfTheDay < 15) {
             oneTile.setTile(getResources().getString(R.string.before_lunch));
             towTile.setTile(getResources().getString(R.string.after_lunch));
-        } else if (15 < hourOfTheDay && hourOfTheDay <= 17) {
+        } else if (15 <= hourOfTheDay && hourOfTheDay < 17) {
             oneTile.setTile(getResources().getString(R.string.after_lunch));
             towTile.setTile(getResources().getString(R.string.before_dinner));
-        } else if (17 < hourOfTheDay && hourOfTheDay <= 22) {
+        } else if (17 <= hourOfTheDay && hourOfTheDay < 22) {
             oneTile.setTile(getResources().getString(R.string.before_dinner));
             towTile.setTile(getResources().getString(R.string.after_dinner));
         } else {

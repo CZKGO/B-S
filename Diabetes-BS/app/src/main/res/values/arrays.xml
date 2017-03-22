@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="languages">
+    <array name="languages">
         <item>English</item>
         <item>中文</item>
-    </string-array>
-    <string-array name="time_slots">
+    </array>
+    <array name="time_slots">
         <item>@string/before_dawn</item>
         <item>@string/before_breakfast</item>
         <item>@string/after_breakfast</item>
@@ -13,5 +13,5 @@
         <item>@string/before_dinner</item>
         <item>@string/after_dinner</item>
         <item>@string/before_sleep</item>
-    </string-array>
+    </array>
 </resources>
