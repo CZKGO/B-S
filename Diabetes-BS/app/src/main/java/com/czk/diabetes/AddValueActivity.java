@@ -280,16 +280,16 @@ public class AddValueActivity extends BaseActivity {
     private void rotationAnimator(final View view1, final View view2) {
         ObjectAnimator animator = ObjectAnimator.ofFloat(
                 view1,
-                "rotationY",
-                0,
-                90);
+                "alpha",
+                1,
+                0);
         animator.setDuration(300);
         animator.start();
         final ObjectAnimator animator2 = ObjectAnimator.ofFloat(
                 view2,
-                "rotationY",
-                -90,
-                0);
+                "alpha",
+                0,
+                1);
         animator2.setDuration(300);
         animator.addListener(new Animator.AnimatorListener() {
             @Override

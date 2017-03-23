@@ -31,4 +31,13 @@
     <string name="fine">良好：%1$s</string>
     <string name="total">总共：%1$s</string>
     <string name="warning">警告：%1$s</string>
+    <string name="leechdom">药品</string>
+    <string name="diet">饮食</string>
+    <string name="athletics">运动</string>
+    <string name="leechdom_query">药品查询</string>
+    <string name="my_leechdom">我的用药</string>
+    <string name="my_recipes">我的食谱</string>
+    <string name="many_recipes">糖友食谱</string>
+    <string name="my_athletics">我的运动</string>
+    <string name="athletics_details">运动详情</string>
 </resources>

@@ -31,4 +31,13 @@
     <string name="total">Total: %1$s</string>
     <string name="warning">Warning: %1$s</string>
     <string name="compare">Compare</string>
+    <string name="leechdom">Leechdom</string>
+    <string name="diet">Diet</string>
+    <string name="athletics">Athletics</string>
+    <string name="leechdom_query">Leechdom query</string>
+    <string name="my_leechdom">My leechdom</string>
+    <string name="my_recipes">My recipes</string>
+    <string name="many_recipes">Many recipes</string>
+    <string name="my_athletics">My athletics</string>
+    <string name="athletics_details">Athletics details</string>
 </resources>
