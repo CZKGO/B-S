@@ -56,8 +56,8 @@ public class MainActivity extends BaseFragmentActivity {
         QuestionnaireFragment questionnaireFragment = new QuestionnaireFragment();
         ContactFragment contactFragment = new ContactFragment();
         fragments.add(mainFragment);
-        fragments.add(medicineFragment);
         fragments.add(questionnaireFragment);
+        fragments.add(medicineFragment);
         fragments.add(contactFragment);
         adapter = new MainPagerAdapter(getSupportFragmentManager(), fragments);
     }
@@ -74,10 +74,10 @@ public class MainActivity extends BaseFragmentActivity {
         fontDrawable1 = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_home);
         icon_bottom1.setImageDrawable(fontDrawable1);
         icon_bottom2 = (ImageView) findViewById(R.id.icon_bottom2);
-        fontDrawable2 = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_pill);
+        fontDrawable2 = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_clipboard_edit);
         icon_bottom2.setImageDrawable(fontDrawable2);
         icon_bottom3 = (ImageView) findViewById(R.id.icon_bottom3);
-        fontDrawable3 = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_clipboard_edit);
+        fontDrawable3 = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_pill);
         icon_bottom3.setImageDrawable(fontDrawable3);
         icon_bottom4 = (ImageView) findViewById(R.id.icon_bottom4);
         fontDrawable4 = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_bubbles);

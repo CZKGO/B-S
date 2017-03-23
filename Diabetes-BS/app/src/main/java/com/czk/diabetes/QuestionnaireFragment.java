@@ -76,10 +76,12 @@ public class QuestionnaireFragment extends Fragment {
                             PieChartView.DataOfPie dataWaring = new PieChartView.DataOfPie(pieData.waring, getResources().getColor(R.color.eorr_color), new DecimalFormat("#").format((float) pieData.waring / (float) pieData.total * 100) + "%");
                             datasOfPie.add(dataWaring);
                         }
+                        pieChart.setDrawPercentage(true);
                         pieChart.setDatasAndColors(datasOfPie);
                     }
                     //折线图
                     if (null != lineDataMap.get(TimeUtil.getYearMonthDay(System.currentTimeMillis()))) {
+                        lineChart.setPointColor(getResources().getColor(R.color.theme_color));
                         lineChart.setLineColor(getResources().getColor(R.color.theme_color));
                         lineChart.setXSystemPionts(0, 8, 8);
                         lineChart.setYSystemPionts(ConfigureData.MIN_VALUE, ConfigureData.MAX_VALUE, (int) ConfigureData.MAX_VALUE);
@@ -96,6 +98,8 @@ public class QuestionnaireFragment extends Fragment {
                     }
                     //柱状图
                     if (null != lineDataMap.get(TimeUtil.getYearMonthDay(System.currentTimeMillis()))) {
+                        barChart.setBarOneColor(getResources().getColor(R.color.theme_color));
+                        barChart.setBarTowColor(getResources().getColor(R.color.theme_color_light));
                         barChart.setXSystemPionts(0, 6, 6);
                         barChart.setYSystemPionts(ConfigureData.MIN_VALUE, ConfigureData.MAX_VALUE, (int) ConfigureData.MAX_VALUE);
                         float[] values = lineDataMap.get(TimeUtil.getYearMonthDay(System.currentTimeMillis())).values;

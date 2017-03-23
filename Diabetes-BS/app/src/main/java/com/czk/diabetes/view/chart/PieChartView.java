@@ -31,6 +31,7 @@ public class PieChartView extends View {
     private float mRadius;
     private int txtColor;
     private float txtSize;
+    private boolean isDrawPercentage;
 
     public PieChartView(Context context) {
         super(context);
@@ -59,11 +60,12 @@ public class PieChartView extends View {
         startAngle = a.getFloat(R.styleable.PieChartView_start_angle, 90);
         txtColor = a.getColor(R.styleable.PieChartView_txt_color, Color.WHITE);
         txtSize = a.getDimension(R.styleable.PieChartView_txt_size, 16);
+        isDrawPercentage = a.getBoolean(R.styleable.PieChartView_draw_percentage,false);
         a.recycle();
 
         List<DataOfPie> datas = new ArrayList<>();
-        DataOfPie data1 = new DataOfPie(6f, Color.LTGRAY,new DecimalFormat("#").format(6f/7f*100)+"%");
-        DataOfPie data2 = new DataOfPie(1f, Color.GRAY,new DecimalFormat("#").format(1f/7f*100)+"%");
+        DataOfPie data1 = new DataOfPie(6f, Color.LTGRAY, new DecimalFormat("#").format(6f / 7f * 100) + "%");
+        DataOfPie data2 = new DataOfPie(1f, Color.GRAY, new DecimalFormat("#").format(1f / 7f * 100) + "%");
         datas.add(data1);
         datas.add(data2);
         setDatasAndColors(datas);
@@ -77,6 +79,10 @@ public class PieChartView extends View {
         }
     }
 
+    public void setDrawPercentage(boolean drawPercentage) {
+        isDrawPercentage = drawPercentage;
+    }
+
     @Override
     protected synchronized void onDraw(Canvas canvas) {
         Paint paint = new Paint();
@@ -87,16 +93,21 @@ public class PieChartView extends View {
             paint.setColor(data.corlor);
             sweepAngle = 360.0f * data.portion / total;
             canvas.drawArc(mPieRectF, startAngle, sweepAngle, true, paint);
-            paint.setColor(txtColor);
-            paint.setTextSize(txtSize);
-            float textWidth = paint.measureText(data.text);
-            double textAngle = (sweepAngle / 2 + startAngle) / 180 * Math.PI;
-            canvas.drawText(data.text
-                    , (float) (mPieRectF.centerX()+Math.cos(textAngle)*mRadius/2-textWidth/2)
-                    , (float) (mPieRectF.centerY()+Math.sin(textAngle)*mRadius/2+txtSize/2)
-                    , paint);
+            if (isDrawPercentage)
+                drawText(canvas, paint, sweepAngle, startAngle, data);
             startAngle = sweepAngle + startAngle;
         }
+    }
+
+    private void drawText(Canvas canvas, Paint paint, float sweepAngle, float startAngle, DataOfPie data) {
+        paint.setColor(txtColor);
+        paint.setTextSize(txtSize);
+        float textWidth = paint.measureText(data.text);
+        double textAngle = (sweepAngle / 2 + startAngle) / 180 * Math.PI;
+        canvas.drawText(data.text
+                , (float) (mPieRectF.centerX() + Math.cos(textAngle) * mRadius / 2 - textWidth / 2)
+                , (float) (mPieRectF.centerY() + Math.sin(textAngle) * mRadius / 2 + txtSize / 2)
+                , paint);
     }
 
     @Override

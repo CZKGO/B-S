@@ -188,6 +188,7 @@ public class MainFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), AddValueActivity.class);
                 intent.putExtra("currentTime", currentTime);
                 intent.putExtra("timeslot", meterOne.getTitle());
+                intent.putExtra("value", meterOne.getValue());
                 startActivity(intent);
             }
         });
@@ -197,6 +198,7 @@ public class MainFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), AddValueActivity.class);
                 intent.putExtra("currentTime", currentTime);
                 intent.putExtra("timeslot", meterTow.getTitle());
+                intent.putExtra("value", meterTow.getValue());
                 startActivity(intent);
             }
         });
@@ -207,6 +209,7 @@ public class MainFragment extends Fragment {
                         Intent intent = new Intent(getActivity(), AddValueActivity.class);
                         intent.putExtra("currentTime", currentTime);
                         intent.putExtra("timeslot", meterTow.getTitle());
+                        intent.putExtra("value", meterTow.getValue());
                         startActivity(intent);
                     }
                 });

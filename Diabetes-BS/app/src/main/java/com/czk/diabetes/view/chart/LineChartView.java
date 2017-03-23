@@ -19,6 +19,11 @@ public class LineChartView extends ChartCoordinate {
     private int mLineColor;
     private float mLineWidth;
     private float pointRadius;
+
+    public void setPointColor(int pointColor) {
+        this.pointColor = pointColor;
+    }
+
     private int pointColor;
 
     public LineChartView(Context context) {
@@ -75,10 +80,10 @@ public class LineChartView extends ChartCoordinate {
     private void drawPointLine(Canvas canvas, Paint paint) {
         paint = initPaint(paint, mLineWidth, mLineColor);
         for (int i = 1; i < userPionts.size(); i++) {
-            canvas.drawLine((userPionts.get(i - 1).x - minX) / (maxX - minX) * (xEnd - xStart) + xStart,
-                    yEnd - (userPionts.get(i - 1).y - minY) / (maxY - minY) * (yEnd - yStart),
-                    (userPionts.get(i).x - minX) / (maxX - minX) * (xEnd - xStart) + xStart,
-                    yEnd - (userPionts.get(i).y - minY) / (maxY - minY) * (yEnd - yStart),
+            canvas.drawLine(getCoordinateX(userPionts.get(i - 1).x),
+                    getCoordinateY(userPionts.get(i - 1).y),
+                    getCoordinateX(userPionts.get(i).x),
+                    getCoordinateY(userPionts.get(i).y),
                     paint);
         }
 
@@ -88,8 +93,8 @@ public class LineChartView extends ChartCoordinate {
         paint.setColor(pointColor);
         paint.setStyle(Paint.Style.FILL);
         for (int i = 0; i < userPionts.size(); i++) {
-            canvas.drawCircle((userPionts.get(i).x - minX) / (maxX - minX) * (xEnd - xStart) + xStart,
-                    yEnd - (userPionts.get(i).y - minY) / (maxY - minY) * (yEnd - yStart),
+            canvas.drawCircle(getCoordinateX(userPionts.get(i).x),
+                    getCoordinateY(userPionts.get(i).y),
                     pointRadius,
                     paint);
         }
@@ -97,28 +102,7 @@ public class LineChartView extends ChartCoordinate {
     }
 
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-        // 父容器传过来的宽度的值
-        int width = MeasureSpec.getSize(widthMeasureSpec);
-        // 父容器传过来的高度的值
-        int height = MeasureSpec.getSize(heightMeasureSpec);
-        if (width == 0) {
-            width = height;
-        }
-        if (height == 0) {
-            height = width;
-        }
-        if (width > height) {
-            width = height;
-        } else {
-            height = width;
-        }
-        heightMeasureSpec = MeasureSpec.makeMeasureSpec(height,
-                MeasureSpec.EXACTLY);
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
 
     public void setLineColor(int lineColor) {
         this.mLineColor = lineColor;

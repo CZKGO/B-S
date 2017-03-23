@@ -46,6 +46,7 @@ public class AddValueActivity extends BaseActivity {
     private DateWheelPicker dateWheelpicker;
     private String currentTimeSlotTitl;
     private TextView tvNext;
+    private float value;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class AddValueActivity extends BaseActivity {
     private void initData() {
         currentTime = getIntent().getLongExtra("currentTime", System.currentTimeMillis());
         currentTimeSlotTitl = getIntent().getStringExtra("timeslot");
+        value = getIntent().getFloatExtra("value", 0);
         keyBoardType = KeyBoardType.DIGITAL_TYPE;
         timeSlots = Arrays.asList(getResources().getStringArray(R.array.time_slots));
     }
@@ -76,6 +78,15 @@ public class AddValueActivity extends BaseActivity {
         tvTimeSlot = (TextView) findViewById(R.id.tv_time_slot);
         tvTimeSlot.setText(currentTimeSlotTitl);
         etValue = (EditText) findViewById(R.id.et_value);
+        if (value != 0) {
+            meterView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    meterView.setValue(value);
+                    etValue.setText(String.valueOf(value));
+                }
+            },100);
+        }
         viewValue = findViewById(R.id.value_range);
         tvNext = (TextView) findViewById(R.id.button_next);
          /*设置EditText光标可见但不弹出软键盘*/
@@ -117,12 +128,12 @@ public class AddValueActivity extends BaseActivity {
             public void onClick(View v) {
                 if (keyBoardType == KeyBoardType.DIGITAL_TYPE) {
                     keyBoardType = keyBoardType.DATE_TYPE;
-                    rotationAnimator(digitalkeyboard,dateWheelpicker);
+                    rotationAnimator(digitalkeyboard, dateWheelpicker);
                     tvDate.setTextColor(getResources().getColor(R.color.theme_color));
                     etValue.setEnabled(false);
-                }else if (keyBoardType == KeyBoardType.TIME_TYPE) {
+                } else if (keyBoardType == KeyBoardType.TIME_TYPE) {
                     keyBoardType = keyBoardType.DATE_TYPE;
-                    rotationAnimator(wheelpicker,dateWheelpicker);
+                    rotationAnimator(wheelpicker, dateWheelpicker);
                     tvTimeSlot.setTextColor(getResources().getColor(R.color.txt_light_color));
                     tvDate.setTextColor(getResources().getColor(R.color.theme_color));
                     etValue.setEnabled(false);
@@ -134,12 +145,12 @@ public class AddValueActivity extends BaseActivity {
             public void onClick(View v) {
                 if (keyBoardType == KeyBoardType.DIGITAL_TYPE) {
                     keyBoardType = keyBoardType.TIME_TYPE;
-                    rotationAnimator(digitalkeyboard,wheelpicker);
+                    rotationAnimator(digitalkeyboard, wheelpicker);
                     tvTimeSlot.setTextColor(getResources().getColor(R.color.theme_color));
                     etValue.setEnabled(false);
-                }else if (keyBoardType == KeyBoardType.DATE_TYPE) {
+                } else if (keyBoardType == KeyBoardType.DATE_TYPE) {
                     keyBoardType = keyBoardType.TIME_TYPE;
-                    rotationAnimator(dateWheelpicker,wheelpicker);
+                    rotationAnimator(dateWheelpicker, wheelpicker);
                     tvTimeSlot.setTextColor(getResources().getColor(R.color.theme_color));
                     tvDate.setTextColor(getResources().getColor(R.color.txt_light_color));
                     etValue.setEnabled(false);
@@ -152,12 +163,12 @@ public class AddValueActivity extends BaseActivity {
             public void onClick(View v) {
                 if (keyBoardType == KeyBoardType.DATE_TYPE) {
                     keyBoardType = keyBoardType.DIGITAL_TYPE;
-                    rotationAnimator(dateWheelpicker,digitalkeyboard);
+                    rotationAnimator(dateWheelpicker, digitalkeyboard);
                     tvDate.setTextColor(getResources().getColor(R.color.txt_light_color));
                     etValue.setEnabled(true);
-                }else if (keyBoardType == KeyBoardType.TIME_TYPE) {
+                } else if (keyBoardType == KeyBoardType.TIME_TYPE) {
                     keyBoardType = keyBoardType.DIGITAL_TYPE;
-                    rotationAnimator(wheelpicker,digitalkeyboard);
+                    rotationAnimator(wheelpicker, digitalkeyboard);
                     tvTimeSlot.setTextColor(getResources().getColor(R.color.txt_light_color));
                     etValue.setEnabled(true);
                 }
@@ -192,13 +203,13 @@ public class AddValueActivity extends BaseActivity {
                     if (value.length() > 0)
                         value = value.substring(0, value.length() - 1);
                 } else if (-2 == key) {
-                    if (value.length() < 2 && value.length() > 0)
+                    if (!value.contains(".") && value.length() > 0)
                         value = value + ".";
-                } else if (value.length() < 2 || (value.contains(".") && value.length() < 3)) {
+                } else if (value.length() < 2 || (value.contains(".") && value.substring(value.length()-1,value.length()).equals("."))) {
                     value = value + key;
                 }
                 if (value.length() > 0) {
-                    if (Float.parseFloat(value) <= 25) {
+                    if (Float.parseFloat(value) < 25) {
                         etValue.setText(value);
                         etValue.setSelection(value.length());
                     }
@@ -234,23 +245,23 @@ public class AddValueActivity extends BaseActivity {
                     case MotionEvent.ACTION_UP:
                         tvNext.setBackgroundResource(R.drawable.button_state_unpressed);
                         String value = etValue.getText().toString();
-                        if(!value.isEmpty()&&!(value.contains(".") && value.length() < 3)){
+                        if (!value.isEmpty() && !value.substring(value.length()-1,value.length()).equals(".")) {
                             DBOpenHelper helper = new DBOpenHelper(AddValueActivity.this);
                             SQLiteDatabase db = helper.getWritableDatabase();  //得到的是SQLiteDatabase对象
                             StringBuffer sBuffer = new StringBuffer();
                             sBuffer.append("REPLACE INTO blood_sugar_record ");
                             sBuffer.append("(_id,date,time_slot,value) values (");
-                            sBuffer.append("'"+tvDate.getText()+tvTimeSlot.getText()+"',");
-                            sBuffer.append("'"+tvDate.getText()+"',");
-                            sBuffer.append(timeSlots.indexOf(tvTimeSlot.getText().toString())+",");
+                            sBuffer.append("'" + tvDate.getText() + tvTimeSlot.getText() + "',");
+                            sBuffer.append("'" + tvDate.getText() + "',");
+                            sBuffer.append(timeSlots.indexOf(tvTimeSlot.getText().toString()) + ",");
                             sBuffer.append(etValue.getText());
                             sBuffer.append(")");
                             // 执行创建表的SQL语句
                             db.execSQL(sBuffer.toString());
                             db.close();
-                        }else {
+                        } else {
                             ToastUtil.showShortToast(AddValueActivity.this
-                                    ,getResources().getString(R.string.check_value));
+                                    , getResources().getString(R.string.check_value));
                         }
 
                         break;
@@ -262,6 +273,7 @@ public class AddValueActivity extends BaseActivity {
 
     /**
      * 翻转切换view
+     *
      * @param view1
      * @param view2
      */
@@ -324,7 +336,6 @@ public class AddValueActivity extends BaseActivity {
     }
 
 
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -332,6 +343,6 @@ public class AddValueActivity extends BaseActivity {
     }
 
     private enum KeyBoardType {
-        DIGITAL_TYPE,DATE_TYPE,TIME_TYPE
+        DIGITAL_TYPE, DATE_TYPE, TIME_TYPE
     }
 }

@@ -14,12 +14,16 @@
         <attr name="start_angle" />
         <attr name="txt_color" format="color|reference" />
         <attr name="txt_size" format="dimension|reference" />
+        <attr name="draw_percentage" format="boolean" />
     </declare-styleable>
     <declare-styleable name="ChartCoordinate">
         <attr name="xline_color" format="color|reference" />
         <attr name="yline_color" format="color|reference" />
         <attr name="xline_width" format="dimension|reference" />
         <attr name="yline_width" format="dimension|reference" />
+        <attr name="scale_color" format="color|reference" />
+        <attr name="scale_width" format="dimension|reference" />
+        <attr name="scale_length" format="dimension|reference" />
     </declare-styleable>
     <declare-styleable name="LineChartView">
         <attr name="line_color" format="color|reference" />

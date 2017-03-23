@@ -18,6 +18,15 @@ public class BarChartView extends ChartCoordinate {
     private float barWidth;
     private float barInterval;
 
+    public void setBarTowColor(int barTowColor) {
+        this.barTowColor = barTowColor;
+    }
+
+    public void setBarOneColor(int barOneColor) {
+        this.barOneColor = barOneColor;
+    }
+
+
     public BarChartView(Context context) {
         super(context);
         initAttributes(context, null);
@@ -57,26 +66,27 @@ public class BarChartView extends ChartCoordinate {
     }
 
     private void drawPointBar(Canvas canvas, Paint paint) {
-        for (int i = 1; i < userPionts.size() / 2+1; i++) {
+        for (int i = 1; i < userPionts.size() / 2 + 1; i++) {
             paint.setStrokeWidth(barWidth);
             paint.setStrokeCap(Paint.Cap.SQUARE);
             paint.setColor(barOneColor);
-            if (userPionts.get((i-1) * 2).y != -1) {
-                canvas.drawLine((minX + i) / (maxX - minX) * (xEnd - xStart) + xStart - barWidth - barInterval / 2,
-                        yEnd - (userPionts.get((i-1) * 2).y - minY) / (maxY - minY) * (yEnd - yStart),
-                        (minX + i) / (maxX - minX) * (xEnd - xStart) + xStart - barWidth - barInterval / 2,
+            if (userPionts.get((i - 1) * 2).y != -1) {
+                canvas.drawLine(getCoordinateX(i) - barWidth - barInterval / 2,
+                        getCoordinateY(userPionts.get((i - 1) * 2).y),
+                        getCoordinateX(i) - barWidth - barInterval / 2,
                         yEnd - barWidth / 2,
                         paint);
             }
 
-            if (userPionts.get((i-1) * 2+1).y != -1) {
+            if (userPionts.get((i - 1) * 2 + 1).y != -1) {
                 paint.setColor(barTowColor);
-                canvas.drawLine((minX + i) / (maxX - minX) * (xEnd - xStart) + xStart + barWidth + barInterval / 2,
-                        yEnd - (userPionts.get((i-1) * 2+1).y - minY) / (maxY - minY) * (yEnd - yStart),
-                        (minX + i) / (maxX - minX) * (xEnd - xStart) + xStart + barWidth + barInterval / 2,
+                canvas.drawLine(getCoordinateX(i) + barWidth + barInterval / 2,
+                        getCoordinateY(userPionts.get((i - 1) * 2+ 1).y),
+                        getCoordinateX(i) + barWidth + barInterval / 2,
                         yEnd - barWidth / 2,
                         paint);
             }
         }
     }
+
 }

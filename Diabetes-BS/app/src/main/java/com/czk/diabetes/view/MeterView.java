@@ -37,6 +37,7 @@ public class MeterView extends LinearLayout {
     private float thresholdSafeLow;
     private float thresholdSafeWarning;
     private float thresholdWarningError;
+    private float value;
 
 
     public MeterView(Context context) {
@@ -100,6 +101,7 @@ public class MeterView extends LinearLayout {
     }
 
     public void setValue(float value) {
+        this.value = value;
         tvValue.setText(String.valueOf(value));
 //        progressBar.setValue(value);
         ObjectAnimator animator = ObjectAnimator.ofFloat(
@@ -132,5 +134,9 @@ public class MeterView extends LinearLayout {
 
     public String getTitle() {
         return tvTitle.getText().toString();
+    }
+
+    public float getValue() {
+        return value;
     }
 }
