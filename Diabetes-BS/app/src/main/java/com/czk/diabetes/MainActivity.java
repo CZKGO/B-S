@@ -53,10 +53,10 @@ public class MainActivity extends BaseFragmentActivity {
         fragments = new ArrayList<>();
         MainFragment mainFragment = new MainFragment();
         MedicineFragment medicineFragment = new MedicineFragment();
-        QuestionnaireFragment questionnaireFragment = new QuestionnaireFragment();
+        StatisticsFragment statisticsFragment = new StatisticsFragment();
         ContactFragment contactFragment = new ContactFragment();
         fragments.add(mainFragment);
-        fragments.add(questionnaireFragment);
+        fragments.add(statisticsFragment);
         fragments.add(medicineFragment);
         fragments.add(contactFragment);
         adapter = new MainPagerAdapter(getSupportFragmentManager(), fragments);
@@ -197,6 +197,11 @@ public class MainActivity extends BaseFragmentActivity {
         mPager.setCurrentItem(index);
     }
 
+    /**
+     * 设置选中的tab状态
+     * @param fontDrawable
+     * @param imageView
+     */
     private void setTabChose(FontIconDrawable fontDrawable, ImageView imageView) {
         fontDrawable.setTextColor(getResources().getColor(R.color.theme_color));
         imageView.setImageDrawable(fontDrawable);

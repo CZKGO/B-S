@@ -40,4 +40,8 @@
     <string name="many_recipes">糖友食谱</string>
     <string name="my_athletics">我的运动</string>
     <string name="athletics_details">运动详情</string>
+    <string name="name">姓名：%1$s</string>
+    <string name="hospital">医院：%1$s</string>
+    <string name="position">职位：%1$s</string>
+    <string name="feedback">好评率：%1$s</string>
 </resources>

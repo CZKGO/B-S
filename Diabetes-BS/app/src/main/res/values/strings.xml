@@ -40,4 +40,8 @@
     <string name="many_recipes">Many recipes</string>
     <string name="my_athletics">My athletics</string>
     <string name="athletics_details">Athletics details</string>
+    <string name="name">Name: %1$s</string>
+    <string name="hospital">Hospital: %1$s</string>
+    <string name="position">Position: %1$s</string>
+    <string name="feedback">Feedback: %1$s</string>
 </resources>

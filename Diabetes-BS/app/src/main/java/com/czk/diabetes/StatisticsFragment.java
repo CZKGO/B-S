@@ -32,7 +32,7 @@ import java.util.Map;
 /**
  * Created by 陈忠凯 on 2017/3/7.
  */
-public class QuestionnaireFragment extends Fragment {
+public class StatisticsFragment extends Fragment {
     private final static int SELECT_FINSH = 0;
     private View fragment;
     private TextView tvLow;
@@ -120,7 +120,7 @@ public class QuestionnaireFragment extends Fragment {
     };
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        fragment = inflater.inflate(com.czk.diabetes.R.layout.fragment_questionnaire, container, false);
+        fragment = inflater.inflate(com.czk.diabetes.R.layout.fragment_statistics, container, false);
         return fragment;
     }
 
