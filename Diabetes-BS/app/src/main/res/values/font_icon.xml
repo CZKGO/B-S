@@ -22,5 +22,10 @@
     <string name="icon_stats_bars" translatable="false">&#xe99c;</string>
     <string name="icon_plus" translatable="false">&#xea0a;</string>
     <string name="icon_lock_rounded" translatable="false">&#xe905;</string>
-    <!--22-->
+    <string name="icon_directions_run" translatable="false">&#xe906;</string>
+    <string name="icon_spoon_knife" translatable="false">&#xe9a3;</string>
+    <string name="icon_pool" translatable="false">&#xe907;</string>
+    <string name="icon_injection" translatable="false">&#xe908;</string>
+    <string name="icon_room_service" translatable="false">&#xe909;</string>
+    <!--27-->
 </resources>

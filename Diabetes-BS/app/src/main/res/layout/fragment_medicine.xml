@@ -36,6 +36,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/leechdom_icon"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginRight="8dp"
@@ -69,9 +70,9 @@
                         android:gravity="center"
                         android:orientation="vertical">
                         <ImageView
+                            android:id="@+id/leechdom_left_icon"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:background="@drawable/tip_purple_circular_bc"
                             android:padding="6dp"
                             android:layout_marginTop="16dp"
                             android:layout_marginBottom="8dp"/>
@@ -94,7 +95,7 @@
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:layout_marginRight="8dp"
-                            android:background="@drawable/tip_purple_circular_bc"
+                            android:id="@+id/leechdom_right_icon"
                             android:padding="6dp"
                             android:layout_marginTop="16dp"
                             android:layout_marginBottom="8dp"/>
@@ -129,6 +130,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/diet_icon"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginRight="8dp"
@@ -160,9 +162,9 @@
                         android:gravity="center"
                         android:orientation="vertical">
                         <ImageView
+                            android:id="@+id/diet_left_icon"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:background="@drawable/tip_purple_circular_bc"
                             android:padding="6dp"
                             android:layout_marginTop="16dp"
                             android:layout_marginBottom="8dp"/>
@@ -184,7 +186,7 @@
                         <ImageView
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:background="@drawable/tip_purple_circular_bc"
+                            android:id="@+id/diet_right_icon"
                             android:padding="6dp"
                             android:layout_marginTop="16dp"
                             android:layout_marginBottom="8dp"/>
@@ -220,6 +222,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/athletics_icon"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginRight="8dp"
@@ -251,9 +254,9 @@
                         android:gravity="center"
                         android:orientation="vertical">
                         <ImageView
+                            android:id="@+id/athletics_left_icon"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:background="@drawable/tip_purple_circular_bc"
                             android:padding="6dp"
                             android:layout_marginTop="16dp"
                             android:layout_marginBottom="8dp"/>
@@ -275,7 +278,7 @@
                         <ImageView
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:background="@drawable/tip_purple_circular_bc"
+                            android:id="@+id/athletics_right_icon"
                             android:padding="6dp"
                             android:layout_marginTop="16dp"
                             android:layout_marginBottom="8dp"/>
