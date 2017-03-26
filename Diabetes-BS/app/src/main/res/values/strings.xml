@@ -44,4 +44,8 @@
     <string name="hospital">Hospital: %1$s</string>
     <string name="position">Position: %1$s</string>
     <string name="feedback">Feedback: %1$s</string>
+    <string name="years">Years: %1$s</string>
+    <string name="daily_reading">Daily reading: %1$s</string>
+    <string name="tips">Tips: to maintain good habits, adhere to exercise, is an effective means of preventing diabetes.</string>
+    <string name="loading">loading...</string>
 </resources>

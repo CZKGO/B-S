@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.czk.diabetes">
 
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -24,6 +25,8 @@
         <activity android:name=".signin.SignActivity" />
 
         <activity android:name=".AddValueActivity" />
+
+        <activity android:name=".BrowserActivity" />
     </application>
 
 </manifest>

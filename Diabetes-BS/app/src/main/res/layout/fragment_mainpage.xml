@@ -97,7 +97,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="温馨提示：保持良好的生活习惯，坚持运动，是预防糖尿病的有效手段。"
+                        android:text="@string/tips"
                         android:textColor="@color/txt_light_color"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -110,7 +110,8 @@
                     android:background="@color/divide_line" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:id="@+id/daily_reading"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -124,9 +125,10 @@
                         android:padding="6dp" />
 
                     <TextView
+                        android:id="@+id/tv_daily_reading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="每日一读：经济水平决定糖尿病的发病率。"
+                        android:text="@string/daily_reading"
                         android:textColor="@color/txt_light_color"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -136,10 +138,10 @@
                 android:id="@+id/blood_sugar_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
                 android:background="@drawable/card_circular_bead"
                 android:elevation="1dp"
                 android:gravity="center_vertical"

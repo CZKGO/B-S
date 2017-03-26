@@ -8,10 +8,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.czk.diabetes.DB.DBOpenHelper;
 import com.czk.diabetes.signin.SignActivity;
@@ -19,6 +22,11 @@ import com.czk.diabetes.util.FontIconDrawable;
 import com.czk.diabetes.util.TimeUtil;
 import com.czk.diabetes.view.MeterView;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,22 +36,28 @@ import java.util.List;
 public class MainFragment extends Fragment {
 
     private final static int SELECT_DATA_FROM_DB = 0;
+    private final static int GET_TITLE_FINISH = 1;
+    String url;
     private View fragment;
     private ImageView userIV;
     private long currentTime;
     private MeterView meterOne;
     private MeterView meterTow;
     private List<String> timeSlots;
+    private TextView dailyReadTV;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case SELECT_DATA_FROM_DB:
                     float values[] = (float[]) msg.obj;
-                    if (values.length> 0)
+                    if (values.length > 0)
                         meterOne.setValue(values[0]);
                     if (values.length > 1)
                         meterTow.setValue(values[1]);
+                    break;
+                case GET_TITLE_FINISH:
+                    dailyReadTV.setText(Html.fromHtml(String.format(getResources().getString(R.string.daily_reading), msg.obj)));
                     break;
             }
         }
@@ -60,11 +74,19 @@ public class MainFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         initData();
         initView();
+        initAsnData();
         dealEvent();
     }
 
     private void initData() {
         timeSlots = Arrays.asList(getResources().getStringArray(R.array.time_slots));
+        url = "http://holdok.com/pageinfo/tnb/"
+                +Long.parseLong(TimeUtil.getYearMonthDay(System.currentTimeMillis()).replace("-",""))%1152;
+    }
+
+    private void initAsnData() {
+        NewsThread newsThread = new NewsThread();
+        newsThread.start();
     }
 
     @Override
@@ -151,6 +173,9 @@ public class MainFragment extends Fragment {
         FontIconDrawable readTipIconfontDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_book);
         readTipIconfontDrawable.setTextColor(getResources().getColor(R.color.background_white));
         readTipIcon.setImageDrawable(readTipIconfontDrawable);
+        dailyReadTV = (TextView) fragment.findViewById(R.id.tv_daily_reading);
+        dailyReadTV.setText(Html.fromHtml(String.format(getResources().getString(R.string.daily_reading), getResources().getString(R.string.loading))));
+
 
         //输入血糖
         /*标题*/
@@ -179,7 +204,24 @@ public class MainFragment extends Fragment {
             }
         });
         //每日一读
-
+        fragment.findViewById(R.id.daily_reading).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        dailyReadTV.setTextColor(getResources().getColor(R.color.theme_color));
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        dailyReadTV.setTextColor(getResources().getColor(R.color.txt_light_color));
+                        Intent intent = new Intent(getActivity(), BrowserActivity.class);
+                        intent.putExtra("title", dailyReadTV.getText().toString());
+                        intent.putExtra("url", url);
+                        startActivity(intent);
+                        break;
+                }
+                return true;
+            }
+        });
 
         //输入血糖
         meterOne.setOnClickListener(new View.OnClickListener() {
@@ -213,5 +255,21 @@ public class MainFragment extends Fragment {
                         startActivity(intent);
                     }
                 });
+    }
+
+    private class NewsThread extends Thread {
+        @Override
+        public void run() {
+            try {
+                Document doc = Jsoup.connect(url).timeout(10000).get();
+                Elements titleElement = doc.getElementsByAttributeValue("class","title");
+                Message message = new Message();
+                message.obj = titleElement.text();
+                message.what = GET_TITLE_FINISH;
+                handler.sendMessage(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

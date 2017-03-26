@@ -52,6 +52,9 @@ public class StatisticsFragment extends Fragment {
             switch (msg.what) {
                 case SELECT_FINSH:
                     //饼状图
+                    if(null == getActivity()||getActivity().isFinishing()){
+                        return;
+                    }
                     tvLow.setText(Html.fromHtml(String.format(getResources().getString(R.string.low), pieData.low)));
                     tvHigh.setText(Html.fromHtml(String.format(getResources().getString(R.string.high), pieData.high)));
                     tvSafe.setText(Html.fromHtml(String.format(getResources().getString(R.string.fine), pieData.safe)));

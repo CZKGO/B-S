@@ -44,4 +44,8 @@
     <string name="hospital">医院：%1$s</string>
     <string name="position">职位：%1$s</string>
     <string name="feedback">好评率：%1$s</string>
+    <string name="years">医龄：%1$s</string>
+    <string name="daily_reading">每日一读: %1$s</string>
+    <string name="tips">温馨提示：保持良好的生活习惯，坚持运动，是预防糖尿病的有效手段。</string>
+    <string name="loading">加载中...</string>
 </resources>
