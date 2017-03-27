@@ -16,6 +16,8 @@ import com.czk.diabetes.util.FontIconDrawable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.czk.diabetes.util.ConnectionUtil.getHistoryAndHotDrugs;
+
 public class MainActivity extends BaseFragmentActivity {
 
     private final static int START_SETTING = 0;

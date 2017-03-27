@@ -1,5 +1,6 @@
 package com.czk.diabetes;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -86,7 +87,13 @@ public class MedicineFragment extends Fragment {
     }
 
     private void dealEvent() {
-
+        fragment.findViewById(R.id.card_my_leechdom).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SearchMedicineActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 }

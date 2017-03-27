@@ -5,7 +5,5 @@ package com.czk.diabetes.util;
  */
 
 public class URlUtil {
-    public static void getTitle(String url) {
-
-    }
+    public static String HistoryAndHotDrugs = "https://diabetesintf.izhangkong.com/mobile/tool/getHistoryAndHotDrugs";
 }
