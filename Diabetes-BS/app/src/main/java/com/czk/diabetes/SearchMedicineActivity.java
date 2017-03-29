@@ -1,31 +1,27 @@
 package com.czk.diabetes;
 
-import android.app.Activity;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.czk.diabetes.util.ConnectionUtil;
 import com.czk.diabetes.util.FontIconDrawable;
-import com.czk.diabetes.util.LogUtil;
-import com.czk.diabetes.util.StringUtil;
+import com.czk.diabetes.util.ToastUtil;
+import com.czk.diabetes.view.TagCloud.FlowLayout;
+import com.czk.diabetes.view.TagCloud.TagAdapter;
+import com.czk.diabetes.view.TagCloud.TagFlowLayout;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by xuezaishao on 2017/3/28.
@@ -33,19 +29,54 @@ import java.io.InputStream;
 
 public class SearchMedicineActivity extends BaseActivity {
     private final static int SEARCH_FINSH = 0;
+    private final static int SEARCH_ERRO = 1;
     private ImageView ivIcon;
-    private String title;
+    private List<String> hots = new ArrayList<>();
+    private List<String> historys = new ArrayList<>();
+    private TagFlowLayout historyLayout;
+    private TagFlowLayout hotLayout;
+    private MTagAdapter historyAdapter;
+    private MTagAdapter hotAdapter;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case SEARCH_FINSH:
-
+                    historyAdapter.notifyDataChanged();
+                    hotAdapter.notifyDataChanged();
                     break;
-
+                case SEARCH_ERRO:
+                    ToastUtil.showShortToast(SearchMedicineActivity.this, getResources().getString(R.string.server_time_out));
+                    break;
             }
         }
     };
+
+    private void analyticJSON(JSONObject obj) {
+        if (obj != null) {
+            try {
+                JSONObject jsonObject = obj.getJSONObject("body");
+                String resultMsg = jsonObject.getString("msg");
+                if (resultMsg.equals("操作数据库成功")) {
+                    JSONArray historyArray = jsonObject.getJSONObject("obj").getJSONArray("historyModels");
+                    for (int i = 0; i < historyArray.length(); i++) {
+                        historys.add(historyArray.getJSONObject(i).getString("businessName"));
+                    }
+                    JSONArray hotArray = jsonObject.getJSONObject("obj").getJSONArray("hotModels");
+                    for (int i = 0; i < hotArray.length(); i++) {
+                        hots.add(hotArray.getJSONObject(i).getString("businessName"));
+                    }
+                } else {
+                    handler.sendEmptyMessage(SEARCH_ERRO);
+                }
+            } catch (JSONException e) {
+                handler.sendEmptyMessage(SEARCH_ERRO);
+                e.printStackTrace();
+            }
+        } else {
+            handler.sendEmptyMessage(SEARCH_ERRO);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +87,12 @@ public class SearchMedicineActivity extends BaseActivity {
         initAsnData();
         dealEvent();
     }
+
     private void initAsnData() {
         SearchThread searchThread = new SearchThread();
         searchThread.start();
     }
+
     private void initData() {
     }
 
@@ -70,10 +103,16 @@ public class SearchMedicineActivity extends BaseActivity {
         ivIcon = (ImageView) findViewById(R.id.icon);
         ivIcon.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_arrow_left));
         TextView tvTitle = (TextView) findViewById(R.id.title);
-        tvTitle.setText(title);
         /**
          * 主体
          */
+        historyLayout = (TagFlowLayout) findViewById(R.id.history_layout);
+        historyAdapter = new MTagAdapter(historys,historyLayout);
+        historyLayout.setAdapter(historyAdapter);
+
+        hotLayout = (TagFlowLayout) findViewById(R.id.hot_layout);
+        hotAdapter = new MTagAdapter(hots,hotLayout);
+        hotLayout.setAdapter(hotAdapter);
 
 
     }
@@ -85,20 +124,68 @@ public class SearchMedicineActivity extends BaseActivity {
                 onBackPressed();
             }
         });
+
+        historyLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+            @Override
+            public boolean onTagClick(View view, int position, FlowLayout parent) {
+                //Toast.makeText(getActivity(), mVals[position], Toast.LENGTH_SHORT).show();
+                //view.setVisibility(View.GONE);
+                return true;
+            }
+        });
+
+        historyLayout.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
+            @Override
+            public void onSelected(Set<Integer> selectPosSet) {
+                setTitle("choose:" + selectPosSet.toString());
+            }
+        });
+
+        hotLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+            @Override
+            public boolean onTagClick(View view, int position, FlowLayout parent) {
+                //Toast.makeText(getActivity(), mVals[position], Toast.LENGTH_SHORT).show();
+                //view.setVisibility(View.GONE);
+                return true;
+            }
+        });
+
+        hotLayout.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
+            @Override
+            public void onSelected(Set<Integer> selectPosSet) {
+                setTitle("choose:" + selectPosSet.toString());
+            }
+        });
     }
+
     private class SearchThread extends Thread {
         @Override
         public void run() {
             try {
-                ConnectionUtil.getHistoryAndHotDrugs();
-                Message message = new Message();
-                message.obj = ConnectionUtil.getHistoryAndHotDrugs();
-                message.what = SEARCH_FINSH;
-                handler.sendMessage(message);
-                LogUtil.d("sdafasfdsadf",StringUtil.convertStreamToString((InputStream) message.obj));
+                analyticJSON(ConnectionUtil.getHistoryAndHotDrugsJSON(SearchMedicineActivity.this));
+                handler.sendEmptyMessage(SEARCH_FINSH);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private class MTagAdapter<Object> extends TagAdapter<Object> {
+        private final FlowLayout flowLayout;
+
+        public MTagAdapter(List datas, FlowLayout flowLayout) {
+            super(datas);
+            this.flowLayout = flowLayout;
+        }
+
+
+        @Override
+        public View getView(FlowLayout parent, int position, java.lang.Object s) {
+            LayoutInflater mInflater = LayoutInflater.from(SearchMedicineActivity.this);
+            TextView tv = (TextView) mInflater.inflate(R.layout.tag_layout,
+                    flowLayout, false);
+            tv.setText(s.toString());
+            return tv;
         }
     }
 }

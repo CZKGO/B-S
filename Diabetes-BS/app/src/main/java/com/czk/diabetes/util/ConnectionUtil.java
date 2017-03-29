@@ -1,5 +1,10 @@
 package com.czk.diabetes.util;
 
+import android.content.Context;
+import android.telephony.TelephonyManager;
+
+import org.json.JSONObject;
+
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -13,7 +18,7 @@ import java.net.URLEncoder;
 public class ConnectionUtil {
     private static String TAG = "ConnectionUtil";
 
-    public static InputStream getHistoryAndHotDrugs(){
+    public static InputStream getHistoryAndHotDrugs(Context context){
         InputStream inputStream = null;
         try {
             URL url = new URL(URlUtil.HistoryAndHotDrugs);
@@ -23,14 +28,14 @@ public class ConnectionUtil {
             conn.setDoOutput(true);
             conn.setRequestMethod("POST");
             conn.setUseCaches(false);
-            conn.setRequestProperty("Content-Length", "180");
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestProperty("Host", "diabetesintf.izhangkong.com");
             conn.setRequestProperty("Connection", "Keep-Alive");
             conn.setRequestProperty("Accept-Encoding", "gzip");
             DataOutputStream outputStream = new DataOutputStream(conn.getOutputStream());
             //写参数
-            outputStream.writeBytes("dev="+ URLEncoder.encode("867068024369976"));
+            TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            outputStream.writeBytes("dev="+ URLEncoder.encode(telephonyManager.getDeviceId()));
             outputStream.writeBytes("&dev_type="+ URLEncoder.encode("android"));
             outputStream.writeBytes("&join_id="+ URLEncoder.encode("123"));
             outputStream.writeBytes("&loadFrom="+ URLEncoder.encode("1000115"));
@@ -49,6 +54,11 @@ public class ConnectionUtil {
             // TODO Auto-generated catch block
             LogUtil.e(TAG+ "-getInputStream", e.getMessage());
         }
+//        LogUtil.d("sdafasfdsadf", StringUtil.convertStreamToString(inputStream));
         return inputStream;
+    }
+
+    public static JSONObject getHistoryAndHotDrugsJSON(Context context){
+        return StringUtil.readJsonFromInputStream(getHistoryAndHotDrugs(context));
     }
 }

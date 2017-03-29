@@ -48,4 +48,7 @@
     <string name="daily_reading">每日一读: %1$s</string>
     <string name="tips">温馨提示：保持良好的生活习惯，坚持运动，是预防糖尿病的有效手段。</string>
     <string name="loading">加载中...</string>
+    <string name="server_time_out">服务器超时!</string>
+    <string name="history_record">历史记录</string>
+    <string name="hot_serach">热点搜索</string>
 </resources>

@@ -87,7 +87,7 @@ public class MedicineFragment extends Fragment {
     }
 
     private void dealEvent() {
-        fragment.findViewById(R.id.card_my_leechdom).setOnClickListener(new View.OnClickListener() {
+        fragment.findViewById(R.id.card_leechdom_query).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SearchMedicineActivity.class);

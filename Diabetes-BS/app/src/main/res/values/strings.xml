@@ -48,4 +48,7 @@
     <string name="daily_reading">Daily reading: %1$s</string>
     <string name="tips">Tips: to maintain good habits, adhere to exercise, is an effective means of preventing diabetes.</string>
     <string name="loading">loading...</string>
+    <string name="server_time_out">Server time-out!</string>
+    <string name="history_record">History record</string>
+    <string name="hot_serach">Hot serach</string>
 </resources>
