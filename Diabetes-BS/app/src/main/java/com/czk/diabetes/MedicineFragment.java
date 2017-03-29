@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.czk.diabetes.medicine.SearchMedicineActivity;
 import com.czk.diabetes.util.FontIconDrawable;
 
 /**

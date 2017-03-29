@@ -27,5 +27,7 @@
     <string name="icon_pool" translatable="false">&#xe907;</string>
     <string name="icon_injection" translatable="false">&#xe908;</string>
     <string name="icon_room_service" translatable="false">&#xe909;</string>
-    <!--27-->
+    <string name="icon_search" translatable="false">&#xe90a;</string>
+    <string name="icon_cross" translatable="false">&#xe90c;</string>
+    <!--29-->
 </resources>

@@ -51,4 +51,7 @@
     <string name="server_time_out">服务器超时!</string>
     <string name="history_record">历史记录</string>
     <string name="hot_serach">热点搜索</string>
+    <string name="input_key_word">输入关键字</string>
+    <string name="search">搜索</string>
+    <string name="medicine_info">药品信息</string>
 </resources>

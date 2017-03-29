@@ -28,7 +28,9 @@
 
         <activity android:name=".BrowserActivity" />
 
-        <activity android:name=".SearchMedicineActivity" />
+        <activity android:name=".medicine.SearchMedicineActivity" />
+
+        <activity android:name=".medicine.MedicineInfoActivity"/>
     </application>
 
 </manifest>

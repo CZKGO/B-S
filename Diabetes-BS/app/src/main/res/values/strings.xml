@@ -51,4 +51,7 @@
     <string name="server_time_out">Server time-out!</string>
     <string name="history_record">History record</string>
     <string name="hot_serach">Hot serach</string>
+    <string name="input_key_word">Input key word</string>
+    <string name="search">Search</string>
+    <string name="medicine_info">Medicine infomation</string>
 </resources>
