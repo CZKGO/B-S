@@ -17,17 +17,17 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:background="@color/background_white"
                 android:orientation="vertical">
 
                 <!--标题-->
                 <LinearLayout
-                    android:layout_margin="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -47,10 +47,13 @@
                         android:textColor="@color/txt_light_color"
                         android:textSize="14sp" />
 
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:padding="2dp" />
+                    <TextView
+                        android:id="@+id/clear_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/clear_all"
+                        android:textColor="@color/txt_light_color"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <com.czk.diabetes.view.TagCloud.TagFlowLayout xmlns:tf="http://schemas.android.com/apk/res-auto"
@@ -68,9 +71,9 @@
                 android:orientation="vertical">
                 <!--标题-->
                 <LinearLayout
-                    android:layout_margin="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 

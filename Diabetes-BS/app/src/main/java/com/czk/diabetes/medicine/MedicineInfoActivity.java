@@ -41,8 +41,15 @@ public class MedicineInfoActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case ANALYTIC_FINSH:
-                    MedicineData medicineData = (MedicineData) msg.obj;
-
+                    if (msg.obj != null) {
+                        MedicineData medicineData = (MedicineData) msg.obj;
+                        tvBusinessName.setText(medicineData.businessName);
+                        tvDrugName.setText(medicineData.drugName);
+                        tvDrugUsage.setText(medicineData.drugUsage);
+                        tvManufacturer.setText(medicineData.manufacturer);
+                        tvSideEffect.setText(medicineData.sideEffect);
+                        tvAdverseReactions.setText(medicineData.adverseReactions);
+                    }
                     break;
                 case SEARCH_ERRO:
                     ToastUtil.showShortToast(MedicineInfoActivity.this, getResources().getString(R.string.server_time_out));
@@ -83,17 +90,11 @@ public class MedicineInfoActivity extends BaseActivity {
          * 主体
          */
         tvBusinessName = (TextView) findViewById(R.id.tv_businessName);
-        tvDrugName = (TextView) findViewById(R.id.tv_businessName);
-        tvDrugUsage = (TextView) findViewById(R.id.tv_businessName);
-        tvInsertDt = (TextView) findViewById(R.id.tv_businessName);
-        tvIsValid = (TextView) findViewById(R.id.tv_businessName);
-        tvManufacturer = (TextView) findViewById(R.id.tv_businessName);
-        tvMemberId = (TextView) findViewById(R.id.tv_businessName);
-        tvModifyDt = (TextView) findViewById(R.id.tv_businessName);
-        tvSearchDrugId = (TextView) findViewById(R.id.tv_businessName);
-        tvSearchId = (TextView) findViewById(R.id.tv_businessName);
-        tvSideEffect = (TextView) findViewById(R.id.tv_businessName);
-        tvAdverseReactions = (TextView) findViewById(R.id.tv_businessName);
+        tvDrugName = (TextView) findViewById(R.id.tv_drugName);
+        tvDrugUsage = (TextView) findViewById(R.id.tv_drugUsage);
+        tvManufacturer = (TextView) findViewById(R.id.tv_manufacturer);
+        tvSideEffect = (TextView) findViewById(R.id.tv_sideEffect);
+        tvAdverseReactions = (TextView) findViewById(R.id.tv_adverseReactions);
 
 
     }

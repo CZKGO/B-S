@@ -54,4 +54,9 @@
     <string name="input_key_word">Input key word</string>
     <string name="search">Search</string>
     <string name="medicine_info">Medicine infomation</string>
+    <string name="medicine_name">Medicine name</string>
+    <string name="side_effect">Side effect</string>
+    <string name="drug_usage">Drug usage</string>
+    <string name="adverse_reactions">Adverse reactions</string>
+    <string name="clear_all">Clear all</string>
 </resources>

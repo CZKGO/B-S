@@ -27,6 +27,7 @@
                     android:id="@+id/tv_businessName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
                     android:textColor="@color/txt_black"
                     android:textSize="16sp" />
 
@@ -44,11 +45,6 @@
                         android:layout_weight="1"
                         android:textColor="@color/txt_light_color"
                         android:textSize="14sp" />
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:padding="2dp" />
                 </LinearLayout>
             </LinearLayout>
             <!--名称-->
@@ -71,7 +67,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/history_record"
+                        android:text="@string/medicine_name"
                         android:textColor="@color/txt_light_color"
                         android:textSize="14sp" />
 
@@ -85,6 +81,7 @@
                     android:id="@+id/tv_drugName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
                     android:textColor="@color/txt_black"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -107,20 +104,16 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/hot_serach"
+                        android:text="@string/side_effect"
                         android:textColor="@color/txt_light_color"
                         android:textSize="14sp" />
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:padding="2dp" />
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_sideEffect"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
                     android:textColor="@color/txt_black"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -144,7 +137,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/hot_serach"
+                        android:text="@string/drug_usage"
                         android:textColor="@color/txt_light_color"
                         android:textSize="14sp" />
 
@@ -158,6 +151,7 @@
                     android:id="@+id/tv_drugUsage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
                     android:textColor="@color/txt_black"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -180,7 +174,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/hot_serach"
+                        android:text="@string/adverse_reactions"
                         android:textColor="@color/txt_light_color"
                         android:textSize="14sp" />
 
@@ -194,6 +188,7 @@
                     android:id="@+id/tv_adverseReactions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
                     android:textColor="@color/txt_black"
                     android:textSize="16sp" />
             </LinearLayout>

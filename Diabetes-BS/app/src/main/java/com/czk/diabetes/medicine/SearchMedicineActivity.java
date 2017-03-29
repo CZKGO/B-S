@@ -40,6 +40,7 @@ public class SearchMedicineActivity extends BaseActivity {
     private EditText etSearch;
     private List<MedicineData> hots = new ArrayList<>();
     private List<MedicineData> historys = new ArrayList<>();
+    private TextView tvClearAll;
     private TagFlowLayout historyLayout;
     private TagFlowLayout hotLayout;
     private MTagAdapter historyAdapter;
@@ -69,7 +70,8 @@ public class SearchMedicineActivity extends BaseActivity {
                     for (int i = 0; i < historyArray.length(); i++) {
                         MedicineData medicineData = new MedicineData(
                                 historyArray.getJSONObject(i).getString("businessName")
-                                ,historyArray.getJSONObject(i).toString());
+                                , historyArray.getJSONObject(i).getString("searchDrugId")
+                                , historyArray.getJSONObject(i).toString());
                         historys.add(medicineData);
 
                     }
@@ -77,7 +79,8 @@ public class SearchMedicineActivity extends BaseActivity {
                     for (int i = 0; i < hotArray.length(); i++) {
                         MedicineData medicineData = new MedicineData(
                                 hotArray.getJSONObject(i).getString("businessName")
-                                ,hotArray.getJSONObject(i).toString());
+                                , hotArray.getJSONObject(i).getString("searchDrugId")
+                                , hotArray.getJSONObject(i).toString());
                         hots.add(medicineData);
                     }
                 } else {
@@ -122,12 +125,13 @@ public class SearchMedicineActivity extends BaseActivity {
         /**
          * 主体
          */
+        tvClearAll = (TextView) findViewById(R.id.clear_all);
         historyLayout = (TagFlowLayout) findViewById(R.id.history_layout);
-        historyAdapter = new MTagAdapter(historys,historyLayout);
+        historyAdapter = new MTagAdapter(historys, historyLayout);
         historyLayout.setAdapter(historyAdapter);
 
         hotLayout = (TagFlowLayout) findViewById(R.id.hot_layout);
-        hotAdapter = new MTagAdapter(hots,hotLayout);
+        hotAdapter = new MTagAdapter(hots, hotLayout);
         hotLayout.setAdapter(hotAdapter);
 
 
@@ -154,9 +158,9 @@ public class SearchMedicineActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.toString().isEmpty()){
+                if (s.toString().isEmpty()) {
                     ivCancel.setVisibility(View.GONE);
-                }else {
+                } else {
                     ivCancel.setVisibility(View.VISIBLE);
                 }
             }
@@ -164,6 +168,13 @@ public class SearchMedicineActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+
+        tvClearAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ConnectionUtil.delDrugsSearch(SearchMedicineActivity.this);
             }
         });
 
@@ -185,9 +196,10 @@ public class SearchMedicineActivity extends BaseActivity {
     }
 
     private void startMedicineActivity(MedicineData medicineData) {
-        Intent intent = new Intent(SearchMedicineActivity.this,MedicineInfoActivity.class);
-        intent.putExtra("obj",medicineData.obj);
+        Intent intent = new Intent(SearchMedicineActivity.this, MedicineInfoActivity.class);
+        intent.putExtra("obj", medicineData.obj);
         startActivity(intent);
+        ConnectionUtil.addDrugsSearch(SearchMedicineActivity.this, medicineData.searchDrugId);
     }
 
     private class SearchThread extends Thread {
@@ -216,7 +228,7 @@ public class SearchMedicineActivity extends BaseActivity {
             LayoutInflater mInflater = LayoutInflater.from(SearchMedicineActivity.this);
             TextView tv = (TextView) mInflater.inflate(R.layout.tag_layout,
                     flowLayout, false);
-            tv.setText(((MedicineData)s).businessName);
+            tv.setText(((MedicineData) s).businessName);
             return tv;
         }
     }
@@ -224,10 +236,12 @@ public class SearchMedicineActivity extends BaseActivity {
     private class MedicineData {
         private String businessName;
         private String obj;
+        public String searchDrugId;
 
-        public MedicineData(String businessName, String obj) {
+        public MedicineData(String businessName, String searchDrugId, String obj) {
             this.businessName = businessName;
             this.obj = obj;
+            this.searchDrugId = searchDrugId;
         }
     }
 }

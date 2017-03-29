@@ -54,4 +54,9 @@
     <string name="input_key_word">输入关键字</string>
     <string name="search">搜索</string>
     <string name="medicine_info">药品信息</string>
+    <string name="medicine_name">药品名称</string>
+    <string name="side_effect">适用症</string>
+    <string name="drug_usage">用法用量</string>
+    <string name="adverse_reactions">不良反应</string>
+    <string name="clear_all">清空</string>
 </resources>
