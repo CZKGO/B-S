@@ -6,27 +6,35 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.czk.diabetes.BaseActivity;
 import com.czk.diabetes.R;
-import com.czk.diabetes.util.ConnectionUtil;
+import com.czk.diabetes.net.DiabetesClient;
 import com.czk.diabetes.util.FontIconDrawable;
+import com.czk.diabetes.util.StringUtil;
 import com.czk.diabetes.util.ToastUtil;
 import com.czk.diabetes.view.TagCloud.FlowLayout;
 import com.czk.diabetes.view.TagCloud.TagAdapter;
 import com.czk.diabetes.view.TagCloud.TagFlowLayout;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by xuezaishao on 2017/3/28.
@@ -106,8 +114,20 @@ public class SearchMedicineActivity extends BaseActivity {
     }
 
     private void initAsnData() {
-        SearchThread searchThread = new SearchThread();
-        searchThread.start();
+        DiabetesClient.post(DiabetesClient.getZKTAbsoluteUrl("getHistoryAndHotDrugs")
+                , DiabetesClient.getHistoryAndHotDrugsParams()
+                , new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                        SearchThread searchThread = new SearchThread(new ByteArrayInputStream(responseBody));
+                        searchThread.start();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                        handler.sendEmptyMessage(SEARCH_ERRO);
+                    }
+                });
     }
 
     private void initData() {
@@ -170,11 +190,46 @@ public class SearchMedicineActivity extends BaseActivity {
 
             }
         });
+        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH){
+                    DiabetesClient.post(DiabetesClient.getZKTAbsoluteUrl("getDrugsList")
+                            , DiabetesClient.getDrugsListParams(v.getText().toString())
+                            , new AsyncHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+//                                    SearchThread searchThread = new SearchThread(new ByteArrayInputStream(responseBody));
+//                                    searchThread.start();
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                    handler.sendEmptyMessage(SEARCH_ERRO);
+                                }
+                            });
+                    return true;
+                }
+                return false;
+            }
+        });
 
         tvClearAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConnectionUtil.delDrugsSearch(SearchMedicineActivity.this);
+                DiabetesClient.post(DiabetesClient.getZKTAbsoluteUrl("delDrugsSearch")
+                        , DiabetesClient.delDrugsSearchParams()
+                        , new AsyncHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                handler.sendEmptyMessage(SEARCH_ERRO);
+                            }
+                        });
             }
         });
 
@@ -199,14 +254,32 @@ public class SearchMedicineActivity extends BaseActivity {
         Intent intent = new Intent(SearchMedicineActivity.this, MedicineInfoActivity.class);
         intent.putExtra("obj", medicineData.obj);
         startActivity(intent);
-        ConnectionUtil.addDrugsSearch(SearchMedicineActivity.this, medicineData.searchDrugId);
+        DiabetesClient.post(DiabetesClient.getZKTAbsoluteUrl("addDrugsSearch")
+                , DiabetesClient.addDrugsSearchParams(medicineData.searchDrugId)
+                , new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                        handler.sendEmptyMessage(SEARCH_ERRO);
+                    }
+                });
     }
 
     private class SearchThread extends Thread {
+        private InputStream inputStream;
+
+        public SearchThread(ByteArrayInputStream inputStream) {
+            this.inputStream = inputStream;
+        }
+
         @Override
         public void run() {
             try {
-                analyticJSON(ConnectionUtil.getHistoryAndHotDrugsJSON(SearchMedicineActivity.this));
+                analyticJSON(StringUtil.readJsonFromInputStream(inputStream));
                 handler.sendEmptyMessage(SEARCH_FINSH);
             } catch (Exception e) {
                 e.printStackTrace();
