@@ -59,4 +59,5 @@
     <string name="drug_usage">用法用量</string>
     <string name="adverse_reactions">不良反应</string>
     <string name="clear_all">清空</string>
+    <string name="input_verification_code">验证码</string>
 </resources>

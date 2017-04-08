@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.czk.diabetes.notification.AddNotificationActivity;
 import com.czk.diabetes.setting.SettingActvity;
 import com.czk.diabetes.util.FontIconDrawable;
 
@@ -106,6 +107,13 @@ public class MainActivity extends BaseFragmentActivity {
             @Override
             public void onClick(View v) {
                 drawerLayout.openDrawer(Gravity.START);
+            }
+        });
+
+        ivIconRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, AddNotificationActivity.class));
             }
         });
 

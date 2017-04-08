@@ -14,6 +14,9 @@ import com.czk.diabetes.util.FontIconDrawable;
  */
 public class SignActivity extends BaseActivity {
     private ImageView ivIcon;
+    private ImageView ivCode;
+    private String realCode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,10 @@ public class SignActivity extends BaseActivity {
         ImageView ivIconPassword = (ImageView) findViewById(R.id.icon_password);
         ivIconPassword.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_lock_rounded));
 
+        ivCode = (ImageView) findViewById(R.id.img_code);
+        //将验证码用图片的形式显示出来
+        ivCode.setImageBitmap(VerificationCode.getInstance().createBitmap());
+        realCode = VerificationCode.getInstance().getCode().toLowerCase();
 
     }
 

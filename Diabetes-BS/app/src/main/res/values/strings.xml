@@ -59,4 +59,5 @@
     <string name="drug_usage">Drug usage</string>
     <string name="adverse_reactions">Adverse reactions</string>
     <string name="clear_all">Clear all</string>
+    <string name="input_verification_code">Input validate code</string>
 </resources>

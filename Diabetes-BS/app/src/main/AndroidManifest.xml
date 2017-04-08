@@ -31,6 +31,8 @@
         <activity android:name=".medicine.SearchMedicineActivity" />
 
         <activity android:name=".medicine.MedicineInfoActivity"/>
+
+        <activity android:name=".notification.AddNotificationActivity"/>
     </application>
 
 </manifest>
