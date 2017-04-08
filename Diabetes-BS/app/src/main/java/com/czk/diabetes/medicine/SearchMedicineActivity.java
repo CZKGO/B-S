@@ -1,5 +1,6 @@
 package com.czk.diabetes.medicine;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,16 +10,20 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.czk.diabetes.BaseActivity;
 import com.czk.diabetes.R;
 import com.czk.diabetes.net.DiabetesClient;
+import com.czk.diabetes.net.SearchThread;
 import com.czk.diabetes.util.FontIconDrawable;
-import com.czk.diabetes.util.StringUtil;
 import com.czk.diabetes.util.ToastUtil;
 import com.czk.diabetes.view.TagCloud.FlowLayout;
 import com.czk.diabetes.view.TagCloud.TagAdapter;
@@ -30,7 +35,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,16 +47,21 @@ import cz.msebera.android.httpclient.Header;
 public class SearchMedicineActivity extends BaseActivity {
     private final static int SEARCH_FINSH = 0;
     private final static int SEARCH_ERRO = 1;
+    private final static int SEARCH_KEY_FINSH = 2;
     private ImageView ivIcon;
     private ImageView ivCancel;
     private EditText etSearch;
     private List<MedicineData> hots = new ArrayList<>();
     private List<MedicineData> historys = new ArrayList<>();
+    private List<MedicineData> keyResults = new ArrayList<>();
+    private View viewHotAndHistory;
+    private ListView listViewResult;
     private TextView tvClearAll;
     private TagFlowLayout historyLayout;
     private TagFlowLayout hotLayout;
     private MTagAdapter historyAdapter;
     private MTagAdapter hotAdapter;
+    private ResultsAdapter keyResultsAdapter;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -61,6 +70,11 @@ public class SearchMedicineActivity extends BaseActivity {
                     historyAdapter.notifyDataChanged();
                     hotAdapter.notifyDataChanged();
                     break;
+                case SEARCH_KEY_FINSH:
+                    viewHotAndHistory.setVisibility(View.GONE);
+                    listViewResult.setVisibility(View.VISIBLE);
+                    keyResultsAdapter.notifyDataSetChanged();
+                    break;
                 case SEARCH_ERRO:
                     ToastUtil.showShortToast(SearchMedicineActivity.this, getResources().getString(R.string.server_time_out));
                     break;
@@ -68,31 +82,57 @@ public class SearchMedicineActivity extends BaseActivity {
         }
     };
 
-    private void analyticJSON(JSONObject obj) {
+    public enum SearchType {
+        MEDICINE_HOT_AND_HISTORY,
+        MEDICINE_KEY_WORD
+
+    }
+
+    private void analyticJSON(JSONObject obj, SearchType type) {
         if (obj != null) {
             try {
-                JSONObject jsonObject = obj.getJSONObject("body");
-                String resultMsg = jsonObject.getString("msg");
-                if (resultMsg.equals("操作数据库成功")) {
-                    JSONArray historyArray = jsonObject.getJSONObject("obj").getJSONArray("historyModels");
-                    for (int i = 0; i < historyArray.length(); i++) {
-                        MedicineData medicineData = new MedicineData(
-                                historyArray.getJSONObject(i).getString("businessName")
-                                , historyArray.getJSONObject(i).getString("searchDrugId")
-                                , historyArray.getJSONObject(i).toString());
-                        historys.add(medicineData);
+                if (SearchType.MEDICINE_HOT_AND_HISTORY == type) {
+                    JSONObject jsonObject = obj.getJSONObject("body");
+                    String resultMsg = jsonObject.getString("msg");
+                    if (resultMsg.equals("操作数据库成功")) {
+                        JSONArray historyArray = jsonObject.getJSONObject("obj").getJSONArray("historyModels");
+                        for (int i = 0; i < historyArray.length(); i++) {
+                            MedicineData medicineData = new MedicineData(
+                                    historyArray.getJSONObject(i).getString("businessName")
+                                    , historyArray.getJSONObject(i).getString("manufacturer")
+                                    , historyArray.getJSONObject(i).getString("searchDrugId")
+                                    , historyArray.getJSONObject(i).toString());
+                            historys.add(medicineData);
 
+                        }
+                        JSONArray hotArray = jsonObject.getJSONObject("obj").getJSONArray("hotModels");
+                        for (int i = 0; i < hotArray.length(); i++) {
+                            MedicineData medicineData = new MedicineData(
+                                    hotArray.getJSONObject(i).getString("businessName")
+                                    , hotArray.getJSONObject(i).getString("manufacturer")
+                                    , hotArray.getJSONObject(i).getString("searchDrugId")
+                                    , hotArray.getJSONObject(i).toString());
+                            hots.add(medicineData);
+                        }
+                    } else {
+                        handler.sendEmptyMessage(SEARCH_ERRO);
                     }
-                    JSONArray hotArray = jsonObject.getJSONObject("obj").getJSONArray("hotModels");
-                    for (int i = 0; i < hotArray.length(); i++) {
-                        MedicineData medicineData = new MedicineData(
-                                hotArray.getJSONObject(i).getString("businessName")
-                                , hotArray.getJSONObject(i).getString("searchDrugId")
-                                , hotArray.getJSONObject(i).toString());
-                        hots.add(medicineData);
+                } else if (SearchType.MEDICINE_KEY_WORD == type) {
+                    JSONObject jsonObject = obj.getJSONObject("body");
+                    String resultMsg = jsonObject.getString("msg");
+                    if (resultMsg.equals("操作数据库成功")) {
+                        JSONArray keyArray = jsonObject.getJSONArray("rows");
+                        for (int i = 0; i < keyArray.length(); i++) {
+                            MedicineData medicineData = new MedicineData(
+                                    keyArray.getJSONObject(i).getString("businessName")
+                                    , keyArray.getJSONObject(i).getString("manufacturer")
+                                    , keyArray.getJSONObject(i).getString("searchDrugId")
+                                    , keyArray.getJSONObject(i).toString());
+                            keyResults.add(medicineData);
+                        }
+                    } else {
+                        handler.sendEmptyMessage(SEARCH_ERRO);
                     }
-                } else {
-                    handler.sendEmptyMessage(SEARCH_ERRO);
                 }
             } catch (JSONException e) {
                 handler.sendEmptyMessage(SEARCH_ERRO);
@@ -109,8 +149,14 @@ public class SearchMedicineActivity extends BaseActivity {
         setContentView(R.layout.activity_serch_medicine);
         initData();
         initView();
-        initAsnData();
         dealEvent();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshDatas();
+
     }
 
     private void initAsnData() {
@@ -119,7 +165,19 @@ public class SearchMedicineActivity extends BaseActivity {
                 , new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                        SearchThread searchThread = new SearchThread(new ByteArrayInputStream(responseBody));
+                        SearchThread searchThread = new SearchThread(new ByteArrayInputStream(responseBody)
+                                , SearchType.MEDICINE_HOT_AND_HISTORY
+                                , new SearchThread.OnSearchResult() {
+                            @Override
+                            public void searchResult(JSONObject jsonObject, Object type) {
+                                try {
+                                    analyticJSON(jsonObject, (SearchType) type);
+                                    handler.sendEmptyMessage(SEARCH_FINSH);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
                         searchThread.start();
                     }
 
@@ -145,6 +203,8 @@ public class SearchMedicineActivity extends BaseActivity {
         /**
          * 主体
          */
+        //热点和历史记录
+        viewHotAndHistory = findViewById(R.id.hot_and_history);
         tvClearAll = (TextView) findViewById(R.id.clear_all);
         historyLayout = (TagFlowLayout) findViewById(R.id.history_layout);
         historyAdapter = new MTagAdapter(historys, historyLayout);
@@ -153,6 +213,11 @@ public class SearchMedicineActivity extends BaseActivity {
         hotLayout = (TagFlowLayout) findViewById(R.id.hot_layout);
         hotAdapter = new MTagAdapter(hots, hotLayout);
         hotLayout.setAdapter(hotAdapter);
+
+        //查询结果
+        listViewResult = (ListView) findViewById(R.id.serch_result);
+        keyResultsAdapter = new ResultsAdapter(keyResults, this);
+        listViewResult.setAdapter(keyResultsAdapter);
 
 
     }
@@ -193,14 +258,27 @@ public class SearchMedicineActivity extends BaseActivity {
         etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH){
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     DiabetesClient.post(DiabetesClient.getZKTAbsoluteUrl("getDrugsList")
                             , DiabetesClient.getDrugsListParams(v.getText().toString())
                             , new AsyncHttpResponseHandler() {
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-//                                    SearchThread searchThread = new SearchThread(new ByteArrayInputStream(responseBody));
-//                                    searchThread.start();
+                                    SearchThread searchThread = new SearchThread(new ByteArrayInputStream(responseBody)
+                                            , SearchType.MEDICINE_KEY_WORD
+                                            , new SearchThread.OnSearchResult() {
+                                        @Override
+                                        public void searchResult(JSONObject jsonObject, Object type) {
+                                            try {
+                                                keyResults.clear();
+                                                analyticJSON(jsonObject, (SearchType) type);
+                                                handler.sendEmptyMessage(SEARCH_KEY_FINSH);
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
+                                    searchThread.start();
                                 }
 
                                 @Override
@@ -222,7 +300,7 @@ public class SearchMedicineActivity extends BaseActivity {
                         , new AsyncHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
+                                refreshDatas();
                             }
 
                             @Override
@@ -248,6 +326,13 @@ public class SearchMedicineActivity extends BaseActivity {
                 return true;
             }
         });
+
+        listViewResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startMedicineActivity(keyResults.get(position));
+            }
+        });
     }
 
     private void startMedicineActivity(MedicineData medicineData) {
@@ -269,22 +354,11 @@ public class SearchMedicineActivity extends BaseActivity {
                 });
     }
 
-    private class SearchThread extends Thread {
-        private InputStream inputStream;
-
-        public SearchThread(ByteArrayInputStream inputStream) {
-            this.inputStream = inputStream;
-        }
-
-        @Override
-        public void run() {
-            try {
-                analyticJSON(StringUtil.readJsonFromInputStream(inputStream));
-                handler.sendEmptyMessage(SEARCH_FINSH);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+    private void refreshDatas() {
+        //清空之前数据，重新重新进行网络请求
+        hots.clear();
+        historys.clear();
+        initAsnData();
     }
 
     private class MTagAdapter<Object> extends TagAdapter<Object> {
@@ -310,11 +384,64 @@ public class SearchMedicineActivity extends BaseActivity {
         private String businessName;
         private String obj;
         public String searchDrugId;
+        public String manufacturer;
 
-        public MedicineData(String businessName, String searchDrugId, String obj) {
+        public MedicineData(String businessName, String manufacturer, String searchDrugId, String obj) {
             this.businessName = businessName;
+            this.manufacturer = manufacturer;
             this.obj = obj;
             this.searchDrugId = searchDrugId;
+        }
+    }
+
+    private class ResultsAdapter extends BaseAdapter {
+        private List<MedicineData> keyResults;
+        private Context context;
+
+        public ResultsAdapter(List<MedicineData> keyResults, Context context) {
+            this.keyResults = keyResults;
+            this.context = context;
+        }
+
+        @Override
+        public int getCount() {
+            return keyResults.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return keyResults.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder viewHolder;
+            MedicineData medicineData = (MedicineData) getItem(position);
+            if (null == convertView) {
+                LayoutInflater inflator = (LayoutInflater) context.getSystemService(
+                        Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflator.inflate(R.layout.item_medicine_layout, null);
+                viewHolder = new ViewHolder();
+                viewHolder.tvName = (TextView) convertView.findViewById(R.id.name);
+                viewHolder.tvManufacturer = (TextView) convertView.findViewById(R.id.manufacturer);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+
+            viewHolder.tvName.setText(medicineData.businessName);
+            viewHolder.tvManufacturer.setText(medicineData.manufacturer);
+            return convertView;
+        }
+
+        private class ViewHolder {
+            private TextView tvName;
+            private TextView tvManufacturer;
         }
     }
 }
