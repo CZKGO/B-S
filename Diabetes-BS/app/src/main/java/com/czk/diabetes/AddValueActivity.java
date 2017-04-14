@@ -128,12 +128,12 @@ public class AddValueActivity extends BaseActivity {
             public void onClick(View v) {
                 if (keyBoardType == KeyBoardType.DIGITAL_TYPE) {
                     keyBoardType = keyBoardType.DATE_TYPE;
-                    rotationAnimator(digitalkeyboard, dateWheelpicker);
+                    alphaAnimator(digitalkeyboard, dateWheelpicker);
                     tvDate.setTextColor(getResources().getColor(R.color.theme_color));
                     etValue.setEnabled(false);
                 } else if (keyBoardType == KeyBoardType.TIME_TYPE) {
                     keyBoardType = keyBoardType.DATE_TYPE;
-                    rotationAnimator(wheelpicker, dateWheelpicker);
+                    alphaAnimator(wheelpicker, dateWheelpicker);
                     tvTimeSlot.setTextColor(getResources().getColor(R.color.txt_light_color));
                     tvDate.setTextColor(getResources().getColor(R.color.theme_color));
                     etValue.setEnabled(false);
@@ -145,12 +145,12 @@ public class AddValueActivity extends BaseActivity {
             public void onClick(View v) {
                 if (keyBoardType == KeyBoardType.DIGITAL_TYPE) {
                     keyBoardType = keyBoardType.TIME_TYPE;
-                    rotationAnimator(digitalkeyboard, wheelpicker);
+                    alphaAnimator(digitalkeyboard, wheelpicker);
                     tvTimeSlot.setTextColor(getResources().getColor(R.color.theme_color));
                     etValue.setEnabled(false);
                 } else if (keyBoardType == KeyBoardType.DATE_TYPE) {
                     keyBoardType = keyBoardType.TIME_TYPE;
-                    rotationAnimator(dateWheelpicker, wheelpicker);
+                    alphaAnimator(dateWheelpicker, wheelpicker);
                     tvTimeSlot.setTextColor(getResources().getColor(R.color.theme_color));
                     tvDate.setTextColor(getResources().getColor(R.color.txt_light_color));
                     etValue.setEnabled(false);
@@ -163,12 +163,12 @@ public class AddValueActivity extends BaseActivity {
             public void onClick(View v) {
                 if (keyBoardType == KeyBoardType.DATE_TYPE) {
                     keyBoardType = keyBoardType.DIGITAL_TYPE;
-                    rotationAnimator(dateWheelpicker, digitalkeyboard);
+                    alphaAnimator(dateWheelpicker, digitalkeyboard);
                     tvDate.setTextColor(getResources().getColor(R.color.txt_light_color));
                     etValue.setEnabled(true);
                 } else if (keyBoardType == KeyBoardType.TIME_TYPE) {
                     keyBoardType = keyBoardType.DIGITAL_TYPE;
-                    rotationAnimator(wheelpicker, digitalkeyboard);
+                    alphaAnimator(wheelpicker, digitalkeyboard);
                     tvTimeSlot.setTextColor(getResources().getColor(R.color.txt_light_color));
                     etValue.setEnabled(true);
                 }
@@ -272,12 +272,12 @@ public class AddValueActivity extends BaseActivity {
     }
 
     /**
-     * 翻转切换view
+     * 虚实切换view
      *
      * @param view1
      * @param view2
      */
-    private void rotationAnimator(final View view1, final View view2) {
+    private void alphaAnimator(final View view1, final View view2) {
         ObjectAnimator animator = ObjectAnimator.ofFloat(
                 view1,
                 "alpha",
@@ -295,6 +295,7 @@ public class AddValueActivity extends BaseActivity {
             @Override
             public void onAnimationStart(Animator animation) {
                 view1.setVisibility(View.GONE);
+                view1.setClickable(false);
             }
 
             @Override
@@ -316,6 +317,7 @@ public class AddValueActivity extends BaseActivity {
             @Override
             public void onAnimationStart(Animator animation) {
                 view2.setVisibility(View.VISIBLE);
+                view2.setClickable(true);
             }
 
             @Override

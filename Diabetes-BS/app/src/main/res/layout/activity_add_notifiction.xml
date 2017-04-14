@@ -15,24 +15,112 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:elevation="1dp"
-            android:translationY="1dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/card_circular_bead"
+            android:elevation="1dp"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:translationY="1dp">
 
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:stretchColumns="2">
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="4dp"
+                        android:text="@string/date" />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_background"
+                        android:inputType="textCapWords"
+                        android:minEms="5"
+                        android:padding="6dp"
+                        android:singleLine="true"
+                        android:textSize="16sp" />
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="4dp"
+                        android:text="@string/time" />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_background"
+                        android:inputType="textCapWords"
+                        android:minEms="5"
+                        android:padding="6dp"
+                        android:singleLine="true"
+                        android:textSize="16sp" />
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="4dp"
+                        android:text="@string/event" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_span="2"
+                        android:background="@drawable/edittext_background"
+                        android:inputType="textCapWords"
+                        android:padding="6dp"
+                        android:singleLine="true"
+                        android:textSize="16sp" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="4dp"
+                        android:text="@string/describe" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_span="2"
+                        android:background="@drawable/edittext_background"
+                        android:gravity="left|top"
+                        android:inputType="textMultiLine"
+                        android:minLines="6"
+                        android:padding="6dp"
+                        android:textSize="16sp" />
+                </TableRow>
+            </TableLayout>
         </LinearLayout>
 
         <TextView
             android:id="@+id/button_next"
-            android:elevation="1dp"
-            android:translationY="1dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -40,16 +128,16 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/button_background"
+            android:elevation="1dp"
             android:gravity="center"
             android:padding="8dp"
             android:text="@string/next"
             android:textColor="@color/txt_white"
-            android:textSize="16sp"></TextView>
+            android:textSize="16sp"
+            android:translationY="1dp"></TextView>
 
 
     </LinearLayout>
-
-
 
 
 </RelativeLayout>

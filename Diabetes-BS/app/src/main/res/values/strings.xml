@@ -60,4 +60,8 @@
     <string name="adverse_reactions">Adverse reactions</string>
     <string name="clear_all">Clear all</string>
     <string name="input_verification_code">Input validate code</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="event">Event</string>
+    <string name="describe">Describe</string>
 </resources>

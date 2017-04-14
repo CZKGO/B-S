@@ -60,4 +60,8 @@
     <string name="adverse_reactions">不良反应</string>
     <string name="clear_all">清空</string>
     <string name="input_verification_code">验证码</string>
+    <string name="date">日期</string>
+    <string name="time">时间</string>
+    <string name="event">事件</string>
+    <string name="describe">描述</string>
 </resources>
