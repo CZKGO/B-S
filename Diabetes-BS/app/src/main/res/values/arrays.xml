@@ -14,4 +14,11 @@
         <item>@string/after_dinner</item>
         <item>@string/before_sleep</item>
     </array>
+    <array name="date_chose">
+        <item>@string/every_day</item>
+        <item>@string/one_week</item>
+        <item>@string/one_year</item>
+        <item>@string/one_month</item>
+        <item>@string/chose</item>
+    </array>
 </resources>

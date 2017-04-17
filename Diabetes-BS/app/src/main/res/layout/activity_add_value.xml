@@ -15,18 +15,17 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:elevation="1dp"
-            android:translationY="1dp"
             android:id="@+id/blood_sugar_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/card_circular_bead"
+            android:background="@drawable/shadow_white_card"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="8dp"
+             >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -136,8 +135,7 @@
 
         <TextView
             android:id="@+id/button_next"
-            android:elevation="1dp"
-            android:translationY="1dp"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -149,16 +147,17 @@
             android:padding="8dp"
             android:text="@string/next"
             android:textColor="@color/txt_white"
-            android:textSize="16sp"></TextView>
+            android:textSize="16sp"
+             ></TextView>
 
         <!--键盘-->
         <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginTop="4dp"
             android:background="@color/background_white"
             android:elevation="4dp"
-            android:translationY="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:translationY="4dp">
             <!--数字键盘-->
             <com.czk.diabetes.view.Digitalkeyboard
                 android:id="@+id/digitalkeyboard"
@@ -187,11 +186,9 @@
                 android:id="@+id/date_wheelpicker"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </RelativeLayout>
     </LinearLayout>
-
-
 
 
 </RelativeLayout>

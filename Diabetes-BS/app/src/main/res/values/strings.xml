@@ -64,4 +64,9 @@
     <string name="time">Time</string>
     <string name="event">Event</string>
     <string name="describe">Describe</string>
+    <string name="every_day">Every day</string>
+    <string name="one_week">One week</string>
+    <string name="one_month">One month</string>
+    <string name="one_year">One Year</string>
+    <string name="chose">Chose</string>
 </resources>

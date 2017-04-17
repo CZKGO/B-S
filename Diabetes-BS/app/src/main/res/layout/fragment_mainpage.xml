@@ -22,8 +22,8 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/card_circular_bead"
-                android:elevation="1dp"
+                android:background="@drawable/shadow_white_card"
+
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="8dp"
@@ -73,8 +73,8 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/card_circular_bead"
-                android:elevation="1dp"
+                android:background="@drawable/shadow_white_card"
+
                 android:gravity="center_vertical"
                 android:orientation="vertical"
                 android:padding="8dp"
@@ -136,14 +136,14 @@
             <!--输入血糖-->
             <LinearLayout
                 android:id="@+id/blood_sugar_card"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/card_circular_bead"
-                android:elevation="1dp"
+                android:background="@drawable/shadow_white_card"
+
                 android:gravity="center_vertical"
                 android:orientation="vertical"
                 android:padding="8dp"

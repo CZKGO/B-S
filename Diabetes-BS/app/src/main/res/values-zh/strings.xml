@@ -64,4 +64,9 @@
     <string name="time">时间</string>
     <string name="event">事件</string>
     <string name="describe">描述</string>
+    <string name="every_day">每天</string>
+    <string name="one_week">一周</string>
+    <string name="one_month">一月</string>
+    <string name="one_year">一年</string>
+    <string name="chose">选择</string>
 </resources>
