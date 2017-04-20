@@ -34,6 +34,14 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         // 执行创建表的SQL语句
         db.execSQL(sBuffer.toString());
 
+        sBuffer = new StringBuffer();
+
+        sBuffer.append("CREATE TABLE [notification] (");
+        sBuffer.append("[_id] INTEGER PRIMARY KEY, ");
+        sBuffer.append("[title] TEXT,");
+        sBuffer.append("[description] TEXT)");
+
+        db.execSQL(sBuffer.toString());
         // 即便程序修改重新运行，只要数据库已经创建过，就不会再进入这个onCreate方法
 
     }

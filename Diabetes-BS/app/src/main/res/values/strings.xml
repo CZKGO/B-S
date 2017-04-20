@@ -65,8 +65,15 @@
     <string name="event">Event</string>
     <string name="describe">Describe</string>
     <string name="every_day">Every day</string>
-    <string name="one_week">One week</string>
-    <string name="one_month">One month</string>
-    <string name="one_year">One Year</string>
+    <string name="every_week">Every week</string>
     <string name="chose">Chose</string>
+    <string name="add_notification">Add notification</string>
+    <string name="diy">DIY</string>
+    <string name="sun">Sun</string>
+    <string name="sat">Sat</string>
+    <string name="fri">Fri</string>
+    <string name="tur">Tur</string>
+    <string name="wed">Wed</string>
+    <string name="tue">Tue</string>
+    <string name="mon">Mon</string>
 </resources>

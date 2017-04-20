@@ -16,9 +16,7 @@
     </array>
     <array name="date_chose">
         <item>@string/every_day</item>
-        <item>@string/one_week</item>
-        <item>@string/one_year</item>
-        <item>@string/one_month</item>
-        <item>@string/chose</item>
+        <item>@string/every_week</item>
+        <item>@string/diy</item>
     </array>
 </resources>

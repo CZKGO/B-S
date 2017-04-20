@@ -29,5 +29,7 @@
     <string name="icon_room_service" translatable="false">&#xe909;</string>
     <string name="icon_search" translatable="false">&#xe90a;</string>
     <string name="icon_cross" translatable="false">&#xe90c;</string>
-    <!--29-->
+    <string name="icon_triangle_down" translatable="false">&#xf05b;</string>
+    <string name="icon_clock" translatable="false">&#xe90d;</string>
+    <!--31-->
 </resources>

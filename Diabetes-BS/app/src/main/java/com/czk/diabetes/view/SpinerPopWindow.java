@@ -23,28 +23,25 @@ public class SpinerPopWindow extends PopupWindow implements AdapterView.OnItemCl
 
     private Context mContext;
     private ListView mListView;
+    private List<String> mObjects;
     private SpinerPopWindow.SpinerAdapter mAdapter;
-    private SpinerPopWindow.SpinerAdapter.IOnItemSelectListener mItemSelectListener;
+    private SpinerPopWindow.SpinerAdapter.OnItemSelectListener mItemSelectListener;
 
 
-    public SpinerPopWindow(Context context){
+    public SpinerPopWindow(Context context, List<String> mObjects) {
         super(context);
         mContext = context;
+        this.mObjects = mObjects;
         init();
     }
 
 
-    public void setItemListener(SpinerPopWindow.SpinerAdapter.IOnItemSelectListener listener){
+    public void setItemListener(SpinerPopWindow.SpinerAdapter.OnItemSelectListener listener) {
         mItemSelectListener = listener;
     }
 
-    public void setAdatper(SpinerPopWindow.SpinerAdapter adapter){
-        mAdapter = adapter;
-        mListView.setAdapter(mAdapter);
-    }
 
-
-    private void init(){
+    private void init() {
         View view = LayoutInflater.from(mContext).inflate(R.layout.spiner_window_layout, null);
         setContentView(view);
         setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -57,13 +54,14 @@ public class SpinerPopWindow extends PopupWindow implements AdapterView.OnItemCl
 
         mListView = (ListView) view.findViewById(R.id.listview);
         mListView.setOnItemClickListener(this);
+        mAdapter = new SpinerAdapter(mContext, mObjects);
+        mListView.setAdapter(mAdapter);
     }
 
 
-    public void refreshData(List<String> list, int selIndex){
-        if (list != null && selIndex  != -1)
-        {
-            if (mAdapter != null){
+    public void refreshData(List<String> list, int selIndex) {
+        if (list != null && selIndex != -1) {
+            if (mAdapter != null) {
                 mAdapter.refreshData(list, selIndex);
             }
         }
@@ -73,8 +71,8 @@ public class SpinerPopWindow extends PopupWindow implements AdapterView.OnItemCl
     @Override
     public void onItemClick(AdapterView<?> arg0, View view, int pos, long arg3) {
         dismiss();
-        if (mItemSelectListener != null){
-            mItemSelectListener.onItemClick(pos);
+        if (mItemSelectListener != null) {
+            mItemSelectListener.onItemClick(pos, mObjects.get(pos));
         }
     }
 
@@ -89,8 +87,8 @@ public class SpinerPopWindow extends PopupWindow implements AdapterView.OnItemCl
 
     public static class SpinerAdapter extends BaseAdapter {
 
-        public  interface IOnItemSelectListener {
-            void onItemClick(int pos);
+        public interface OnItemSelectListener {
+            void onItemClick(int pos, String item);
         }
 
         private List<String> mObjects;
