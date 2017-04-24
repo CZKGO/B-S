@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.czk.diabetes.medicine.SearchMedicineActivity;
+import com.czk.diabetes.recipe.RecipeListActivity;
 import com.czk.diabetes.util.FontIconDrawable;
 
 /**
@@ -95,6 +96,14 @@ public class MedicineFragment extends Fragment {
                 startActivity(intent);
             }
         });
-    }
 
+        fragment.findViewById(R.id.card_many_recipes).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), RecipeListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+    }
 }

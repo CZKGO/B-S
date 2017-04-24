@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.czk.diabetes.BaseActivity;
 import com.czk.diabetes.R;
+import com.czk.diabetes.net.SearchType;
 import com.czk.diabetes.net.DiabetesClient;
 import com.czk.diabetes.net.SearchThread;
 import com.czk.diabetes.util.FontIconDrawable;
@@ -81,12 +82,6 @@ public class SearchMedicineActivity extends BaseActivity {
             }
         }
     };
-
-    public enum SearchType {
-        MEDICINE_HOT_AND_HISTORY,
-        MEDICINE_KEY_WORD
-
-    }
 
     private void analyticJSON(JSONObject obj, SearchType type) {
         if (obj != null) {

@@ -4,8 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.czk.diabetes.util.LogUtil;
-
 import java.util.Calendar;
 
 /**
@@ -20,11 +18,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         item.setTitle(intent.getStringExtra("title"));
         item.setDescription(intent.getStringExtra("Description"));
         String remind_number = intent.getStringExtra("remind_number");//提醒的日期
-        LogUtil.d("sdafasfa","2");
         switch (item.getType()) {
 
             case NotificationItem.TYPE_DIY_DAY://只提醒一次
-                LogUtil.d("sdafasfa","3");
                 MYNotificationManager.getInstance().showNotifition(item, context);
                 MYNotificationManager.getInstance().cancleAlarm(intent, context);
                 break;

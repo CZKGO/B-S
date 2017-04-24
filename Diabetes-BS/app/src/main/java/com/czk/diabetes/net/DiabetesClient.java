@@ -16,10 +16,15 @@ public class DiabetesClient {
      * 来自智抗糖的start
      ****************************************************************/
     private static final String BASE_URL = "https://diabetesintf.izhangkong.com/mobile/tool/";
+    private static final String BASE_RECIPE_URL = "http://wikidiabetes.izhangkong.com/mobile/tool/";
     private static final String DVE_ID = "867068024369976";
 
     public static String getZKTAbsoluteUrl(String relativeUrl) {
         return BASE_URL + relativeUrl;
+    }
+
+    public static String getZKTRECIPEAbsoluteUrl(String relativeUrl) {
+        return BASE_RECIPE_URL + relativeUrl;
     }
 
     /**
@@ -80,7 +85,7 @@ public class DiabetesClient {
 
     /**
      * 添加搜索药品到历史记录
-     * @param id
+     * @param key
      * @return
      */
     public static RequestParams getDrugsListParams(String key) {
@@ -97,6 +102,19 @@ public class DiabetesClient {
         params.add("sessionMemberID","eba63ded5fff28a9f045d0363e4d0f7d");
         params.add("valid","");
         params.add("ver","59");
+        return params;
+    }
+
+    /**
+     * 获取食谱
+     * @return
+     */
+    public static RequestParams getCookBooksNew() {
+        RequestParams params = new RequestParams();
+        params.add("rows","10");
+        params.add("page","1");
+        params.add("sessionMemberID","eba63ded5fff28a9f045d0363e4d0f7d");
+        params.add("isMyCollected","-1");
         return params;
     }
     /****************************************************************

@@ -90,9 +90,9 @@ public class AddNotificationActivity extends BaseFragmentActivity {
                         tvDateChose.setText(year + "-" + TimeUtil.format(month) + "-" + TimeUtil.format(day));
                     }
                 }
-                , TimeUtil.getYear(currentTime + HOUR)
-                , TimeUtil.getMonth(currentTime + HOUR)
-                , TimeUtil.getDay(currentTime + HOUR)
+                , TimeUtil.getYear(currentTime)
+                , TimeUtil.getMonth(currentTime)
+                , TimeUtil.getDay(currentTime)
                 , false);
         findViewById(R.id.date_chose).setOnClickListener(new View.OnClickListener() {
             @Override
