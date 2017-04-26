@@ -1,9 +1,14 @@
 package com.czk.diabetes.recipe;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +18,8 @@ import com.czk.diabetes.net.DiabetesClient;
 import com.czk.diabetes.net.SearchThread;
 import com.czk.diabetes.net.SearchType;
 import com.czk.diabetes.util.FontIconDrawable;
+import com.czk.diabetes.util.Imageloader;
+import com.czk.diabetes.util.StringUtil;
 import com.czk.diabetes.util.ToastUtil;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -21,7 +28,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -33,15 +41,16 @@ public class RecipeListActivity extends BaseActivity {
     private final static int SEARCH_FINSH = 0;
     private final static int SEARCH_ERRO = 1;
     private ImageView ivIcon;
-    private LinkedList<RecipeData> cookBooks;
+    private List<RecipeData> cookBooks = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private WaterFallAdapter adapter;
 
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case SEARCH_FINSH:
-                    if (msg.obj != null) {
-                    }
+                    adapter.notifyDataSetChanged();
                     break;
                 case SEARCH_ERRO:
                     ToastUtil.showShortToast(RecipeListActivity.this, getResources().getString(R.string.server_time_out));
@@ -53,7 +62,7 @@ public class RecipeListActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_medicine_info);
+        setContentView(R.layout.activity_recipe_list);
         initData();
         initAsnData();
         initView();
@@ -62,7 +71,7 @@ public class RecipeListActivity extends BaseActivity {
 
 
     private void initData() {
-
+        adapter = new WaterFallAdapter();
     }
 
     private void initAsnData() {
@@ -101,12 +110,14 @@ public class RecipeListActivity extends BaseActivity {
         ivIcon = (ImageView) findViewById(R.id.icon);
         ivIcon.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_arrow_left));
         TextView tvTitle = (TextView) findViewById(R.id.title);
-        tvTitle.setText(getResources().getString(R.string.medicine_info));
+        tvTitle.setText(getResources().getString(R.string.many_recipes));
         /**
          * 主体
          */
-
-
+        recyclerView = (RecyclerView) findViewById(R.id.rv);
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.addItemDecoration(new SpaceDecoration(StringUtil.dpTopx(this, 4)));
+        recyclerView.setAdapter(adapter);
     }
 
     private void dealEvent() {
@@ -128,6 +139,8 @@ public class RecipeListActivity extends BaseActivity {
                     RecipeData medicineData = new RecipeData(
                             keyArray.getJSONObject(i).getString("cookbookName")
                             , keyArray.getJSONObject(i).getString("imgUrl")
+                            , keyArray.getJSONObject(i).getInt("picWidth")
+                            , keyArray.getJSONObject(i).getInt("picHeight")
                             , keyArray.getJSONObject(i).toString());
                     cookBooks.add(medicineData);
                 }
@@ -140,31 +153,72 @@ public class RecipeListActivity extends BaseActivity {
         }
     }
 
-    private class AnalyticThread extends Thread {
-        String obj;
-
-        public AnalyticThread(String obj) {
-            this.obj = obj;
-        }
-
-        @Override
-        public void run() {
-            try {
-                analyticJSON(new JSONObject(obj));
-//                handler.sendEmptyMessage(ANALYTIC_FINSH);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     private class RecipeData {
         private String cookbookName;
         private String imgUrl;
+        private int imgWidth;
+        private int imgHight;
         private String obj;
 
-        public RecipeData(String cookbookName, String imgUrl, String obj) {
+        public RecipeData(String cookbookName, String imgUrl,int imgWidth,int imgHight, String obj) {
+            this.cookbookName = cookbookName;
+            this.imgUrl = imgUrl;
+            this.obj = obj;
+            this.imgWidth = imgWidth;
+            this.imgHight = imgHight;
+        }
+    }
 
+    private class SpaceDecoration extends RecyclerView.ItemDecoration {
+
+        private final int space;
+
+        public SpaceDecoration(int space) {
+            this.space = space;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            outRect.left = space;
+            outRect.right = space;
+            outRect.bottom = space;
+            outRect.top = space;
+        }
+    }
+
+    private class WaterFallAdapter extends RecyclerView.Adapter {
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            CardViewHolder holder = new CardViewHolder(LayoutInflater.from(RecipeListActivity.this)
+                    .inflate(R.layout.item_recipe_card, parent, false));
+            return holder;
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            if (holder instanceof CardViewHolder) {
+                ((CardViewHolder) holder).tv.setText(cookBooks.get(position).cookbookName);
+                Imageloader.getInstance().loadImageByUrl(cookBooks.get(position).imgUrl
+                        ,cookBooks.get(position).imgWidth
+                        ,cookBooks.get(position).imgHight
+                        ,R.drawable.icon,((CardViewHolder) holder).iv);
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return cookBooks.size();
+        }
+
+        private class CardViewHolder extends RecyclerView.ViewHolder {
+            ImageView iv;
+            TextView tv;
+
+            public CardViewHolder(View itemView) {
+                super(itemView);
+                iv = (ImageView) itemView.findViewById(R.id.img);
+                tv = (TextView) itemView.findViewById(R.id.txt);
+            }
         }
     }
 }
