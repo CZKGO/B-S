@@ -25,8 +25,7 @@
 
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="8dp"
-                 >
+                android:padding="8dp">
 
                 <!--标题-->
                 <LinearLayout
@@ -65,51 +64,55 @@
 
                     <LinearLayout
                         android:id="@+id/card_my_leechdom"
-                        android:background="@drawable/item_background_click"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/item_background_click"
                         android:gravity="center"
                         android:orientation="vertical">
+
                         <ImageView
                             android:id="@+id/leechdom_left_icon"
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
-                            android:padding="6dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginBottom="8dp" />
-                        <TextView
-                            android:layout_marginTop="8dp"
                             android:layout_marginBottom="8dp"
+                            android:layout_marginTop="16dp"
+                            android:padding="6dp" />
+
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:text="@string/my_leechdom"/>
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/my_leechdom"
+                            android:textSize="16sp" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/card_leechdom_query"
-                        android:background="@drawable/item_background_click"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/item_background_click"
                         android:gravity="center"
                         android:orientation="vertical">
+
                         <ImageView
+                            android:id="@+id/leechdom_right_icon"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:layout_marginRight="8dp"
-                            android:id="@+id/leechdom_right_icon"
-                            android:padding="6dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginBottom="8dp"/>
-                        <TextView
-                            android:layout_marginTop="8dp"
                             android:layout_marginBottom="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="16dp"
+                            android:padding="6dp" />
+
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:text="@string/leechdom_query"/>
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/leechdom_query"
+                            android:textSize="16sp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -124,8 +127,7 @@
 
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="8dp"
-                 >
+                android:padding="8dp">
                 <!--标题-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -154,6 +156,7 @@
                         android:layout_height="24dp"
                         android:padding="2dp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -165,20 +168,22 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical">
+
                         <ImageView
                             android:id="@+id/diet_left_icon"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:padding="6dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginBottom="8dp"/>
-                        <TextView
-                            android:layout_marginTop="8dp"
                             android:layout_marginBottom="8dp"
+                            android:layout_marginTop="16dp"
+                            android:padding="6dp" />
+
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:text="@string/my_recipes"/>
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/my_recipes"
+                            android:textSize="16sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -186,22 +191,25 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/item_background_click"
                         android:gravity="center"
                         android:orientation="vertical">
+
                         <ImageView
+                            android:id="@+id/diet_right_icon"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:id="@+id/diet_right_icon"
-                            android:padding="6dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginBottom="8dp"/>
-                        <TextView
-                            android:layout_marginTop="8dp"
                             android:layout_marginBottom="8dp"
+                            android:layout_marginTop="16dp"
+                            android:padding="6dp" />
+
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:text="@string/many_recipes"/>
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/many_recipes"
+                            android:textSize="16sp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -217,8 +225,7 @@
 
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="8dp"
-                 >
+                android:padding="8dp">
                 <!--标题-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -247,6 +254,7 @@
                         android:layout_height="24dp"
                         android:padding="2dp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -258,20 +266,22 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical">
+
                         <ImageView
                             android:id="@+id/athletics_left_icon"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:padding="6dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginBottom="8dp"/>
-                        <TextView
-                            android:layout_marginTop="8dp"
                             android:layout_marginBottom="8dp"
+                            android:layout_marginTop="16dp"
+                            android:padding="6dp" />
+
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:text="@string/my_athletics"/>
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/my_athletics"
+                            android:textSize="16sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -280,20 +290,22 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical">
+
                         <ImageView
+                            android:id="@+id/athletics_right_icon"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:id="@+id/athletics_right_icon"
-                            android:padding="6dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginBottom="8dp"/>
-                        <TextView
-                            android:layout_marginTop="8dp"
                             android:layout_marginBottom="8dp"
+                            android:layout_marginTop="16dp"
+                            android:padding="6dp" />
+
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:text="@string/athletics_details"/>
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/athletics_details"
+                            android:textSize="16sp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

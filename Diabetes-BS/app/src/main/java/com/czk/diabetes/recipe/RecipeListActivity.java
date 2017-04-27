@@ -7,9 +7,11 @@ import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.czk.diabetes.BaseActivity;
@@ -17,9 +19,9 @@ import com.czk.diabetes.R;
 import com.czk.diabetes.net.DiabetesClient;
 import com.czk.diabetes.net.SearchThread;
 import com.czk.diabetes.net.SearchType;
+import com.czk.diabetes.util.DimensUtil;
 import com.czk.diabetes.util.FontIconDrawable;
 import com.czk.diabetes.util.Imageloader;
-import com.czk.diabetes.util.StringUtil;
 import com.czk.diabetes.util.ToastUtil;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -116,7 +118,7 @@ public class RecipeListActivity extends BaseActivity {
          */
         recyclerView = (RecyclerView) findViewById(R.id.rv);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        recyclerView.addItemDecoration(new SpaceDecoration(StringUtil.dpTopx(this, 4)));
+        recyclerView.addItemDecoration(new SpaceDecoration(DimensUtil.dpTopx(this, 4)));
         recyclerView.setAdapter(adapter);
     }
 
@@ -125,6 +127,23 @@ public class RecipeListActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+
+        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
             }
         });
     }
@@ -196,11 +215,16 @@ public class RecipeListActivity extends BaseActivity {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            RecipeData data = cookBooks.get(position);
             if (holder instanceof CardViewHolder) {
-                ((CardViewHolder) holder).tv.setText(cookBooks.get(position).cookbookName);
-                Imageloader.getInstance().loadImageByUrl(cookBooks.get(position).imgUrl
-                        ,cookBooks.get(position).imgWidth
-                        ,cookBooks.get(position).imgHight
+                ((CardViewHolder) holder).tv.setText(data.cookbookName);
+                float cardWidth = (DimensUtil.getScreenWidthDip(RecipeListActivity.this) - 24) / 2;
+                ((CardViewHolder) holder).iv.setLayoutParams(
+                        new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
+                                , DimensUtil.dpTopx(RecipeListActivity.this,(int) (data.imgHight*cardWidth/data.imgWidth))));
+                Imageloader.getInstance().loadImageByUrl(data.imgUrl
+                        ,data.imgWidth
+                        ,data.imgHight
                         ,R.drawable.icon,((CardViewHolder) holder).iv);
             }
         }

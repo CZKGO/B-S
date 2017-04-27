@@ -1,7 +1,5 @@
 package com.czk.diabetes.util;
 
-import android.content.Context;
-
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -71,16 +69,5 @@ public class StringUtil {
             sb.append((char) cp);
         }
         return sb.toString();
-    }
-
-    /**
-     * dp值转px值
-     * @param context
-     * @param dp
-     * @return
-     */
-    public static int dpTopx(Context context, int dp) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dp * scale + 0.5f);
     }
 }
