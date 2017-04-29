@@ -39,6 +39,8 @@
 
         <activity android:name=".recipe.RecipeListActivity" />
 
+        <activity android:name=".recipe.RecipeInfoActivity" />
+
         <receiver android:name=".notification.AlarmReceiver" />
     </application>
 

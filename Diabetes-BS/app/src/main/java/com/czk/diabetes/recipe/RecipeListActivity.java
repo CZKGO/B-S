@@ -1,5 +1,6 @@
 package com.czk.diabetes.recipe;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,11 +8,10 @@ import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.czk.diabetes.BaseActivity;
@@ -130,22 +130,6 @@ public class RecipeListActivity extends BaseActivity {
             }
         });
 
-        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-            @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-                return false;
-            }
-
-            @Override
-            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-            }
-
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-            }
-        });
     }
 
     private void analyticJSON(JSONObject obj) {
@@ -158,6 +142,8 @@ public class RecipeListActivity extends BaseActivity {
                     RecipeData medicineData = new RecipeData(
                             keyArray.getJSONObject(i).getString("cookbookName")
                             , keyArray.getJSONObject(i).getString("imgUrl")
+                            , String.valueOf(keyArray.getJSONObject(i).getInt("collection") + keyArray.getJSONObject(i).getInt("collectNum"))
+                            , String.valueOf(keyArray.getJSONObject(i).getInt("fabulous") + keyArray.getJSONObject(i).getInt("likeNum"))
                             , keyArray.getJSONObject(i).getInt("picWidth")
                             , keyArray.getJSONObject(i).getInt("picHeight")
                             , keyArray.getJSONObject(i).toString());
@@ -175,13 +161,17 @@ public class RecipeListActivity extends BaseActivity {
     private class RecipeData {
         private String cookbookName;
         private String imgUrl;
+        private String collection;
+        private String like;
         private int imgWidth;
         private int imgHight;
         private String obj;
 
-        public RecipeData(String cookbookName, String imgUrl,int imgWidth,int imgHight, String obj) {
+        public RecipeData(String cookbookName, String imgUrl, String collection, String like, int imgWidth, int imgHight, String obj) {
             this.cookbookName = cookbookName;
             this.imgUrl = imgUrl;
+            this.collection = collection;
+            this.like = like;
             this.obj = obj;
             this.imgWidth = imgWidth;
             this.imgHight = imgHight;
@@ -215,17 +205,27 @@ public class RecipeListActivity extends BaseActivity {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            RecipeData data = cookBooks.get(position);
+            final RecipeData data = cookBooks.get(position);
             if (holder instanceof CardViewHolder) {
                 ((CardViewHolder) holder).tv.setText(data.cookbookName);
+                ((CardViewHolder) holder).tvLike.setText(data.like);
+                ((CardViewHolder) holder).tvStar.setText(data.collection);
                 float cardWidth = (DimensUtil.getScreenWidthDip(RecipeListActivity.this) - 24) / 2;
                 ((CardViewHolder) holder).iv.setLayoutParams(
-                        new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
-                                , DimensUtil.dpTopx(RecipeListActivity.this,(int) (data.imgHight*cardWidth/data.imgWidth))));
+                        new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
+                                , DimensUtil.dpTopx(RecipeListActivity.this, (int) (data.imgHight * cardWidth / data.imgWidth))));
                 Imageloader.getInstance().loadImageByUrl(data.imgUrl
-                        ,data.imgWidth
-                        ,data.imgHight
-                        ,R.drawable.icon,((CardViewHolder) holder).iv);
+                        , data.imgWidth
+                        , data.imgHight
+                        , ((CardViewHolder) holder).iv);
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(RecipeListActivity.this, RecipeInfoActivity.class);
+                        intent.putExtra("obj", data.obj);
+                        startActivity(intent);
+                    }
+                });
             }
         }
 
@@ -236,12 +236,31 @@ public class RecipeListActivity extends BaseActivity {
 
         private class CardViewHolder extends RecyclerView.ViewHolder {
             ImageView iv;
+            ImageView ivDefault;
             TextView tv;
+            ImageView ivLike;
+            TextView tvLike;
+            ImageView ivStar;
+            TextView tvStar;
 
             public CardViewHolder(View itemView) {
                 super(itemView);
                 iv = (ImageView) itemView.findViewById(R.id.img);
+                ivDefault = (ImageView) itemView.findViewById(R.id.img_default);
                 tv = (TextView) itemView.findViewById(R.id.txt);
+                ivLike = (ImageView) itemView.findViewById(R.id.like_img);
+                tvLike = (TextView) itemView.findViewById(R.id.like_num);
+                ivStar = (ImageView) itemView.findViewById(R.id.star_img);
+                tvStar = (TextView) itemView.findViewById(R.id.star_num);
+                FontIconDrawable iconThumbUp = FontIconDrawable.inflate(RecipeListActivity.this, R.xml.icon_thumb_up);
+                iconThumbUp.setTextColor(getResources().getColor(R.color.theme_color));
+                FontIconDrawable iconStarEmpty = FontIconDrawable.inflate(RecipeListActivity.this, R.xml.icon_star);
+                iconStarEmpty.setTextColor(getResources().getColor(R.color.theme_color));
+                FontIconDrawable iconImages = FontIconDrawable.inflate(RecipeListActivity.this, R.xml.icon_images);
+                iconImages.setTextColor(getResources().getColor(R.color.theme_color));
+                ivLike.setImageDrawable(iconThumbUp);
+                ivStar.setImageDrawable(iconStarEmpty);
+                ivDefault.setImageDrawable(iconImages);
             }
         }
     }

@@ -369,12 +369,24 @@ public class Imageloader {
      *
      * @param url
      * @param width
+     * @param imageView
+     * @return
+     */
+    public void loadImageByUrl(final String url, final int width, final int hight, final ImageView imageView) {
+        loadImageByUrl(url, width, hight, -1, imageView, false);
+    }
+
+    /**
+     * 加载网络图片
+     *
+     * @param url
+     * @param width
      * @param defaultResID 默认图片
      * @param imageView
      * @return
      */
-    public void loadImageByUrl(final String url, final int width, final int hight,int defaultResID, final ImageView imageView) {
-        loadImageByUrl(url, width,hight, defaultResID, imageView, false);
+    public void loadImageByUrl(final String url, final int width, final int hight, int defaultResID, final ImageView imageView) {
+        loadImageByUrl(url, width, hight, defaultResID, imageView, false);
     }
 
     /**
@@ -406,14 +418,16 @@ public class Imageloader {
         };
         //若该Bitmap不在内存缓存中，则启用线程去加载本地的图片，并将Bitmap加入到mMemoryCache中
         if (null == bitmap) {
-            Bitmap defaultImg = getBitmapFromMemCache(Integer.toString(defaultResID));
-            if (null == defaultImg) {
-                Drawable defaultPic = imageView.getContext().getResources().getDrawable(defaultResID);
-                defaultImg = drawableToBitamp(defaultPic, width, hight);
-                addBitmapToMemoryCache(Integer.toString(defaultResID), defaultImg);
-            }
-            if (null != defaultImg) {
-                imageView.setImageBitmap(defaultImg);
+            if (-1 != defaultResID) {
+                Bitmap defaultImg = getBitmapFromMemCache(Integer.toString(defaultResID));
+                if (null == defaultImg) {
+                    Drawable defaultPic = imageView.getContext().getResources().getDrawable(defaultResID);
+                    defaultImg = drawableToBitamp(defaultPic, width, hight);
+                    addBitmapToMemoryCache(Integer.toString(defaultResID), defaultImg);
+                }
+                if (null != defaultImg) {
+                    imageView.setImageBitmap(defaultImg);
+                }
             }
             threadPool.execute(new Runnable() {
 
@@ -436,7 +450,7 @@ public class Imageloader {
                                     outOptions.inSampleSize = xInSampleSize;
                                     outOptions.outWidth = width;
                                     outOptions.outHeight = outOptions.outHeight / outOptions.inSampleSize;
-                                }else {
+                                } else {
                                     outOptions.inSampleSize = yInSampleSize;
                                     outOptions.outWidth = outOptions.outWidth / outOptions.inSampleSize;
                                     outOptions.outHeight = hight;
@@ -648,6 +662,35 @@ public class Imageloader {
         });
     }
 
+    public Drawable getDrawableFromUrl(final String url, final GetDrawableFromUrlCallBack getDrawableFromUrlCallBack) {
+        //先获取内存中的Bitmap
+        final Bitmap[] bitmap = {getBitmapFromMemCache(url)};
+
+        if (null == bitmap[0]) {
+
+            threadPool.execute(new Runnable() {
+
+                @Override
+                public void run() {
+                    try {
+                        bitmap[0] = BitmapFactory.decodeStream(new URL(url).openStream());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if (null != bitmap[0]) {
+                        addBitmapToMemoryCache(url, bitmap[0]);
+                        getDrawableFromUrlCallBack.onGetEnd();
+                    }
+                }
+            });
+
+        } else {
+            return new BitmapDrawable(bitmap[0]);
+        }
+
+        return null;
+    }
+
     /**
      * 加载异步图片的回调接口
      *
@@ -672,4 +715,7 @@ public class Imageloader {
         void onImageLoader(ImageView imageView, String key, Bitmap bitmap);
     }
 
+    public static interface GetDrawableFromUrlCallBack {
+        public void onGetEnd();
+    }
 }

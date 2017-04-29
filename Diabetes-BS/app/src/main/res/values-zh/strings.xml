@@ -76,4 +76,5 @@
     <string name="wed">周三</string>
     <string name="tue">周二</string>
     <string name="mon">周一</string>
+    <string name="recipe_info">食谱详情</string>
 </resources>

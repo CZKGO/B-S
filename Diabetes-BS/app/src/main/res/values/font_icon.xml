@@ -32,4 +32,10 @@
     <string name="icon_triangle_down" translatable="false">&#xf05b;</string>
     <string name="icon_clock" translatable="false">&#xe90d;</string>
     <!--31-->
+    <string name="icon_thumb_up" translatable="false">&#xe90e;</string>
+    <string name="icon_thumb_up2" translatable="false">&#xe90f;</string>
+    <string name="icon_star" translatable="false">&#xe911;</string>
+    <string name="icon_star2" translatable="false">&#xe912;</string>
+    <string name="icon_images" translatable="false">&#xe910;</string>
+    <!--36-->
 </resources>

@@ -76,4 +76,5 @@
     <string name="wed">Wed</string>
     <string name="tue">Tue</string>
     <string name="mon">Mon</string>
+    <string name="recipe_info">Recipe info</string>
 </resources>
