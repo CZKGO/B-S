@@ -42,10 +42,15 @@ import cz.msebera.android.httpclient.Header;
 public class RecipeListActivity extends BaseActivity {
     private final static int SEARCH_FINSH = 0;
     private final static int SEARCH_ERRO = 1;
+    private final static int LOADING = -1;
+    private final static int LOAD_SUCCESS = 0;
+    private final static int LOAD_FIALD = 1;
     private ImageView ivIcon;
     private List<RecipeData> cookBooks = new ArrayList<>();
     private RecyclerView recyclerView;
     private WaterFallAdapter adapter;
+    private int requestPage = 1;
+    private int loadPageSuccess = LOAD_SUCCESS;//0
 
     private Handler handler = new Handler() {
         @Override
@@ -53,8 +58,11 @@ public class RecipeListActivity extends BaseActivity {
             switch (msg.what) {
                 case SEARCH_FINSH:
                     adapter.notifyDataSetChanged();
+                    requestPage++;
+                    loadPageSuccess = LOAD_SUCCESS;
                     break;
                 case SEARCH_ERRO:
+                    loadPageSuccess = LOAD_FIALD;
                     ToastUtil.showShortToast(RecipeListActivity.this, getResources().getString(R.string.server_time_out));
                     break;
             }
@@ -77,32 +85,39 @@ public class RecipeListActivity extends BaseActivity {
     }
 
     private void initAsnData() {
-        DiabetesClient.post(DiabetesClient.getZKTRECIPEAbsoluteUrl("getCookBooksNew")
-                , DiabetesClient.getCookBooksNew()
-                , new AsyncHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                        SearchThread searchThread = new SearchThread(new ByteArrayInputStream(responseBody)
-                                , SearchType.RECIPE_LIST
-                                , new SearchThread.OnSearchResult() {
-                            @Override
-                            public void searchResult(JSONObject jsonObject, Object type) {
-                                try {
-                                    analyticJSON(jsonObject);
-                                    handler.sendEmptyMessage(SEARCH_FINSH);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-                        searchThread.start();
-                    }
+        getCookBooks();
+    }
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                        handler.sendEmptyMessage(SEARCH_ERRO);
-                    }
-                });
+    private void getCookBooks() {
+        if(LOADING!=loadPageSuccess){
+            loadPageSuccess = LOADING;
+            DiabetesClient.post(DiabetesClient.getZKTRECIPEAbsoluteUrl("getCookBooksNew")
+                    , DiabetesClient.getCookBooksNew(requestPage)
+                    , new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                            SearchThread searchThread = new SearchThread(new ByteArrayInputStream(responseBody)
+                                    , SearchType.RECIPE_LIST
+                                    , new SearchThread.OnSearchResult() {
+                                @Override
+                                public void searchResult(JSONObject jsonObject, Object type) {
+                                    try {
+                                        analyticJSON(jsonObject);
+                                        handler.sendEmptyMessage(SEARCH_FINSH);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                            searchThread.start();
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                            handler.sendEmptyMessage(SEARCH_ERRO);
+                        }
+                    });
+        }
     }
 
     private void initView() {
@@ -129,7 +144,41 @@ public class RecipeListActivity extends BaseActivity {
                 onBackPressed();
             }
         });
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                //当前RecyclerView显示出来的最后一个的item的position
+                int lastPosition = -1;
 
+                //当前状态为停止滑动状态SCROLL_STATE_IDLE时
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+                    int[] lastPositions = new int[((StaggeredGridLayoutManager) layoutManager).getSpanCount()];
+                    ((StaggeredGridLayoutManager) layoutManager).findLastVisibleItemPositions(lastPositions);
+                    lastPosition = findMax(lastPositions);
+
+
+                    //时判断界面显示的最后item的position是否等于itemCount总数-1也就是最后一个item的position
+                    //如果相等则说明已经滑动到最后了
+                    if (lastPosition == recyclerView.getLayoutManager().getItemCount() - 1) {
+                        getCookBooks();
+                    }
+
+                }
+            }
+        });
+    }
+
+    //找到数组中的最大值
+    private int findMax(int[] lastPositions) {
+        int max = lastPositions[0];
+        for (int value : lastPositions) {
+            if (value > max) {
+                max = value;
+            }
+        }
+        return max;
     }
 
     private void analyticJSON(JSONObject obj) {
@@ -142,10 +191,10 @@ public class RecipeListActivity extends BaseActivity {
                     RecipeData medicineData = new RecipeData(
                             keyArray.getJSONObject(i).getString("cookbookName")
                             , keyArray.getJSONObject(i).getString("imgUrl")
-                            , String.valueOf(keyArray.getJSONObject(i).getInt("collection") + keyArray.getJSONObject(i).getInt("collectNum"))
-                            , String.valueOf(keyArray.getJSONObject(i).getInt("fabulous") + keyArray.getJSONObject(i).getInt("likeNum"))
-                            , keyArray.getJSONObject(i).getInt("picWidth")
-                            , keyArray.getJSONObject(i).getInt("picHeight")
+                            , String.valueOf(keyArray.getJSONObject(i).optInt("collection",0) + keyArray.getJSONObject(i).optInt("collectNum"))
+                            , String.valueOf(keyArray.getJSONObject(i).optInt("fabulous",0) + keyArray.getJSONObject(i).optInt("likeNum",0))
+                            , keyArray.getJSONObject(i).optInt("picWidth",0)
+                            , keyArray.getJSONObject(i).optInt("picHeight",0)
                             , keyArray.getJSONObject(i).toString());
                     cookBooks.add(medicineData);
                 }
@@ -215,6 +264,7 @@ public class RecipeListActivity extends BaseActivity {
                         new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
                                 , DimensUtil.dpTopx(RecipeListActivity.this, (int) (data.imgHight * cardWidth / data.imgWidth))));
                 Imageloader.getInstance().loadImageByUrl(data.imgUrl
+                        , android.R.drawable.sym_def_app_icon
                         , data.imgWidth
                         , data.imgHight
                         , ((CardViewHolder) holder).iv);

@@ -662,35 +662,6 @@ public class Imageloader {
         });
     }
 
-    public Drawable getDrawableFromUrl(final String url, final GetDrawableFromUrlCallBack getDrawableFromUrlCallBack) {
-        //先获取内存中的Bitmap
-        final Bitmap[] bitmap = {getBitmapFromMemCache(url)};
-
-        if (null == bitmap[0]) {
-
-            threadPool.execute(new Runnable() {
-
-                @Override
-                public void run() {
-                    try {
-                        bitmap[0] = BitmapFactory.decodeStream(new URL(url).openStream());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    if (null != bitmap[0]) {
-                        addBitmapToMemoryCache(url, bitmap[0]);
-                        getDrawableFromUrlCallBack.onGetEnd();
-                    }
-                }
-            });
-
-        } else {
-            return new BitmapDrawable(bitmap[0]);
-        }
-
-        return null;
-    }
-
     /**
      * 加载异步图片的回调接口
      *
@@ -715,7 +686,5 @@ public class Imageloader {
         void onImageLoader(ImageView imageView, String key, Bitmap bitmap);
     }
 
-    public static interface GetDrawableFromUrlCallBack {
-        public void onGetEnd();
-    }
+
 }

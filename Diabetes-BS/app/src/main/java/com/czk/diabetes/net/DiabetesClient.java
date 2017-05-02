@@ -109,10 +109,10 @@ public class DiabetesClient {
      * 获取食谱
      * @return
      */
-    public static RequestParams getCookBooksNew() {
+    public static RequestParams getCookBooksNew(int page) {
         RequestParams params = new RequestParams();
         params.add("rows","10");
-        params.add("page","1");
+        params.add("page", String.valueOf(page));
         params.add("sessionMemberID","eba63ded5fff28a9f045d0363e4d0f7d");
         params.add("isMyCollected","-1");
         return params;
