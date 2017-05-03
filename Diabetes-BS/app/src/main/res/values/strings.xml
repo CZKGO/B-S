@@ -77,4 +77,9 @@
     <string name="tue">Tue</string>
     <string name="mon">Mon</string>
     <string name="recipe_info">Recipe info</string>
+    <string name="about_us">About us</string>
+    <string name="copyright_version">Version: %1$s</string>
+    <string name="share_apk">Share APK to friends</string>
+    <string name="failed_share">Share failed</string>
+    <string name="rate_us">Rate us at App Store</string>
 </resources>

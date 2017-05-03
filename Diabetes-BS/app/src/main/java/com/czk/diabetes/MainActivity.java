@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.czk.diabetes.aboutUs.AboutUsActvity;
 import com.czk.diabetes.notification.AddNotificationActivity;
 import com.czk.diabetes.setting.SettingActvity;
 import com.czk.diabetes.util.FontIconDrawable;
@@ -23,6 +24,7 @@ public class MainActivity extends BaseFragmentActivity {
     private DrawerLayout drawerLayout;
     private ImageView ivIcon;
     private LinearLayout settiongLayout;
+    private LinearLayout aboutLayout;
     private ViewPager mPager;
     private MainPagerAdapter adapter;
     private List<Fragment> fragments;
@@ -94,7 +96,7 @@ public class MainActivity extends BaseFragmentActivity {
         ImageView about_icon = (ImageView) findViewById(R.id.about_icon);
         about_icon.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_notification));
         settiongLayout = (LinearLayout) findViewById(R.id.settiong_layout);
-        LinearLayout about_layout = (LinearLayout) findViewById(R.id.about_layout);
+        aboutLayout = (LinearLayout) findViewById(R.id.about_layout);
 
         //主体
         mPager = (ViewPager) findViewById(R.id.main_viewpager);
@@ -121,6 +123,13 @@ public class MainActivity extends BaseFragmentActivity {
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent(MainActivity.this, SettingActvity.class), START_SETTING);
+            }
+        });
+
+        aboutLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(MainActivity.this, AboutUsActvity.class), START_SETTING);
             }
         });
 

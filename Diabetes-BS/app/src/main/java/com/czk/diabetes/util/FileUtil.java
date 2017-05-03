@@ -5,5 +5,6 @@ package com.czk.diabetes.util;
  */
 
 public class FileUtil {
-    public static String CACHEPATH = "cache";
+    public final static String CACHEPATH = "cache";
+    public final static String BACKUP_PATH = "Diabets_BS";
 }
