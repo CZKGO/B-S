@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.czk.diabetes.R;
+import com.czk.diabetes.util.ColorUtil;
 import com.czk.diabetes.util.FontIconDrawable;
 
 /**
@@ -19,6 +20,7 @@ public class SettingActvity extends PreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ColorUtil.setTitleColor(this);
         setContentView(R.layout.activity_setting);
         addPreferencesFromResource(R.xml.setting_perference);
         initData();

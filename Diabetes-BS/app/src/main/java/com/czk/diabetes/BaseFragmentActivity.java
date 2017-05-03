@@ -8,6 +8,8 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 
+import com.czk.diabetes.util.ColorUtil;
+
 import java.util.Locale;
 
 /**
@@ -17,8 +19,7 @@ public class BaseFragmentActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
+        ColorUtil.setTitleColor(this);
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
         String language = settings.getString("language", "DEFAULT");
         if (language.equals("DEFAULT")) {

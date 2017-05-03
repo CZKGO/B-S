@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 
+import com.czk.diabetes.util.ColorUtil;
+
 import java.util.Locale;
 
 /**
@@ -17,8 +19,7 @@ public class BaseActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
+        ColorUtil.setTitleColor(this);
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
         String language = settings.getString("language", "DEFAULT");
         if (language.equals("DEFAULT")) {
