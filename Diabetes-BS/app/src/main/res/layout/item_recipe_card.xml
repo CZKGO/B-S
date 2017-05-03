@@ -6,22 +6,12 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <FrameLayout
+    <ImageView
+        android:id="@+id/img"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ImageView
-            android:layout_gravity="center"
-            android:id="@+id/img_default"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="centerCrop" />
-        <ImageView
-            android:layout_gravity="top"
-            android:id="@+id/img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop" />
-    </FrameLayout>
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/txt"
@@ -39,6 +29,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/like_click_range"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -59,6 +50,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/star_click_range"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
