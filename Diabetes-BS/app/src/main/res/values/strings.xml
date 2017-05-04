@@ -82,4 +82,8 @@
     <string name="share_apk">Share APK to friends</string>
     <string name="failed_share">Share failed</string>
     <string name="rate_us">Rate us at App Store</string>
+    <string name="language_select">English</string>
+    <string name="theme">Theme</string>
+    <string name="theme_pink">Lovely pink</string>
+    <string name="theme_blue">Deep Sea Blue</string>
 </resources>

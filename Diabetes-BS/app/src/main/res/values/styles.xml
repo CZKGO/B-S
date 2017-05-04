@@ -1,5 +1,25 @@
 <resources>
+
     <style name="main_activity_style" parent="android:Theme.Light.NoTitleBar">
         <item name="android:fitsSystemWindows">true</item>
+    </style>
+
+    <style name="AppTheme_Blue" parent="main_activity_style">
+        <item name="theme_color">@color/blue_color</item>
+        <item name="theme_color_light">@color/blue_color_light</item>
+    </style>
+
+    <style name="AppTheme_Pink" parent="main_activity_style">
+        <item name="theme_color">@color/pink_color</item>
+        <item name="theme_color_light">@color/pink_color_light</item>
+    </style>
+
+    <style name="MyDialog" parent="@android:style/Theme.Light">
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
     </style>
 </resources>

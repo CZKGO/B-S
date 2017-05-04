@@ -6,7 +6,7 @@
 
         <PreferenceScreen
             android:title="@string/language"
-            android:summary="@string/language"
+            android:summary="@string/language_select"
             android:layout="@layout/preference_general"
             android:key="language">
             <intent
@@ -14,5 +14,10 @@
                 android:targetClass="com.czk.diabetes.setting.LanguageSettingActivity" />
         </PreferenceScreen>
 
+        <com.czk.diabetes.setting.ThemeDialogPreference
+            android:title="@string/theme"
+            android:summary="@string/theme"
+            android:key="theme">
+        </com.czk.diabetes.setting.ThemeDialogPreference>
     </com.czk.diabetes.setting.MyPreferenceCategory>
 </PreferenceScreen>

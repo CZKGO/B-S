@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import com.czk.diabetes.aboutUs.AboutUsActvity;
 import com.czk.diabetes.notification.AddNotificationActivity;
 import com.czk.diabetes.setting.SettingActvity;
+import com.czk.diabetes.util.ThemeUtil;
 import com.czk.diabetes.util.FontIconDrawable;
 
 import java.util.ArrayList;
@@ -67,11 +68,16 @@ public class MainActivity extends BaseFragmentActivity {
 
     private void initView() {
         //头部
+        findViewById(R.id.title_layout).setBackgroundColor(ThemeUtil.getThemeColor());
         ivIcon = (ImageView) findViewById(R.id.icon);
-        ivIcon.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_menu));
+        FontIconDrawable iconMenu = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_menu);
+        iconMenu.setTextColor(getResources().getColor(R.color.white));
+        ivIcon.setImageDrawable(iconMenu);
         ivIconRight = (ImageView) findViewById(R.id.icon_right);
         ivIconRight.setVisibility(View.VISIBLE);
-        ivIconRight.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_alarm));
+        FontIconDrawable iconAlarm = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_alarm);
+        iconAlarm.setTextColor(getResources().getColor(R.color.white));
+        ivIconRight.setImageDrawable(iconAlarm);
         //底部
         icon_bottom1 = (ImageView) findViewById(R.id.icon_bottom1);
         fontDrawable1 = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_home);
@@ -186,13 +192,13 @@ public class MainActivity extends BaseFragmentActivity {
      */
     private void setTabSelection(int index) {
         // 每次选中之前先清楚掉上次的选中状态
-        fontDrawable1.setTextColor(getResources().getColor(R.color.theme_color_light));
+        fontDrawable1.setTextColor(ThemeUtil.getThemeColorLight());
         icon_bottom1.setImageDrawable(fontDrawable1);
-        fontDrawable2.setTextColor(getResources().getColor(R.color.theme_color_light));
+        fontDrawable2.setTextColor(ThemeUtil.getThemeColorLight());
         icon_bottom2.setImageDrawable(fontDrawable2);
-        fontDrawable3.setTextColor(getResources().getColor(R.color.theme_color_light));
+        fontDrawable3.setTextColor(ThemeUtil.getThemeColorLight());
         icon_bottom3.setImageDrawable(fontDrawable3);
-        fontDrawable4.setTextColor(getResources().getColor(R.color.theme_color_light));
+        fontDrawable4.setTextColor(ThemeUtil.getThemeColorLight());
         icon_bottom4.setImageDrawable(fontDrawable4);
         switch (index) {
             case 0:
@@ -220,7 +226,7 @@ public class MainActivity extends BaseFragmentActivity {
      * @param imageView
      */
     private void setTabChose(FontIconDrawable fontDrawable, ImageView imageView) {
-        fontDrawable.setTextColor(getResources().getColor(R.color.theme_color));
+        fontDrawable.setTextColor(ThemeUtil.getThemeColor());
         imageView.setImageDrawable(fontDrawable);
     }
 

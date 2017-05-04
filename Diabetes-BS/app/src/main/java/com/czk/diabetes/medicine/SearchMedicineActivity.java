@@ -24,6 +24,7 @@ import com.czk.diabetes.R;
 import com.czk.diabetes.net.SearchType;
 import com.czk.diabetes.net.DiabetesClient;
 import com.czk.diabetes.net.SearchThread;
+import com.czk.diabetes.util.ThemeUtil;
 import com.czk.diabetes.util.FontIconDrawable;
 import com.czk.diabetes.util.ToastUtil;
 import com.czk.diabetes.view.TagCloud.FlowLayout;
@@ -190,10 +191,15 @@ public class SearchMedicineActivity extends BaseActivity {
         /**
          * 头部
          */
+        findViewById(R.id.title_layout).setBackgroundColor(ThemeUtil.getThemeColor());
         ivIcon = (ImageView) findViewById(R.id.icon);
-        ivIcon.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_arrow_left));
+        FontIconDrawable iconArrowLeft = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_arrow_left);
+        iconArrowLeft.setTextColor(getResources().getColor(R.color.white));
+        ivIcon.setImageDrawable(iconArrowLeft);
         ivCancel = (ImageView) findViewById(R.id.search_cancel_icon);
-        ivCancel.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_cross));
+        FontIconDrawable iconCross = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_cross);
+        iconCross.setTextColor(getResources().getColor(R.color.white));
+        ivCancel.setImageDrawable(iconCross);
         etSearch = (EditText) findViewById(R.id.search_etxt);
         /**
          * 主体

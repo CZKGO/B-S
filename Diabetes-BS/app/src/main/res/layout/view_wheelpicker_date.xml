@@ -16,7 +16,7 @@
         wp:wheel_atmospheric="true"
         wp:wheel_curved="true"
         wp:wheel_item_text_size="16dp"
-        wp:wheel_selected_item_text_color="@color/theme_color"
+        wp:wheel_selected_item_text_color="?attr/theme_color"
         wp:wheel_visible_item_count="5" />
 
     <com.czk.diabetes.view.WheelPicker xmlns:wp="http://schemas.android.com/apk/res-auto"
@@ -32,7 +32,7 @@
         wp:wheel_curved="true"
         wp:wheel_cyclic="true"
         wp:wheel_item_text_size="16dp"
-        wp:wheel_selected_item_text_color="@color/theme_color"
+        wp:wheel_selected_item_text_color="?attr/theme_color"
         wp:wheel_visible_item_count="5" />
 
     <com.czk.diabetes.view.WheelPicker xmlns:wp="http://schemas.android.com/apk/res-auto"
@@ -48,6 +48,6 @@
         wp:wheel_curved="true"
         wp:wheel_cyclic="true"
         wp:wheel_item_text_size="16dp"
-        wp:wheel_selected_item_text_color="@color/theme_color"
+        wp:wheel_selected_item_text_color="?attr/theme_color"
         wp:wheel_visible_item_count="5" />
 </LinearLayout>

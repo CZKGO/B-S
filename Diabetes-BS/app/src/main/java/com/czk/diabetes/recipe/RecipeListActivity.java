@@ -19,6 +19,7 @@ import com.czk.diabetes.R;
 import com.czk.diabetes.net.DiabetesClient;
 import com.czk.diabetes.net.SearchThread;
 import com.czk.diabetes.net.SearchType;
+import com.czk.diabetes.util.ThemeUtil;
 import com.czk.diabetes.util.DimensUtil;
 import com.czk.diabetes.util.FontIconDrawable;
 import com.czk.diabetes.util.Imageloader;
@@ -125,8 +126,11 @@ public class RecipeListActivity extends BaseActivity {
         /**
          * 头部
          */
+        findViewById(R.id.title_layout).setBackgroundColor(ThemeUtil.getThemeColor());
         ivIcon = (ImageView) findViewById(R.id.icon);
-        ivIcon.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_arrow_left));
+        FontIconDrawable iconArrowLeft = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_arrow_left);
+        iconArrowLeft.setTextColor(getResources().getColor(R.color.white));
+        ivIcon.setImageDrawable(iconArrowLeft);
         TextView tvTitle = (TextView) findViewById(R.id.title);
         tvTitle.setText(getResources().getString(R.string.many_recipes));
         /**
@@ -322,8 +326,8 @@ public class RecipeListActivity extends BaseActivity {
             if(null!=islike){
                 FontIconDrawable iconThumbUp = FontIconDrawable.inflate(RecipeListActivity.this, R.xml.icon_thumb_up);
                 if((boolean)islike){
-                    iconThumbUp.setTextColor(getResources().getColor(R.color.theme_color));
-                    holder.tvLike.setTextColor(getResources().getColor(R.color.theme_color));
+                    iconThumbUp.setTextColor(ThemeUtil.getThemeColor());
+                    holder.tvLike.setTextColor(ThemeUtil.getThemeColor());
                     holder.ivLike.setImageDrawable(iconThumbUp);
                 }else {
                     iconThumbUp.setTextColor(getResources().getColor(R.color.txt_light_color));
@@ -334,8 +338,8 @@ public class RecipeListActivity extends BaseActivity {
             if(null!=isCollect){
                 FontIconDrawable iconStarEmpty = FontIconDrawable.inflate(RecipeListActivity.this, R.xml.icon_star);
                 if((boolean)isCollect){
-                    iconStarEmpty.setTextColor(getResources().getColor(R.color.theme_color));
-                    holder.tvStar.setTextColor(getResources().getColor(R.color.theme_color));
+                    iconStarEmpty.setTextColor(ThemeUtil.getThemeColor());
+                    holder.tvStar.setTextColor(ThemeUtil.getThemeColor());
                     holder.ivStar.setImageDrawable(iconStarEmpty);
                 }else {
                     iconStarEmpty.setTextColor(getResources().getColor(R.color.txt_light_color));

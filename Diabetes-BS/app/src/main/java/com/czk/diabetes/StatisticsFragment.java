@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.czk.diabetes.DB.DBOpenHelper;
 import com.czk.diabetes.data.ConfigureData;
+import com.czk.diabetes.util.ThemeUtil;
 import com.czk.diabetes.util.FontIconDrawable;
 import com.czk.diabetes.util.TimeUtil;
 import com.czk.diabetes.view.chart.BarChartView;
@@ -84,8 +85,8 @@ public class StatisticsFragment extends Fragment {
                     }
                     //折线图
                     if (null != lineDataMap.get(TimeUtil.getYearMonthDay(System.currentTimeMillis()))) {
-                        lineChart.setPointColor(getResources().getColor(R.color.theme_color));
-                        lineChart.setLineColor(getResources().getColor(R.color.theme_color));
+                        lineChart.setPointColor(ThemeUtil.getThemeColor());
+                        lineChart.setLineColor(ThemeUtil.getThemeColor());
                         lineChart.setXSystemPionts(0, 8, 8);
                         lineChart.setYSystemPionts(ConfigureData.MIN_VALUE, ConfigureData.MAX_VALUE, (int) ConfigureData.MAX_VALUE);
                         float[] values = lineDataMap.get(TimeUtil.getYearMonthDay(System.currentTimeMillis())).values;
@@ -101,8 +102,8 @@ public class StatisticsFragment extends Fragment {
                     }
                     //柱状图
                     if (null != lineDataMap.get(TimeUtil.getYearMonthDay(System.currentTimeMillis()))) {
-                        barChart.setBarOneColor(getResources().getColor(R.color.theme_color));
-                        barChart.setBarTowColor(getResources().getColor(R.color.theme_color_light));
+                        barChart.setBarOneColor(ThemeUtil.getThemeColor());
+                        barChart.setBarTowColor(ThemeUtil.getThemeColorLight());
                         barChart.setXSystemPionts(0, 6, 6);
                         barChart.setYSystemPionts(ConfigureData.MIN_VALUE, ConfigureData.MAX_VALUE, (int) ConfigureData.MAX_VALUE);
                         float[] values = lineDataMap.get(TimeUtil.getYearMonthDay(System.currentTimeMillis())).values;

@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="oval">
-    <solid android:color="@color/theme_color_light"/>
-</shape>
+<level-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--Blue_Theme-->
+    <item
+        android:maxLevel="0"
+        android:minLevel="0">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="oval">
+            <solid android:color="@color/blue_color_light" />
+        </shape>
+    </item>
+    <!--Pink_Theme-->
+    <item
+        android:maxLevel="1"
+        android:minLevel="1">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="oval">
+            <solid android:color="@color/pink_color_light" />
+        </shape>
+    </item>
+</level-list>

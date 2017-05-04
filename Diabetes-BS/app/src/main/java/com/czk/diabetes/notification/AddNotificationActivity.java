@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.czk.diabetes.BaseFragmentActivity;
 import com.czk.diabetes.R;
+import com.czk.diabetes.util.ThemeUtil;
 import com.czk.diabetes.util.FontIconDrawable;
 import com.czk.diabetes.util.TimeUtil;
 import com.czk.diabetes.view.SpinerPopWindow;
@@ -55,8 +56,11 @@ public class AddNotificationActivity extends BaseFragmentActivity {
 
     private void initView() {
         /**头部**/
+        findViewById(R.id.title_layout).setBackgroundColor(ThemeUtil.getThemeColor());
         ivIcon = (ImageView) findViewById(R.id.icon);
-        ivIcon.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_arrow_left));
+        FontIconDrawable iconArrowLeft = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_arrow_left);
+        iconArrowLeft.setTextColor(getResources().getColor(R.color.white));
+        ivIcon.setImageDrawable(iconArrowLeft);
         TextView tvTitle = (TextView) findViewById(R.id.title);
         tvTitle.setText(getResources().getString(R.string.add_notification));
         /**添加提醒**/

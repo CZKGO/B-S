@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.czk.diabetes.DB.DBOpenHelper;
+import com.czk.diabetes.util.ThemeUtil;
 import com.czk.diabetes.util.FontIconDrawable;
 import com.czk.diabetes.util.TimeUtil;
 import com.czk.diabetes.util.ToastUtil;
@@ -67,8 +68,11 @@ public class AddValueActivity extends BaseActivity {
 
     private void initView() {
         //头部
+        findViewById(R.id.title_layout).setBackgroundColor(ThemeUtil.getThemeColor());
         ivIcon = (ImageView) findViewById(R.id.icon);
-        ivIcon.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_arrow_left));
+        FontIconDrawable iconArrowLeft = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_arrow_left);
+        iconArrowLeft.setTextColor(getResources().getColor(R.color.white));
+        ivIcon.setImageDrawable(iconArrowLeft);
         TextView tvTitle = (TextView) findViewById(R.id.title);
         tvTitle.setText(getResources().getString(R.string.input_measured_value));
         //主体
@@ -129,13 +133,13 @@ public class AddValueActivity extends BaseActivity {
                 if (keyBoardType == KeyBoardType.DIGITAL_TYPE) {
                     keyBoardType = keyBoardType.DATE_TYPE;
                     alphaAnimator(digitalkeyboard, dateWheelpicker);
-                    tvDate.setTextColor(getResources().getColor(R.color.theme_color));
+                    tvDate.setTextColor(ThemeUtil.getThemeColor());
                     etValue.setEnabled(false);
                 } else if (keyBoardType == KeyBoardType.TIME_TYPE) {
                     keyBoardType = keyBoardType.DATE_TYPE;
                     alphaAnimator(wheelpicker, dateWheelpicker);
                     tvTimeSlot.setTextColor(getResources().getColor(R.color.txt_light_color));
-                    tvDate.setTextColor(getResources().getColor(R.color.theme_color));
+                    tvDate.setTextColor(ThemeUtil.getThemeColor());
                     etValue.setEnabled(false);
                 }
             }
@@ -146,12 +150,12 @@ public class AddValueActivity extends BaseActivity {
                 if (keyBoardType == KeyBoardType.DIGITAL_TYPE) {
                     keyBoardType = keyBoardType.TIME_TYPE;
                     alphaAnimator(digitalkeyboard, wheelpicker);
-                    tvTimeSlot.setTextColor(getResources().getColor(R.color.theme_color));
+                    tvTimeSlot.setTextColor(ThemeUtil.getThemeColor());
                     etValue.setEnabled(false);
                 } else if (keyBoardType == KeyBoardType.DATE_TYPE) {
                     keyBoardType = keyBoardType.TIME_TYPE;
                     alphaAnimator(dateWheelpicker, wheelpicker);
-                    tvTimeSlot.setTextColor(getResources().getColor(R.color.theme_color));
+                    tvTimeSlot.setTextColor(ThemeUtil.getThemeColor());
                     tvDate.setTextColor(getResources().getColor(R.color.txt_light_color));
                     etValue.setEnabled(false);
                 }

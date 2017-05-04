@@ -18,7 +18,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:background="@color/theme_color"
+            android:background="?attr/theme_color"
             android:gravity="center"
             android:orientation="vertical">
 

@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="56dp"
-    android:background="@color/theme_color"
     android:elevation="4dp"
-    android:translationZ="4dp">
+    android:translationZ="4dp"
+    android:id="@+id/title_layout">
 
     <ImageView
         android:id="@+id/icon"

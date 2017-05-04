@@ -24,13 +24,13 @@ import android.view.AbsSavedState;
 import android.view.InflateException;
 import android.view.View;
 
+import com.czk.diabetes.R;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-
-import com.czk.diabetes.R;
 
 /**
  * Created by 陈忠凯 on 2017/2/21.
@@ -83,6 +83,7 @@ public class FontIconDrawable extends Drawable {
                 if ("font-icon".equals(name)) {
                     FontIconDrawable result = new FontIconDrawable();
                     result.inflate(context, Xml.asAttributeSet(parser));
+                    result.setTextColor(ThemeUtil.getThemeColor());
                     return result;
                 } else {
                     throw new InflateException(name);

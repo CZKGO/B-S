@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- 主题色 -->
-    <color name="theme_color">#3f51b5</color>
-    <color name="theme_color_light">#c5cae9</color>
+    <color name="blue_color">#3f51b5</color>
+    <color name="blue_color_light">#c5cae9</color>
+
+    <color name="pink_color">#FF4081</color>
+    <color name="pink_color_light">#FF80AB</color>
 
     <color name="low_color">#5677fc</color>
     <color name="safe_color">#259b24</color>

@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.czk.diabetes.R;
+import com.czk.diabetes.util.ThemeUtil;
 
 /**
  * Created by 陈忠凯 on 2017/3/13.
@@ -88,12 +89,12 @@ public class Digitalkeyboard extends LinearLayout {
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        view.setTextColor(getResources().getColor(com.czk.diabetes.R.color.txt_white));
-                        view.setBackgroundResource(com.czk.diabetes.R.drawable.button_key_onclick);
+                        view.setTextColor(getResources().getColor(R.color.txt_white));
+                        view.setBackgroundResource(R.drawable.button_key_onclick);
                         break;
                     case MotionEvent.ACTION_UP:
-                        view.setTextColor(getResources().getColor(com.czk.diabetes.R.color.theme_color));
-                        view.setBackgroundResource(com.czk.diabetes.R.drawable.button_key_default);
+                        view.setTextColor(ThemeUtil.getThemeColor());
+                        view.setBackgroundResource(R.drawable.button_key_default);
                         if (null != keyClickListener) {
                             keyClickListener.onClick(i);
                         }

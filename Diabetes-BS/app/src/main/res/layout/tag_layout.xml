@@ -5,6 +5,6 @@
     android:layout_margin="5dp"
     android:background="@drawable/tag_background"
     android:text="Helloworld"
-    android:textColor="@color/theme_color">
+    android:textColor="?attr/theme_color">
 
 </TextView>

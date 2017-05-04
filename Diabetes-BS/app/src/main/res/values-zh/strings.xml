@@ -82,4 +82,8 @@
     <string name="share_apk">分享APK给朋友</string>
     <string name="failed_share">分享失败</string>
     <string name="rate_us">在应用商店给我们好评</string>
+    <string name="language_select">中文</string>
+    <string name="theme">主题</string>
+    <string name="theme_pink">可爱粉</string>
+    <string name="theme_blue">深海蓝</string>
 </resources>

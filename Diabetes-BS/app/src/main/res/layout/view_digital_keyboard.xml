@@ -20,7 +20,7 @@
             android:background="@drawable/button_key_default"
             android:gravity="center"
             android:text="1"
-            android:textColor="@color/theme_color"
+            android:textColor="?attr/theme_color"
             android:textSize="24dp" />
 
         <TextView
@@ -31,7 +31,7 @@
             android:background="@drawable/button_key_default"
             android:gravity="center"
             android:text="2"
-            android:textColor="@color/theme_color"
+            android:textColor="?attr/theme_color"
             android:textSize="24dp" />
 
         <TextView
@@ -42,7 +42,7 @@
             android:background="@drawable/button_key_default"
             android:gravity="center"
             android:text="3"
-            android:textColor="@color/theme_color"
+            android:textColor="?attr/theme_color"
             android:textSize="24dp" />
     </LinearLayout>
 
@@ -59,7 +59,7 @@
             android:background="@drawable/button_key_default"
             android:gravity="center"
             android:text="4"
-            android:textColor="@color/theme_color"
+            android:textColor="?attr/theme_color"
             android:textSize="24dp" />
 
         <TextView
@@ -70,7 +70,7 @@
             android:background="@drawable/button_key_default"
             android:gravity="center"
             android:text="5"
-            android:textColor="@color/theme_color"
+            android:textColor="?attr/theme_color"
             android:textSize="24dp" />
 
         <TextView
@@ -81,7 +81,7 @@
             android:background="@drawable/button_key_default"
             android:gravity="center"
             android:text="6"
-            android:textColor="@color/theme_color"
+            android:textColor="?attr/theme_color"
             android:textSize="24dp" />
     </LinearLayout>
 
@@ -98,7 +98,7 @@
             android:background="@drawable/button_key_default"
             android:gravity="center"
             android:text="7"
-            android:textColor="@color/theme_color"
+            android:textColor="?attr/theme_color"
             android:textSize="24dp" />
 
         <TextView
@@ -109,7 +109,7 @@
             android:background="@drawable/button_key_default"
             android:gravity="center"
             android:text="8"
-            android:textColor="@color/theme_color"
+            android:textColor="?attr/theme_color"
             android:textSize="24dp" />
 
         <TextView
@@ -120,7 +120,7 @@
             android:background="@drawable/button_key_default"
             android:gravity="center"
             android:text="9"
-            android:textColor="@color/theme_color"
+            android:textColor="?attr/theme_color"
             android:textSize="24dp" />
     </LinearLayout>
 
@@ -137,7 +137,7 @@
             android:background="@drawable/button_key_default"
             android:gravity="center"
             android:text="@string/delete"
-            android:textColor="@color/theme_color"
+            android:textColor="?attr/theme_color"
             android:textSize="24dp" />
 
         <TextView
@@ -148,7 +148,7 @@
             android:background="@drawable/button_key_default"
             android:gravity="center"
             android:text="0"
-            android:textColor="@color/theme_color"
+            android:textColor="?attr/theme_color"
             android:textSize="24dp" />
 
         <TextView
@@ -159,7 +159,7 @@
             android:background="@drawable/button_key_default"
             android:gravity="center"
             android:text="."
-            android:textColor="@color/theme_color"
+            android:textColor="?attr/theme_color"
             android:textSize="24dp" />
     </LinearLayout>
 </LinearLayout>

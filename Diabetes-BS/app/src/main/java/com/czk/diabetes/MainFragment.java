@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.czk.diabetes.DB.DBOpenHelper;
 import com.czk.diabetes.signin.SignActivity;
+import com.czk.diabetes.util.ThemeUtil;
 import com.czk.diabetes.util.FontIconDrawable;
 import com.czk.diabetes.util.TimeUtil;
 import com.czk.diabetes.view.MeterView;
@@ -159,10 +160,10 @@ public class MainFragment extends Fragment {
         FontIconDrawable userIVfontDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_user);
         userIVfontDrawable.setTextColor(getResources().getColor(R.color.background_white));
         userIV.setImageDrawable(userIVfontDrawable);
-
+        fragment.findViewById(R.id.user_icon_back).getBackground().setLevel(ThemeUtil.getTheme());
         ImageView chevronRightIV = (ImageView) fragment.findViewById(R.id.img_sig_chevron_right);
         FontIconDrawable chevronRightDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_chevron_thin_right);
-        chevronRightDrawable.setTextColor(getResources().getColor(R.color.theme_color_light));
+        chevronRightDrawable.setTextColor(ThemeUtil.getThemeColorLight());
         chevronRightIV.setImageDrawable(chevronRightDrawable);
         //每日一读
         ImageView cozyTipIcon = (ImageView) fragment.findViewById(R.id.cozy_tip_icon);
@@ -209,7 +210,7 @@ public class MainFragment extends Fragment {
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()){
                     case MotionEvent.ACTION_DOWN:
-                        dailyReadTV.setTextColor(getResources().getColor(R.color.theme_color));
+                        dailyReadTV.setTextColor(ThemeUtil.getThemeColor());
                         break;
                     case MotionEvent.ACTION_UP:
                         dailyReadTV.setTextColor(getResources().getColor(R.color.txt_light_color));

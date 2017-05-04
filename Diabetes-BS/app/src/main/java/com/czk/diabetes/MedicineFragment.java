@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.czk.diabetes.medicine.SearchMedicineActivity;
 import com.czk.diabetes.recipe.RecipeListActivity;
+import com.czk.diabetes.util.ThemeUtil;
 import com.czk.diabetes.util.FontIconDrawable;
 
 /**
@@ -47,12 +48,12 @@ public class MedicineFragment extends Fragment {
         leechdomIconIV.setImageDrawable(leechdomIconDrawable);
         ImageView leechdomLeftIconIV = (ImageView) fragment.findViewById(R.id.leechdom_left_icon);
         FontIconDrawable leechdomIconLeftDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_pill);
-        leechdomIconLeftDrawable.setTextColor(getResources().getColor(R.color.theme_color));
+        leechdomIconLeftDrawable.setTextColor(ThemeUtil.getThemeColor());
         leechdomLeftIconIV.setImageDrawable(leechdomIconLeftDrawable);
 
         ImageView leechdomRightIconIV = (ImageView) fragment.findViewById(R.id.leechdom_right_icon);
         FontIconDrawable leechdomRightIconDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_injection);
-        leechdomRightIconDrawable.setTextColor(getResources().getColor(R.color.theme_color));
+        leechdomRightIconDrawable.setTextColor(ThemeUtil.getThemeColor());
         leechdomRightIconIV.setImageDrawable(leechdomRightIconDrawable);
         /**************************************************
          * 饮食                                           *
@@ -63,12 +64,12 @@ public class MedicineFragment extends Fragment {
         dietIconIV.setImageDrawable(dietIconDrawable);
         ImageView dietLeftIconIV = (ImageView) fragment.findViewById(R.id.diet_left_icon);
         FontIconDrawable dietIconLeftDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_spoon_knife);
-        dietIconLeftDrawable.setTextColor(getResources().getColor(R.color.theme_color));
+        dietIconLeftDrawable.setTextColor(ThemeUtil.getThemeColor());
         dietLeftIconIV.setImageDrawable(dietIconLeftDrawable);
 
         ImageView dietRightIconIV = (ImageView) fragment.findViewById(R.id.diet_right_icon);
         FontIconDrawable dietRightIconDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_room_service);
-        dietRightIconDrawable.setTextColor(getResources().getColor(R.color.theme_color));
+        dietRightIconDrawable.setTextColor(ThemeUtil.getThemeColor());
         dietRightIconIV.setImageDrawable(dietRightIconDrawable);
         /**************************************************
          * 运动                                           *
@@ -79,12 +80,12 @@ public class MedicineFragment extends Fragment {
         athleticsIconIV.setImageDrawable(athleticsIconDrawable);
         ImageView athleticsLeftIconIV = (ImageView) fragment.findViewById(R.id.athletics_left_icon);
         FontIconDrawable athleticsLeftIconDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_directions_run);
-        athleticsLeftIconDrawable.setTextColor(getResources().getColor(R.color.theme_color));
+        athleticsLeftIconDrawable.setTextColor(ThemeUtil.getThemeColor());
         athleticsLeftIconIV.setImageDrawable(athleticsLeftIconDrawable);
 
         ImageView athleticsRightIconIV = (ImageView) fragment.findViewById(R.id.athletics_right_icon);
         FontIconDrawable athleticsRightIconDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_pool);
-        athleticsRightIconDrawable.setTextColor(getResources().getColor(R.color.theme_color));
+        athleticsRightIconDrawable.setTextColor(ThemeUtil.getThemeColor());
         athleticsRightIconIV.setImageDrawable(athleticsRightIconDrawable);
     }
 
