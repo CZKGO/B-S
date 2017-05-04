@@ -38,8 +38,7 @@
             <View
                 android:id="@id/img_theme"
                 android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:background="?attr/theme_color"/>
+                android:layout_height="14dp"/>
             <TextView
                 android:layout_marginLeft="8dp"
                 android:id="@+android:id/summary"

@@ -3,6 +3,8 @@
     <array name="themes">
         <item>@string/theme_blue</item>
         <item>@string/theme_pink</item>
+        <item>@string/theme_purple</item>
+        <item>@string/theme_black</item>
     </array>
     <array name="languages">
         <item>English</item>

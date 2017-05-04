@@ -14,6 +14,16 @@
         <item name="theme_color_light">@color/pink_color_light</item>
     </style>
 
+    <style name="AppTheme_Purple" parent="main_activity_style">
+        <item name="theme_color">@color/purple_color</item>
+        <item name="theme_color_light">@color/purple_color_light</item>
+    </style>
+
+    <style name="AppTheme_Black" parent="main_activity_style">
+        <item name="theme_color">@color/black_color</item>
+        <item name="theme_color_light">@color/black_color_light</item>
+    </style>
+
     <style name="MyDialog" parent="@android:style/Theme.Light">
         <item name="android:windowBackground">@null</item>
         <item name="android:windowNoTitle">true</item>

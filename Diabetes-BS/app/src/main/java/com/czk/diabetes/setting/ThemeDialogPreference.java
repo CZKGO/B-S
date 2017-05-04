@@ -50,6 +50,7 @@ public class ThemeDialogPreference extends Preference {
     protected void onBindView(View view) {
         super.onBindView(view);
         imgTheme = view.findViewById(R.id.img_theme);
+        imgTheme.setBackgroundColor(ThemeUtil.getThemeColor());
         tvTheme = (TextView) view.findViewById(android.R.id.summary);
         tvTheme.setText(ThemeUtil.getThemeName());
     }

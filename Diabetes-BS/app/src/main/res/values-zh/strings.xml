@@ -86,4 +86,6 @@
     <string name="theme">主题</string>
     <string name="theme_pink">可爱粉</string>
     <string name="theme_blue">深海蓝</string>
+    <string name="theme_black">高雅黑</string>
+    <string name="theme_purple">神秘紫</string>
 </resources>

@@ -18,6 +18,8 @@ import com.czk.diabetes.R;
 public class ThemeUtil {
     public static final int THEME_BLUE = 0;
     public static final int THEME_PINK = 1;
+    public static final int THEME_PURPLE = 2;
+    public static final int THEME_BLACK = 3;
 
     public static void setTitleColor(Activity ac) {
         if (Build.VERSION.SDK_INT >= 21) {
@@ -37,6 +39,12 @@ public class ThemeUtil {
             case THEME_PINK:
                 color = MyApplication.getInstance().getResources().getColor(R.color.pink_color);
                 break;
+            case THEME_PURPLE:
+                color = MyApplication.getInstance().getResources().getColor(R.color.purple_color);
+                break;
+            case THEME_BLACK:
+                color = MyApplication.getInstance().getResources().getColor(R.color.black_color);
+                break;
         }
         return color;
     }
@@ -49,6 +57,12 @@ public class ThemeUtil {
                 break;
             case THEME_PINK:
                 color = MyApplication.getInstance().getResources().getColor(R.color.pink_color_light);
+                break;
+            case THEME_PURPLE:
+                color = MyApplication.getInstance().getResources().getColor(R.color.purple_color_light);
+                break;
+            case THEME_BLACK:
+                color = MyApplication.getInstance().getResources().getColor(R.color.black_color_light);
                 break;
         }
         return color;

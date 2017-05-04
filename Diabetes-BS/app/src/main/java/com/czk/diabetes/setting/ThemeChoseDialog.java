@@ -86,7 +86,10 @@ public class ThemeChoseDialog extends Dialog {
                 holder.img_theme.setBackgroundColor(getContext().getResources().getColor(R.color.pink_color));
             else if (getContext().getResources().getString(R.string.theme_blue).equals(data))
                 holder.img_theme.setBackgroundColor(getContext().getResources().getColor(R.color.blue_color));
-
+            else if (getContext().getResources().getString(R.string.theme_purple).equals(data))
+                holder.img_theme.setBackgroundColor(getContext().getResources().getColor(R.color.purple_color));
+            else if (getContext().getResources().getString(R.string.theme_black).equals(data))
+                holder.img_theme.setBackgroundColor(getContext().getResources().getColor(R.color.black_color));
             if (selectIndex == position) {
                 holder.img_selected_lang.setVisibility(View.VISIBLE);
             } else {
@@ -102,6 +105,10 @@ public class ThemeChoseDialog extends Dialog {
                         ThemeUtil.setTheme(ThemeUtil.THEME_PINK);
                     else if (getContext().getResources().getString(R.string.theme_blue).equals(data))
                         ThemeUtil.setTheme(ThemeUtil.THEME_BLUE);
+                    else if (getContext().getResources().getString(R.string.theme_purple).equals(data))
+                        ThemeUtil.setTheme(ThemeUtil.THEME_PURPLE);
+                    else if (getContext().getResources().getString(R.string.theme_black).equals(data))
+                        ThemeUtil.setTheme(ThemeUtil.THEME_BLACK);
                     if(onSelectListener!=null){
                         onSelectListener.onSelect(data);
                     }

@@ -86,4 +86,6 @@
     <string name="theme">Theme</string>
     <string name="theme_pink">Lovely pink</string>
     <string name="theme_blue">Deep Sea Blue</string>
+    <string name="theme_black">Elegant black</string>
+    <string name="theme_purple">Mysterious purple</string>
 </resources>
