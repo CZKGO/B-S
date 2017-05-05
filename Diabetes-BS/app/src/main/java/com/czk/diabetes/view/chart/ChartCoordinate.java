@@ -109,6 +109,42 @@ public class ChartCoordinate extends View {
         this.userPionts = userPionts;
     }
 
+
+    public void setUserPionts(List<UserPoint> userPionts, boolean coordinateAutoX, boolean coordinateAutoY, float intervalX, float intervalY) {
+        setUserPionts(userPionts);
+        float maxX = Float.MIN_VALUE, maxY = Float.MIN_VALUE;
+        float minX = Float.MAX_VALUE, minY = Float.MAX_VALUE;
+        for (UserPoint point : userPionts) {
+            if (coordinateAutoX) {
+                if (point.x > maxX) {
+                    maxX = point.x;
+                }
+                if (point.x < minX) {
+                    minX = point.x;
+                }
+            }
+            if (coordinateAutoY) {
+                if (point.x > maxX) {
+                    maxX = point.x;
+                }
+
+                if (point.x < minX) {
+                    minX = point.x;
+                }
+            }
+        }
+        if (coordinateAutoX) {
+            maxX = (float)(int)maxX + intervalX;
+            minX = (float)(int)minX;
+            setXSystemPionts(minX,maxX, (int) ((maxX - minX)/intervalX)+1);
+        }
+        if (coordinateAutoY) {
+            maxY = (float)(int)maxY + intervalY;
+            minY = (float)(int)minY;
+            setYSystemPionts(minY,maxY, (int) ((maxY - minY)/intervalY)+1);
+        }
+    }
+
     /**
      * 设置等分的x坐标轴
      *
@@ -194,30 +230,32 @@ public class ChartCoordinate extends View {
 
     private void drawScale(Canvas canvas, Paint paint) {
         paint = initPaint(paint, mScaleWidth, mScaleColor);
-        for(int i = 0; i<ySystemPionts.size(); i++){
-            canvas.drawLine(xStart, getCoordinateY(ySystemPionts.get(i)), xStart+mScaleLength, getCoordinateY(ySystemPionts.get(i)), paint);
+        for (int i = 0; i < ySystemPionts.size(); i++) {
+            canvas.drawLine(xStart, getCoordinateY(ySystemPionts.get(i)), xStart + mScaleLength, getCoordinateY(ySystemPionts.get(i)), paint);
         }
-        for(int i = 0; i<xSystemPionts.size(); i++){
-            canvas.drawLine(getCoordinateX(xSystemPionts.get(i)), yEnd, getCoordinateX(xSystemPionts.get(i)), yEnd-mScaleLength, paint);
+        for (int i = 0; i < xSystemPionts.size(); i++) {
+            canvas.drawLine(getCoordinateX(xSystemPionts.get(i)), yEnd, getCoordinateX(xSystemPionts.get(i)), yEnd - mScaleLength, paint);
         }
     }
 
     /**
      * 根据x的数值获取在坐标系中的位置
+     *
      * @param numberX
      * @return
      */
     protected float getCoordinateX(float numberX) {
-        return (numberX-minX)/(maxX - minX) * (xEnd - xStart)+xStart;
+        return (numberX - minX) / (maxX - minX) * (xEnd - xStart) + xStart;
     }
 
     /**
      * 根据y的数值获取在坐标系中的位置
+     *
      * @param numberY
      * @return
      */
     protected float getCoordinateY(float numberY) {
-        return yEnd - (numberY-minY)/(maxY - minY) * (yEnd - yStart);
+        return yEnd - (numberY - minY) / (maxY - minY) * (yEnd - yStart);
     }
 
     @Override

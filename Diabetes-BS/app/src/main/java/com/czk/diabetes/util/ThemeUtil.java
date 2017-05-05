@@ -68,13 +68,19 @@ public class ThemeUtil {
         return color;
     }
 
-    public static void setTheme(Activity activity) {
+    public static void setTheme(Context context) {
         switch (getTheme()){
             case THEME_BLUE:
-                activity.setTheme(R.style.AppTheme_Blue);
+                context.setTheme(R.style.AppTheme_Blue);
                 break;
             case THEME_PINK:
-                activity.setTheme(R.style.AppTheme_Blue);
+                context.setTheme(R.style.AppTheme_Blue);
+                break;
+            case THEME_BLACK:
+                context.setTheme(R.style.AppTheme_Blue);
+                break;
+            case THEME_PURPLE:
+                context.setTheme(R.style.AppTheme_Blue);
                 break;
         }
     }
@@ -85,6 +91,7 @@ public class ThemeUtil {
         SharedPreferences.Editor editor = sp.edit();
         editor.putInt(SharedPreferencesUtils.THEME, theme);
         editor.commit();
+        setTheme(MyApplication.getInstance());
     }
 
     public static int getTheme() {
@@ -101,6 +108,12 @@ public class ThemeUtil {
                 break;
             case THEME_PINK:
                 themeName = MyApplication.getInstance().getString(R.string.theme_pink);
+                break;
+            case THEME_PURPLE:
+                themeName = MyApplication.getInstance().getString(R.string.theme_purple);
+                break;
+            case THEME_BLACK:
+                themeName = MyApplication.getInstance().getString(R.string.theme_black);
                 break;
         }
         return themeName;

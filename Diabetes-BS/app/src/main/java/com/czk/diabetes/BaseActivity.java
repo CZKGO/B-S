@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 
 import com.czk.diabetes.util.ThemeUtil;
 
@@ -21,6 +22,8 @@ public class BaseActivity extends Activity{
         super.onCreate(savedInstanceState);
         ThemeUtil.setTitleColor(this);
         ThemeUtil.setTheme(this);
+        TypedValue typedValue = new TypedValue();
+        getTheme().resolveAttribute(R.attr.theme_color, typedValue, true);
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
         String language = settings.getString("language", "DEFAULT");
         if (language.equals("DEFAULT")) {

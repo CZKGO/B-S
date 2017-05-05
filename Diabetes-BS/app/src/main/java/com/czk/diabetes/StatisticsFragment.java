@@ -87,8 +87,6 @@ public class StatisticsFragment extends Fragment {
                     if (null != lineDataMap.get(TimeUtil.getYearMonthDay(System.currentTimeMillis()))) {
                         lineChart.setPointColor(ThemeUtil.getThemeColor());
                         lineChart.setLineColor(ThemeUtil.getThemeColor());
-                        lineChart.setXSystemPionts(0, 8, 8);
-                        lineChart.setYSystemPionts(ConfigureData.MIN_VALUE, ConfigureData.MAX_VALUE, (int) ConfigureData.MAX_VALUE);
                         float[] values = lineDataMap.get(TimeUtil.getYearMonthDay(System.currentTimeMillis())).values;
                         List<LineChartView.UserPoint> userPoints = new ArrayList<>();
                         for (int i = 0; i < values.length; i++) {
@@ -97,15 +95,13 @@ public class StatisticsFragment extends Fragment {
                                 userPoints.add(userPoint);
                             }
                         }
-                        lineChart.setUserPionts(userPoints);
+                        lineChart.setUserPionts(userPoints,true,true,1,1);
                         lineChart.invalidate();
                     }
                     //柱状图
                     if (null != lineDataMap.get(TimeUtil.getYearMonthDay(System.currentTimeMillis()))) {
                         barChart.setBarOneColor(ThemeUtil.getThemeColor());
                         barChart.setBarTowColor(ThemeUtil.getThemeColorLight());
-                        barChart.setXSystemPionts(0, 6, 6);
-                        barChart.setYSystemPionts(ConfigureData.MIN_VALUE, ConfigureData.MAX_VALUE, (int) ConfigureData.MAX_VALUE);
                         float[] values = lineDataMap.get(TimeUtil.getYearMonthDay(System.currentTimeMillis())).values;
                         List<LineChartView.UserPoint> userPoints = new ArrayList<>();
                         if (null != lineDataMap.get(TimeUtil.getYearMonthDay(System.currentTimeMillis() - 24 * 60 * 60 * 1000))) {
@@ -115,7 +111,7 @@ public class StatisticsFragment extends Fragment {
                             ChartCoordinate.UserPoint userPoint = new ChartCoordinate.UserPoint(i + 1, values[i + 1]);
                             userPoints.add(userPoint);
                         }
-                        barChart.setUserPionts(userPoints);
+                        barChart.setUserPionts(userPoints,true,true,1,1);
                         barChart.invalidate();
                     }
                     break;
