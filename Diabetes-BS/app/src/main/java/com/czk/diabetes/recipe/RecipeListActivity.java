@@ -126,7 +126,6 @@ public class RecipeListActivity extends BaseActivity {
         /**
          * 头部
          */
-        findViewById(R.id.title_layout).setBackgroundColor(ThemeUtil.getThemeColor());
         ivIcon = (ImageView) findViewById(R.id.icon);
         FontIconDrawable iconArrowLeft = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_arrow_left);
         iconArrowLeft.setTextColor(getResources().getColor(R.color.white));

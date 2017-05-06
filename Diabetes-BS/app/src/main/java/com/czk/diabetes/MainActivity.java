@@ -68,7 +68,6 @@ public class MainActivity extends BaseFragmentActivity {
 
     private void initView() {
         //头部
-        findViewById(R.id.title_layout).setBackgroundColor(ThemeUtil.getThemeColor());
         ivIcon = (ImageView) findViewById(R.id.icon);
         FontIconDrawable iconMenu = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_menu);
         iconMenu.setTextColor(getResources().getColor(R.color.white));

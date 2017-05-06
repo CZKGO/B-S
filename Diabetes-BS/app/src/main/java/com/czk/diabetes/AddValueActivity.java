@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -15,8 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.czk.diabetes.DB.DBOpenHelper;
-import com.czk.diabetes.util.ThemeUtil;
 import com.czk.diabetes.util.FontIconDrawable;
+import com.czk.diabetes.util.ThemeUtil;
 import com.czk.diabetes.util.TimeUtil;
 import com.czk.diabetes.util.ToastUtil;
 import com.czk.diabetes.view.DateWheelPicker;
@@ -68,7 +67,6 @@ public class AddValueActivity extends BaseActivity {
 
     private void initView() {
         //头部
-        findViewById(R.id.title_layout).setBackgroundColor(ThemeUtil.getThemeColor());
         ivIcon = (ImageView) findViewById(R.id.icon);
         FontIconDrawable iconArrowLeft = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_arrow_left);
         iconArrowLeft.setTextColor(getResources().getColor(R.color.white));
@@ -239,38 +237,28 @@ public class AddValueActivity extends BaseActivity {
             }
         });
 
-        tvNext.setOnTouchListener(new View.OnTouchListener() {
+        tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        tvNext.setBackgroundResource(R.drawable.button_state_pressed);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        tvNext.setBackgroundResource(R.drawable.button_state_unpressed);
-                        String value = etValue.getText().toString();
-                        if (!value.isEmpty() && !value.substring(value.length()-1,value.length()).equals(".")) {
-                            DBOpenHelper helper = new DBOpenHelper(AddValueActivity.this);
-                            SQLiteDatabase db = helper.getWritableDatabase();  //得到的是SQLiteDatabase对象
-                            StringBuffer sBuffer = new StringBuffer();
-                            sBuffer.append("REPLACE INTO blood_sugar_record ");
-                            sBuffer.append("(_id,date,time_slot,value) values (");
-                            sBuffer.append("'" + tvDate.getText() + tvTimeSlot.getText() + "',");
-                            sBuffer.append("'" + tvDate.getText() + "',");
-                            sBuffer.append(timeSlots.indexOf(tvTimeSlot.getText().toString()) + ",");
-                            sBuffer.append(etValue.getText());
-                            sBuffer.append(")");
-                            // 执行创建表的SQL语句
-                            db.execSQL(sBuffer.toString());
-                            db.close();
-                        } else {
-                            ToastUtil.showShortToast(AddValueActivity.this
-                                    , getResources().getString(R.string.check_value));
-                        }
-
-                        break;
+            public void onClick(View v) {
+                String value = etValue.getText().toString();
+                if (!value.isEmpty() && !value.substring(value.length()-1,value.length()).equals(".")) {
+                    DBOpenHelper helper = new DBOpenHelper(AddValueActivity.this);
+                    SQLiteDatabase db = helper.getWritableDatabase();  //得到的是SQLiteDatabase对象
+                    StringBuffer sBuffer = new StringBuffer();
+                    sBuffer.append("REPLACE INTO blood_sugar_record ");
+                    sBuffer.append("(_id,date,time_slot,value) values (");
+                    sBuffer.append("'" + tvDate.getText() + tvTimeSlot.getText() + "',");
+                    sBuffer.append("'" + tvDate.getText() + "',");
+                    sBuffer.append(timeSlots.indexOf(tvTimeSlot.getText().toString()) + ",");
+                    sBuffer.append(etValue.getText());
+                    sBuffer.append(")");
+                    // 执行创建表的SQL语句
+                    db.execSQL(sBuffer.toString());
+                    db.close();
+                } else {
+                    ToastUtil.showShortToast(AddValueActivity.this
+                            , getResources().getString(R.string.check_value));
                 }
-                return true;
             }
         });
     }

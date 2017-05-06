@@ -74,13 +74,13 @@ public class ThemeUtil {
                 context.setTheme(R.style.AppTheme_Blue);
                 break;
             case THEME_PINK:
-                context.setTheme(R.style.AppTheme_Blue);
-                break;
-            case THEME_BLACK:
-                context.setTheme(R.style.AppTheme_Blue);
+                context.setTheme(R.style.AppTheme_Pink);
                 break;
             case THEME_PURPLE:
-                context.setTheme(R.style.AppTheme_Blue);
+                context.setTheme(R.style.AppTheme_Purple);
+                break;
+            case THEME_BLACK:
+                context.setTheme(R.style.AppTheme_Black);
                 break;
         }
     }

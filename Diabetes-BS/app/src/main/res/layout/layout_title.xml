@@ -4,7 +4,7 @@
     android:layout_height="56dp"
     android:elevation="4dp"
     android:translationZ="4dp"
-    android:id="@+id/title_layout">
+    android:background="?attr/theme_color">
 
     <ImageView
         android:id="@+id/icon"
