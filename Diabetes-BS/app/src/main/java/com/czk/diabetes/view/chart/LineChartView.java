@@ -105,6 +105,7 @@ public class LineChartView extends ChartCoordinate {
 
 
     public void setLineColor(int lineColor) {
+        super.setLineColor(lineColor);
         this.mLineColor = lineColor;
     }
 

@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.czk.diabetes.DB.DBOpenHelper;
 import com.czk.diabetes.data.ConfigureData;
+import com.czk.diabetes.util.DimensUtil;
 import com.czk.diabetes.util.ThemeUtil;
 import com.czk.diabetes.util.FontIconDrawable;
 import com.czk.diabetes.util.TimeUtil;
@@ -95,13 +96,15 @@ public class StatisticsFragment extends Fragment {
                                 userPoints.add(userPoint);
                             }
                         }
-                        lineChart.setUserPionts(userPoints,true,true,1,1);
+                        lineChart.setXSystemPionts(0, 7, 8);
+                        lineChart.setUserPionts(userPoints,false,true,1,1);
                         lineChart.invalidate();
                     }
                     //柱状图
                     if (null != lineDataMap.get(TimeUtil.getYearMonthDay(System.currentTimeMillis()))) {
                         barChart.setBarOneColor(ThemeUtil.getThemeColor());
                         barChart.setBarTowColor(ThemeUtil.getThemeColorLight());
+                        barChart.setLineColor(ThemeUtil.getThemeColor());
                         float[] values = lineDataMap.get(TimeUtil.getYearMonthDay(System.currentTimeMillis())).values;
                         List<LineChartView.UserPoint> userPoints = new ArrayList<>();
                         if (null != lineDataMap.get(TimeUtil.getYearMonthDay(System.currentTimeMillis() - 24 * 60 * 60 * 1000))) {
@@ -111,7 +114,8 @@ public class StatisticsFragment extends Fragment {
                             ChartCoordinate.UserPoint userPoint = new ChartCoordinate.UserPoint(i + 1, values[i + 1]);
                             userPoints.add(userPoint);
                         }
-                        barChart.setUserPionts(userPoints,true,true,1,1);
+                        barChart.setXSystemPionts(0, 5, 6);
+                        barChart.setUserPionts(userPoints,false,true,1,1);
                         barChart.invalidate();
                     }
                     break;
@@ -166,7 +170,7 @@ public class StatisticsFragment extends Fragment {
         lineChartIconDrawable.setTextColor(getResources().getColor(R.color.background_white));
         lineChartIconIV.setImageDrawable(lineChartIconDrawable);
         lineChart = (LineChartView) fragment.findViewById(R.id.line_chart);
-
+        lineChart.setCoordTextSize(DimensUtil.dpTopx(getContext(),12));
         /**************************************************
          * 对照                                           *
          **************************************************/
@@ -176,6 +180,7 @@ public class StatisticsFragment extends Fragment {
         barChartIconDrawable.setTextColor(getResources().getColor(R.color.background_white));
         barChartIconIV.setImageDrawable(barChartIconDrawable);
         barChart = (BarChartView) fragment.findViewById(R.id.bar_chart);
+        barChart.setCoordTextSize(DimensUtil.dpTopx(getContext(),12));
 
     }
 

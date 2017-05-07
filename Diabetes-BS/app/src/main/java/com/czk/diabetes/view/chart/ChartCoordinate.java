@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.czk.diabetes.R;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +56,8 @@ public class ChartCoordinate extends View {
     private float mScaleWidth;
     private int mScaleColor;
     private float mScaleLength;
+    private boolean drawText = true;
+    private int coordTextSize = 0;
 
     public ChartCoordinate(Context context) {
         super(context);
@@ -88,8 +91,8 @@ public class ChartCoordinate extends View {
         mScaleLength = a.getDimension(R.styleable.ChartCoordinate_scale_length, 5);
         a.recycle();
 
-        setXSystemPionts(0, 6, 6);
-        setYSystemPionts(0, 6, 6);
+        setXSystemPionts(0, 6, 7);
+        setYSystemPionts(0, 6, 7);
         List<UserPoint> userPionts = new ArrayList<>();
         UserPoint point = new UserPoint(1f, 4f);
         UserPoint point2 = new UserPoint(2f, 2f);
@@ -124,24 +127,26 @@ public class ChartCoordinate extends View {
                 }
             }
             if (coordinateAutoY) {
-                if (point.x > maxX) {
-                    maxX = point.x;
+                if (point.y > maxY) {
+                    maxY = point.y;
                 }
 
-                if (point.x < minX) {
-                    minX = point.x;
+                if (point.y < minY) {
+                    minY = point.y;
                 }
             }
         }
         if (coordinateAutoX) {
-            maxX = (float)(int)maxX + intervalX;
-            minX = (float)(int)minX;
-            setXSystemPionts(minX,maxX, (int) ((maxX - minX)/intervalX)+1);
+            maxX = (int) maxX + intervalX;
+            minX = (int) minX;
+//            setXSystemPionts(minX,maxX, (int) (maxX - minX)+1);
+            setXSystemPionts(0, maxX, (int) maxX + 1);
         }
         if (coordinateAutoY) {
-            maxY = (float)(int)maxY + intervalY;
-            minY = (float)(int)minY;
-            setYSystemPionts(minY,maxY, (int) ((maxY - minY)/intervalY)+1);
+            maxY = (int) maxY + intervalY;
+            minY = (int) minY;
+//            setYSystemPionts(minY,maxY, (int) (maxY - minY)+1);
+            setYSystemPionts(0, maxY, (int) maxY + 1);
         }
     }
 
@@ -155,7 +160,8 @@ public class ChartCoordinate extends View {
     public void setXSystemPionts(float startValue, float endValue, int number) {
         ArrayList<Float> systemPionts = new ArrayList<>();
         for (int i = 0; i < number; i++) {
-            systemPionts.add(startValue + (endValue - startValue) / number * i);
+            DecimalFormat df = new DecimalFormat(".0");
+            systemPionts.add(Float.valueOf(df.format(startValue + (endValue - startValue + 1) / number * i)));
         }
         setXSystemPionts(systemPionts);
     }
@@ -170,9 +176,14 @@ public class ChartCoordinate extends View {
     public void setYSystemPionts(float startValue, float endValue, int number) {
         ArrayList<Float> systemPionts = new ArrayList<>();
         for (int i = 0; i < number; i++) {
-            systemPionts.add(startValue + (endValue - startValue) / number * i);
+            DecimalFormat df = new DecimalFormat(".0");
+            systemPionts.add(Float.valueOf(df.format(startValue + (endValue - startValue + 1) / number * i)));
         }
         setYSystemPionts(systemPionts);
+    }
+
+    public void setLineColor(int mLineColor) {
+        this.mXLineColor = this.mYLineColor = mScaleColor = mLineColor;
     }
 
     /**
@@ -180,10 +191,19 @@ public class ChartCoordinate extends View {
      *
      * @param xSystemPionts
      */
-    private void setXSystemPionts(ArrayList<Float> xSystemPionts) {
+    public void setXSystemPionts(ArrayList<Float> xSystemPionts) {
         this.xSystemPionts = xSystemPionts;
         minX = xSystemPionts.get(0);
         maxX = xSystemPionts.get(xSystemPionts.size() - 1);
+    }
+
+    /**
+     * 设置坐标文字大小
+     *
+     * @param size
+     */
+    public void setCoordTextSize(int size) {
+        coordTextSize = size;
     }
 
     /**
@@ -203,7 +223,7 @@ public class ChartCoordinate extends View {
      * Paint initialization
      */
     private Paint initPaint(Paint paint, float width, int color) {
-        paint.setStyle(Paint.Style.STROKE);
+        paint.setStyle(Paint.Style.FILL);
         paint.setStrokeWidth(width);
         paint.setColor(color);
         return paint;
@@ -213,6 +233,10 @@ public class ChartCoordinate extends View {
     protected synchronized void onDraw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
+        if (drawText) {
+            drawXText(canvas, paint);
+            drawYText(canvas, paint);
+        }
         drawXSystem(canvas, paint);
         drawYSystem(canvas, paint);
         drawScale(canvas, paint);
@@ -235,6 +259,23 @@ public class ChartCoordinate extends View {
         }
         for (int i = 0; i < xSystemPionts.size(); i++) {
             canvas.drawLine(getCoordinateX(xSystemPionts.get(i)), yEnd, getCoordinateX(xSystemPionts.get(i)), yEnd - mScaleLength, paint);
+        }
+    }
+
+    private void drawXText(Canvas canvas, Paint paint) {
+        paint = initPaint(paint, mScaleWidth, mScaleColor);
+        paint.setTextSize(coordTextSize);
+        for (int i = 0; i < xSystemPionts.size(); i++) {
+            String text = xSystemPionts.get(i).toString();
+            canvas.drawText(text, getCoordinateX(xSystemPionts.get(i)) - coordTextSize * text.length() / 4, yEnd + coordTextSize, paint);
+        }
+    }
+
+    private void drawYText(Canvas canvas, Paint paint) {
+        paint = initPaint(paint, mScaleWidth, mScaleColor);
+        paint.setTextSize(coordTextSize);
+        for (int i = 1; i < ySystemPionts.size(); i++) {
+            canvas.drawText(ySystemPionts.get(i).toString(), xStart + mScaleLength, getCoordinateY(ySystemPionts.get(i)) + coordTextSize / 2, paint);
         }
     }
 
@@ -287,7 +328,7 @@ public class ChartCoordinate extends View {
         xStart = mXLineWidth / 2 + getPaddingLeft();
         yStart = mYLineWidth / 2 + getPaddingTop();
         xEnd = w - mXLineWidth / 2 - getPaddingRight();
-        yEnd = h - mYLineWidth / 2 - getPaddingBottom();
+        yEnd = h - mYLineWidth / 2 - getPaddingBottom() - coordTextSize;
     }
 
     public static class UserPoint {
