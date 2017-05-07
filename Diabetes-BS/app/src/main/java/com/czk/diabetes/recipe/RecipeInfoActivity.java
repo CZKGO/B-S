@@ -34,7 +34,11 @@ public class RecipeInfoActivity extends BaseActivity {
                     if (msg.obj != null) {
                         RecipeData data = (RecipeData) msg.obj;
                         wvInfo.getSettings().setJavaScriptEnabled(true);
-                        wvInfo.loadDataWithBaseURL(null,data.content, "text/html", "utf-8",null);
+                        if (data.content.equals("null")) {
+                            wvInfo.loadUrl(data.url);
+                        }else {
+                            wvInfo.loadDataWithBaseURL(null, data.content, "text/html", "utf-8", null);
+                        }
                     }
                     break;
                 case SEARCH_ERRO:
@@ -96,6 +100,7 @@ public class RecipeInfoActivity extends BaseActivity {
             try {
                 RecipeData data = new RecipeData();
                 data.content = obj.getString("bodyText");
+                data.url = "https://diabetesintf.izhangkong.com/cookbook_detail.html?flag=1&id=" + obj.getLong("cookbookId");
                 Message message = new Message();
                 message.what = ANALYTIC_FINSH;
                 message.obj = data;
@@ -121,7 +126,6 @@ public class RecipeInfoActivity extends BaseActivity {
         public void run() {
             try {
                 analyticJSON(new JSONObject(obj));
-                handler.sendEmptyMessage(ANALYTIC_FINSH);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -130,5 +134,6 @@ public class RecipeInfoActivity extends BaseActivity {
 
     private class RecipeData {
         private String content;
+        private String url;
     }
 }

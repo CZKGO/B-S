@@ -59,11 +59,11 @@ public class SettingActvity extends PreferenceActivity {
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 ThemeUtil.setTitleColor(SettingActvity.this);
                 ThemeUtil.setTheme(SettingActvity.this);
+                findViewById(R.id.title_layout).setBackgroundColor(ThemeUtil.getThemeColor());
                 return true;
             }
         });
     }
-
 
 
     @Override
