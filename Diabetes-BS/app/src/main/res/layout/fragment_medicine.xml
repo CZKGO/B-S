@@ -16,13 +16,13 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/card_leechdom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/shadow_white_card"
-
                 android:gravity="center"
                 android:orientation="vertical"
                 android:padding="8dp">
@@ -60,74 +60,109 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:id="@+id/card_my_leechdom"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/item_background_click"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <ImageView
-                            android:id="@+id/leechdom_left_icon"
-                            android:layout_width="match_parent"
+                        <RelativeLayout
+                            android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginTop="16dp"
-                            android:padding="6dp" />
+                            android:background="@drawable/tip_theme_light_circular_bc"
+                            android:gravity="center">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginTop="8dp"
-                            android:text="@string/my_leechdom"
-                            android:textSize="16sp" />
+                            <ImageView
+                                android:id="@+id/leechdom_left_icon"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp" />
+                        </RelativeLayout>
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/card_leechdom_query"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@drawable/item_background_click"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:paddingRight="4dp">
 
-                        <ImageView
-                            android:id="@+id/leechdom_right_icon"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_marginTop="16dp"
-                            android:padding="6dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
-                            android:layout_marginTop="8dp"
-                            android:text="@string/leechdom_query"
-                            android:textSize="16sp" />
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/txt_leechdom_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="4dp"
+                                android:singleLine="true"
+                                android:text="@string/designation"
+                                android:textColor="@color/txt_light_color"
+                                android:textSize="16sp" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/divide_line" />
+
+                            <TextView
+                                android:id="@+id/txt_leechdom_usage"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="4dp"
+                                android:layout_marginTop="12dp"
+                                android:singleLine="true"
+                                android:text="@string/usage"
+                                android:textColor="@color/txt_light_color"
+                                android:textSize="16sp" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/divide_line" />
+
+                            <TextView
+                                android:id="@+id/txt_leechdom_dosage"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="4dp"
+                                android:layout_marginTop="12dp"
+                                android:singleLine="true"
+                                android:text="@string/dosage"
+                                android:textColor="@color/txt_light_color"
+                                android:textSize="16sp" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/divide_line" />
+
+
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/card_diet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/shadow_white_card"
-
                 android:gravity="center"
                 android:orientation="vertical"
                 android:padding="8dp">
+
                 <!--标题-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -156,76 +191,114 @@
                         android:layout_height="24dp"
                         android:padding="2dp" />
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <ImageView
-                            android:id="@+id/diet_left_icon"
+                        <RelativeLayout
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginTop="16dp"
-                            android:padding="6dp" />
+                            android:background="@drawable/tip_theme_light_circular_bc"
+                            android:gravity="center">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginTop="8dp"
-                            android:text="@string/my_recipes"
-                            android:textSize="16sp" />
+                            <ImageView
+                                android:id="@+id/diet_left_icon"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:layout_centerHorizontal="true" />
+                        </RelativeLayout>
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/card_many_recipes"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@drawable/item_background_click"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:paddingRight="4dp">
 
-                        <ImageView
-                            android:id="@+id/diet_right_icon"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginTop="16dp"
-                            android:padding="6dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
-                            android:layout_marginTop="8dp"
-                            android:text="@string/many_recipes"
-                            android:textSize="16sp" />
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/txt_diet_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="4dp"
+                                android:singleLine="true"
+                                android:text="@string/designation"
+                                android:textColor="@color/txt_light_color"
+                                android:textSize="16sp" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/divide_line" />
+
+                            <TextView
+                                android:id="@+id/txt_diet_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="4dp"
+                                android:layout_marginTop="12dp"
+                                android:singleLine="true"
+                                android:text="@string/diet_time"
+                                android:textColor="@color/txt_light_color"
+                                android:textSize="16sp" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/divide_line" />
+
+                            <TextView
+                                android:id="@+id/txt_diet_blood_sugar"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="4dp"
+                                android:layout_marginTop="12dp"
+                                android:singleLine="true"
+                                android:text="@string/blood_sugar_change"
+                                android:textColor="@color/txt_light_color"
+                                android:textSize="16sp" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/divide_line" />
+
+
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/card_athletics"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/shadow_white_card"
-
                 android:gravity="center"
                 android:orientation="vertical"
                 android:padding="8dp">
+
                 <!--标题-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -258,54 +331,93 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <ImageView
-                            android:id="@+id/athletics_left_icon"
+                        <RelativeLayout
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginTop="16dp"
-                            android:padding="6dp" />
+                            android:background="@drawable/tip_theme_light_circular_bc"
+                            android:gravity="center">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginTop="8dp"
-                            android:text="@string/my_athletics"
-                            android:textSize="16sp" />
+                            <ImageView
+                                android:id="@+id/athletics_left_icon"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp" />
+                        </RelativeLayout>
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:paddingRight="4dp">
 
-                        <ImageView
-                            android:id="@+id/athletics_right_icon"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginTop="16dp"
-                            android:padding="6dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
-                            android:layout_marginTop="8dp"
-                            android:text="@string/athletics_details"
-                            android:textSize="16sp" />
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/txt_athletics_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="4dp"
+                                android:singleLine="true"
+                                android:text="@string/designation"
+                                android:textColor="@color/txt_light_color"
+                                android:textSize="16sp" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/divide_line" />
+
+                            <TextView
+                                android:id="@+id/txt_athletics_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="4dp"
+                                android:layout_marginTop="12dp"
+                                android:singleLine="true"
+                                android:text="@string/athletics_time"
+                                android:textColor="@color/txt_light_color"
+                                android:textSize="16sp" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/divide_line" />
+
+                            <TextView
+                                android:id="@+id/txt_athletics_consume"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="4dp"
+                                android:layout_marginTop="12dp"
+                                android:singleLine="true"
+                                android:text="@string/blood_sugar_change"
+                                android:textColor="@color/txt_light_color"
+                                android:textSize="16sp" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/divide_line" />
+
+
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

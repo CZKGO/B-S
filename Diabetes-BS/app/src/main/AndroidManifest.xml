@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.SET_TIME_ZONE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".MyApplication"
@@ -46,6 +46,17 @@
             android:name=".BrowserActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".medicine.AddMedicineActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".recipe.AddRecipeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".athletic.AddAthleticActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".medicine.SearchMedicineActivity"
             android:screenOrientation="portrait" />

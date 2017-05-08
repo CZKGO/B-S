@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.czk.diabetes.medicine.SearchMedicineActivity;
-import com.czk.diabetes.recipe.RecipeListActivity;
-import com.czk.diabetes.util.ThemeUtil;
+import com.czk.diabetes.athletic.AddAthleticActivity;
+import com.czk.diabetes.medicine.AddMedicineActivity;
+import com.czk.diabetes.recipe.AddRecipeActivity;
 import com.czk.diabetes.util.FontIconDrawable;
 
 /**
@@ -47,14 +47,8 @@ public class MedicineFragment extends Fragment {
         leechdomIconDrawable.setTextColor(getResources().getColor(R.color.background_white));
         leechdomIconIV.setImageDrawable(leechdomIconDrawable);
         ImageView leechdomLeftIconIV = (ImageView) fragment.findViewById(R.id.leechdom_left_icon);
-        FontIconDrawable leechdomIconLeftDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_pill);
-        leechdomIconLeftDrawable.setTextColor(ThemeUtil.getThemeColor());
-        leechdomLeftIconIV.setImageDrawable(leechdomIconLeftDrawable);
+        leechdomLeftIconIV.setImageDrawable(leechdomIconDrawable);
 
-        ImageView leechdomRightIconIV = (ImageView) fragment.findViewById(R.id.leechdom_right_icon);
-        FontIconDrawable leechdomRightIconDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_injection);
-        leechdomRightIconDrawable.setTextColor(ThemeUtil.getThemeColor());
-        leechdomRightIconIV.setImageDrawable(leechdomRightIconDrawable);
         /**************************************************
          * 饮食                                           *
          **************************************************/
@@ -63,14 +57,7 @@ public class MedicineFragment extends Fragment {
         dietIconDrawable.setTextColor(getResources().getColor(R.color.background_white));
         dietIconIV.setImageDrawable(dietIconDrawable);
         ImageView dietLeftIconIV = (ImageView) fragment.findViewById(R.id.diet_left_icon);
-        FontIconDrawable dietIconLeftDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_spoon_knife);
-        dietIconLeftDrawable.setTextColor(ThemeUtil.getThemeColor());
-        dietLeftIconIV.setImageDrawable(dietIconLeftDrawable);
-
-        ImageView dietRightIconIV = (ImageView) fragment.findViewById(R.id.diet_right_icon);
-        FontIconDrawable dietRightIconDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_room_service);
-        dietRightIconDrawable.setTextColor(ThemeUtil.getThemeColor());
-        dietRightIconIV.setImageDrawable(dietRightIconDrawable);
+        dietLeftIconIV.setImageDrawable(dietIconDrawable);
         /**************************************************
          * 运动                                           *
          **************************************************/
@@ -79,32 +66,51 @@ public class MedicineFragment extends Fragment {
         athleticsIconDrawable.setTextColor(getResources().getColor(R.color.background_white));
         athleticsIconIV.setImageDrawable(athleticsIconDrawable);
         ImageView athleticsLeftIconIV = (ImageView) fragment.findViewById(R.id.athletics_left_icon);
-        FontIconDrawable athleticsLeftIconDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_directions_run);
-        athleticsLeftIconDrawable.setTextColor(ThemeUtil.getThemeColor());
-        athleticsLeftIconIV.setImageDrawable(athleticsLeftIconDrawable);
+        athleticsLeftIconIV.setImageDrawable(athleticsIconDrawable);
 
-        ImageView athleticsRightIconIV = (ImageView) fragment.findViewById(R.id.athletics_right_icon);
-        FontIconDrawable athleticsRightIconDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_pool);
-        athleticsRightIconDrawable.setTextColor(ThemeUtil.getThemeColor());
-        athleticsRightIconIV.setImageDrawable(athleticsRightIconDrawable);
     }
 
     private void dealEvent() {
-        fragment.findViewById(R.id.card_leechdom_query).setOnClickListener(new View.OnClickListener() {
+        fragment.findViewById(R.id.card_leechdom).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SearchMedicineActivity.class);
+                Intent intent = new Intent(getActivity(), AddMedicineActivity.class);
                 startActivity(intent);
             }
         });
 
-        fragment.findViewById(R.id.card_many_recipes).setOnClickListener(new View.OnClickListener() {
+        fragment.findViewById(R.id.card_diet).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), RecipeListActivity.class);
+                Intent intent = new Intent(getActivity(), AddRecipeActivity.class);
                 startActivity(intent);
             }
         });
+
+
+        fragment.findViewById(R.id.card_athletics).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddAthleticActivity.class);
+                startActivity(intent);
+            }
+        });
+
+//        fragment.findViewById(R.id.card_leechdom_query).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(), SearchMedicineActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        fragment.findViewById(R.id.card_many_recipes).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(), RecipeListActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
     }
 }

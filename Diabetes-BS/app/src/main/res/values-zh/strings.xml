@@ -88,4 +88,10 @@
     <string name="theme_blue">深海蓝</string>
     <string name="theme_black">高雅黑</string>
     <string name="theme_purple">神秘紫</string>
+    <string name="designation">名称：%1$s</string>
+    <string name="usage">用法：%1$s</string>
+    <string name="dosage">用量：%1$s</string>
+    <string name="diet_time">用餐时间：%1$s</string>
+    <string name="blood_sugar_change">血糖水平：%1$s</string>
+    <string name="athletics_time">运动时长：%1$s</string>
 </resources>

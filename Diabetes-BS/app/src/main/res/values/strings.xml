@@ -88,4 +88,10 @@
     <string name="theme_blue">Deep Sea Blue</string>
     <string name="theme_black">Elegant black</string>
     <string name="theme_purple">Mysterious purple</string>
+    <string name="designation">Designation：%1$s</string>
+    <string name="usage">Usage：%1$s</string>
+    <string name="dosage">Dosage：%1$s</string>
+    <string name="diet_time">Meal time：%1$s</string>
+    <string name="blood_sugar_change">Blood sugar：%1$s</string>
+    <string name="athletics_time">Athletics_time：%1$s</string>
 </resources>
