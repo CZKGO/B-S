@@ -94,4 +94,18 @@
     <string name="diet_time">Meal time：%1$s</string>
     <string name="blood_sugar_change">Blood sugar：%1$s</string>
     <string name="athletics_time">Athletics_time：%1$s</string>
+    <string name="leechdom_history">Leechdom history</string>
+    <string name="add_my_leechdom_tip">Add medication situation\nSo that we can timely remind you take medicine</string>
+    <string name="add_leechdom">Add leechdom</string>
+    <string name="base_info">Base info</string>
+    <string name="medicine_name_colon">Medicine name:</string>
+    <string name="drug_doses">Drug doses:</string>
+    <string name="medication_time">Medication time</string>
+    <string name="add_medication_time">Add medication time</string>
+    <string name="medication_period">Medication period</string>
+    <string name="one_week">One week</string>
+    <string name="tow_week">Tow weeks</string>
+    <string name="one_month">One month</string>
+    <string name="open_notifition">Open notifition</string>
+    <string name="remarks">Remarks</string>
 </resources>

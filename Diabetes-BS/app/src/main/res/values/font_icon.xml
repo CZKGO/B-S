@@ -20,7 +20,7 @@
     <string name="icon_pie_chart" translatable="false">&#xe99a;</string>
     <string name="icon_stats_dots" translatable="false">&#xe99b;</string>
     <string name="icon_stats_bars" translatable="false">&#xe99c;</string>
-    <string name="icon_plus" translatable="false">&#xea0a;</string>
+    <string name="icon_plus" translatable="false">&#xe913;</string>
     <string name="icon_lock_rounded" translatable="false">&#xe905;</string>
     <string name="icon_directions_run" translatable="false">&#xe906;</string>
     <string name="icon_spoon_knife" translatable="false">&#xe9a3;</string>
@@ -38,4 +38,11 @@
     <string name="icon_star2" translatable="false">&#xe912;</string>
     <string name="icon_images" translatable="false">&#xe910;</string>
     <!--36-->
+    <string name="icon_toggle_on" translatable="false">&#xe914;</string>
+    <string name="icon_toggle_off" translatable="false">&#xe915;</string>
+    <string name="icon_checkbox_checked" translatable="false">&#xea52;</string>
+    <string name="icon_checkbox_unchecked" translatable="false">&#xea53;</string>
+    <string name="icon_radio_checked" translatable="false">&#xea54;</string>
+    <string name="icon_radio_unchecked" translatable="false">&#xea56;</string>
+    <!--42-->
 </resources>

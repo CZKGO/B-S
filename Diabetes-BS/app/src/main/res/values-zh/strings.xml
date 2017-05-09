@@ -94,4 +94,18 @@
     <string name="diet_time">用餐时间：%1$s</string>
     <string name="blood_sugar_change">血糖水平：%1$s</string>
     <string name="athletics_time">运动时长：%1$s</string>
+    <string name="leechdom_history">用药历史</string>
+    <string name="add_my_leechdom_tip">添加用药情况\n以便及时提醒您用药</string>
+    <string name="add_leechdom">添加用药</string>
+    <string name="base_info">基本信息</string>
+    <string name="medicine_name_colon">药品名称:</string>
+    <string name="drug_doses">药品剂量:</string>
+    <string name="medication_time">用药时间</string>
+    <string name="add_medication_time">添加用药时间</string>
+    <string name="medication_period">用药周期</string>
+    <string name="one_week">一周</string>
+    <string name="one_month">一月</string>
+    <string name="tow_week">两周</string>
+    <string name="open_notifition">开启提醒</string>
+    <string name="remarks">备注</string>
 </resources>

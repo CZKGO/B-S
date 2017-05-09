@@ -47,6 +47,14 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".medicine.MedicineActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".medicine.MedicineHistoryActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".medicine.AddMedicineActivity"
             android:screenOrientation="portrait" />
 

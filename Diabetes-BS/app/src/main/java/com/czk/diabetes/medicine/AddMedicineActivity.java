@@ -9,7 +9,7 @@ import com.czk.diabetes.R;
 import com.czk.diabetes.util.FontIconDrawable;
 
 /**
- * Created by 陈忠凯 on 2017/5/8.
+ * Created by 陈忠凯 on 2017/5/9.
  */
 
 public class AddMedicineActivity extends BaseActivity{
@@ -21,8 +21,10 @@ public class AddMedicineActivity extends BaseActivity{
         setContentView(R.layout.activity_add_medicine);
 //        initData();
         initView();
-//        dealEvent();
+        dealEvent();
     }
+
+
 
     private void initView() {
         /**头部**/
@@ -31,6 +33,19 @@ public class AddMedicineActivity extends BaseActivity{
         iconArrowLeft.setTextColor(getResources().getColor(R.color.white));
         ivIcon.setImageDrawable(iconArrowLeft);
         TextView tvTitle = (TextView) findViewById(R.id.title);
-        tvTitle.setText(getResources().getString(R.string.leechdom));
+        tvTitle.setText(getResources().getString(R.string.add_leechdom));
+        /**主体**/
+        ImageView ivAdd = (ImageView) findViewById(R.id.iv_add);
+        FontIconDrawable iconPlus = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_plus);
+        ivAdd.setImageDrawable(iconPlus);
+
+        ImageView ivToggle = (ImageView) findViewById(R.id.iv_toggle);
+        FontIconDrawable iconToggle = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_toggle_on);
+        ivToggle.setImageDrawable(iconToggle);
+    }
+
+
+    private void dealEvent() {
+
     }
 }

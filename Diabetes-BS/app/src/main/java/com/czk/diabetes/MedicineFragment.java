@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.czk.diabetes.athletic.AddAthleticActivity;
-import com.czk.diabetes.medicine.AddMedicineActivity;
+import com.czk.diabetes.medicine.MedicineActivity;
 import com.czk.diabetes.recipe.AddRecipeActivity;
 import com.czk.diabetes.util.FontIconDrawable;
 
@@ -74,7 +74,7 @@ public class MedicineFragment extends Fragment {
         fragment.findViewById(R.id.card_leechdom).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AddMedicineActivity.class);
+                Intent intent = new Intent(getActivity(), MedicineActivity.class);
                 startActivity(intent);
             }
         });
@@ -96,13 +96,6 @@ public class MedicineFragment extends Fragment {
             }
         });
 
-//        fragment.findViewById(R.id.card_leechdom_query).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), SearchMedicineActivity.class);
-//                startActivity(intent);
-//            }
-//        });
 //
 //        fragment.findViewById(R.id.card_many_recipes).setOnClickListener(new View.OnClickListener() {
 //            @Override
