@@ -99,7 +99,7 @@
     <string name="add_leechdom">Add leechdom</string>
     <string name="base_info">Base info</string>
     <string name="medicine_name_colon">Medicine name:</string>
-    <string name="drug_doses">Drug doses:</string>
+    <string name="drug_doses__colon">Drug doses:</string>
     <string name="medication_time">Medication time</string>
     <string name="add_medication_time">Add medication time</string>
     <string name="medication_period">Medication period</string>
@@ -108,4 +108,12 @@
     <string name="one_month">One month</string>
     <string name="open_notifition">Open notifition</string>
     <string name="remarks">Remarks</string>
+    <string name="drug_doses">Drug doses</string>
+    <string name="please_input_drag_name">Please input drag name</string>
+    <string name="please_input_drag_doses">Please input drag doses</string>
+    <string name="please_choose_medication_time">Please choose medication time</string>
+    <string name="please_choose_medication_period">Please choose medication period</string>
+    <string name="save">Save</string>
+    <string name="start_time">Start time</string>
+    <string name="end_time">End time</string>
 </resources>

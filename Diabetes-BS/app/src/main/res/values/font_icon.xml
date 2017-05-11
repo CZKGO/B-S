@@ -45,4 +45,6 @@
     <string name="icon_radio_checked" translatable="false">&#xea54;</string>
     <string name="icon_radio_unchecked" translatable="false">&#xea56;</string>
     <!--42-->
+    <string name="icon_bin" translatable="false">&#xe9ac;</string>
+    <!--43-->
 </resources>

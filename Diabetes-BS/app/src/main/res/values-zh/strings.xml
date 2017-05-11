@@ -99,7 +99,7 @@
     <string name="add_leechdom">添加用药</string>
     <string name="base_info">基本信息</string>
     <string name="medicine_name_colon">药品名称:</string>
-    <string name="drug_doses">药品剂量:</string>
+    <string name="drug_doses__colon">药品剂量:</string>
     <string name="medication_time">用药时间</string>
     <string name="add_medication_time">添加用药时间</string>
     <string name="medication_period">用药周期</string>
@@ -108,4 +108,12 @@
     <string name="tow_week">两周</string>
     <string name="open_notifition">开启提醒</string>
     <string name="remarks">备注</string>
+    <string name="drug_doses">药品剂量</string>
+    <string name="please_input_drag_name">请输入药品名称</string>
+    <string name="please_input_drag_doses">请输入药品剂量</string>
+    <string name="please_choose_medication_time">请选择用药时间</string>
+    <string name="please_choose_medication_period">请选择用药周期</string>
+    <string name="save">保存</string>
+    <string name="start_time">开始时间</string>
+    <string name="end_time">结束时间</string>
 </resources>

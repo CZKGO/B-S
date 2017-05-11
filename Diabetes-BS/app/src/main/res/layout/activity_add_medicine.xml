@@ -65,11 +65,12 @@
                             android:textSize="16sp" />
 
                         <EditText
+                            android:id="@+id/et_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/transparent"
                             android:gravity="center_vertical|right"
-                            android:singleLine="true"
+                            android:maxLines="1"
                             android:textColor="@color/txt_light_color"
                             android:textCursorDrawable="@drawable/cursor"
                             android:textSize="16sp" />
@@ -92,17 +93,27 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="4dp"
                             android:singleLine="true"
-                            android:text="@string/drug_doses"
+                            android:text="@string/drug_doses__colon"
                             android:textSize="16sp" />
 
                         <EditText
-                            android:layout_width="match_parent"
+                            android:id="@+id/et_doses"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:background="@color/transparent"
                             android:gravity="center_vertical|right"
-                            android:singleLine="true"
+                            android:inputType="number"
+                            android:maxLines="1"
                             android:textColor="@color/txt_light_color"
                             android:textCursorDrawable="@drawable/cursor"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="片"
+                            android:textColor="@color/txt_light_color"
                             android:textSize="16sp" />
                     </LinearLayout>
 
@@ -139,8 +150,39 @@
                         android:textColor="@color/txt_light_color"
                         android:textSize="14sp" />
                 </LinearLayout>
+                <!--时间卡片-->
+                <include
+                    android:id="@+id/time_card_one"
+                    layout="@layout/layout_time_card"
+                    android:visibility="gone" />
 
+                <include
+                    android:id="@+id/time_card_tow"
+                    layout="@layout/layout_time_card"
+                    android:visibility="gone" />
+
+                <include
+                    android:id="@+id/time_card_three"
+                    layout="@layout/layout_time_card"
+                    android:visibility="gone" />
+
+                <include
+                    android:id="@+id/time_card_four"
+                    layout="@layout/layout_time_card"
+                    android:visibility="gone" />
+
+                <include
+                    android:id="@+id/time_card_five"
+                    layout="@layout/layout_time_card"
+                    android:visibility="gone" />
+
+                <include
+                    android:id="@+id/time_card_six"
+                    layout="@layout/layout_time_card"
+                    android:visibility="gone" />
+                <!--添加时间-->
                 <LinearLayout
+                    android:id="@+id/add_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
@@ -200,7 +242,6 @@
                         android:textSize="14sp" />
                 </LinearLayout>
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -209,60 +250,126 @@
                     android:padding="8dp">
 
                     <TextView
-                        android:layout_margin="4dp"
-                        android:padding="2dp"
+                        android:id="@+id/tv_period_1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
                         android:layout_weight="1"
+                        android:background="@drawable/rectangle_line_them_light_r_2"
                         android:gravity="center"
+                        android:padding="2dp"
                         android:singleLine="true"
                         android:text="@string/one_week"
                         android:textColor="?attr/theme_color_light"
-                        android:textSize="16sp"
-                        android:background="@drawable/rectangle_line_them_light_r_2"/>
+                        android:textSize="16sp" />
 
                     <TextView
-                        android:layout_margin="4dp"
-                        android:padding="2dp"
+                        android:id="@+id/tv_period_2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
                         android:layout_weight="1"
+                        android:background="@drawable/rectangle_line_them_light_r_2"
                         android:gravity="center"
+                        android:padding="2dp"
                         android:singleLine="true"
                         android:text="@string/tow_week"
                         android:textColor="?attr/theme_color_light"
-                        android:textSize="16sp"
-                        android:background="@drawable/rectangle_line_them_light_r_2"/>
+                        android:textSize="16sp" />
 
                     <TextView
-                        android:layout_margin="4dp"
-                        android:padding="2dp"
+                        android:id="@+id/tv_period_3"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
                         android:layout_weight="1"
+                        android:background="@drawable/rectangle_line_them_light_r_2"
                         android:gravity="center"
+                        android:padding="2dp"
                         android:singleLine="true"
                         android:text="@string/one_month"
                         android:textColor="?attr/theme_color_light"
-                        android:textSize="16sp"
-                        android:background="@drawable/rectangle_line_them_light_r_2"/>
+                        android:textSize="16sp" />
 
                     <TextView
-                        android:layout_margin="4dp"
-                        android:padding="2dp"
+                        android:id="@+id/tv_period_4"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
                         android:layout_weight="1"
+                        android:background="@drawable/rectangle_line_them_light_r_2"
                         android:gravity="center"
+                        android:padding="2dp"
                         android:singleLine="true"
                         android:text="@string/diy"
                         android:textColor="?attr/theme_color_light"
-                        android:textSize="16sp"
-                        android:background="@drawable/rectangle_line_them_light_r_2"/>
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/diy_period"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+                    <LinearLayout
+                        android:id="@+id/star_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true"
+                            android:text="@string/start_time"
+                            android:textColor="@color/txt_light_color"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:singleLine="true"
+                            android:text="2017-05-11"
+                            android:textColor="@color/txt_black"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/end_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true"
+                            android:text="@string/end_time"
+                            android:textColor="@color/txt_light_color"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:singleLine="true"
+                            android:text="2017-05-19"
+                            android:textColor="@color/txt_black"
+                            android:textSize="18sp" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
             <!--设置提醒-->
             <LinearLayout
+                android:id="@+id/layout_notifition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -298,20 +405,25 @@
                     android:padding="8dp">
 
                     <TextView
-                        android:layout_margin="4dp"
-                        android:padding="2dp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
+                        android:padding="2dp"
                         android:singleLine="true"
                         android:text="@string/open_notifition"
-                        android:textColor="?attr/theme_color_light"
-                        android:textSize="16sp"/>
-                    <ImageView
-                        android:id="@+id/iv_toggle"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp" />
+                        android:textColor="@color/txt_black"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:id="@+id/cb_toggle"
+                        android:layout_width="48dp"
+                        android:layout_height="24dp"
+                        android:gravity="right"
+                        android:button="@null"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -343,16 +455,33 @@
                         android:textSize="14sp" />
 
                 </LinearLayout>
+
                 <EditText
-                    android:layout_margin="8dp"
-                    android:padding="4dp"
+                    android:id="@+id/et_remarks"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
                     android:background="@drawable/rectangle_line_them_light_r_2"
+                    android:padding="4dp"
                     android:textColor="@color/txt_light_color"
                     android:textCursorDrawable="@drawable/cursor"
                     android:textSize="16sp" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/button_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/button_background"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/save"
+                android:textColor="@color/txt_white"
+                android:textSize="16sp"></TextView>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
