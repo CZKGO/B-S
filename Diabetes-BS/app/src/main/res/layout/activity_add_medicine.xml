@@ -110,9 +110,10 @@
                             android:textSize="16sp" />
 
                         <TextView
+                            android:id="@+id/tv_unit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="片"
+                            android:text="mg"
                             android:textColor="@color/txt_light_color"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -331,6 +332,7 @@
                             android:textSize="14sp" />
 
                         <TextView
+                            android:id="@+id/tv_start_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -357,6 +359,7 @@
                             android:textSize="14sp" />
 
                         <TextView
+                            android:id="@+id/tv_end_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"

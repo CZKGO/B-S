@@ -29,6 +29,7 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -55,11 +56,12 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/tv_doses"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:singleLine="true"
-                android:text="1片"
+                android:text="1mg"
                 android:textColor="@color/txt_black"
                 android:textSize="18sp" />
         </LinearLayout>

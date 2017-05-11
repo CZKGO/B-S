@@ -1,5 +1,6 @@
 package com.czk.diabetes.medicine;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -8,12 +9,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.czk.diabetes.BaseActivity;
+import com.czk.diabetes.BaseFragmentActivity;
+import com.czk.diabetes.DB.DBOpenHelper;
 import com.czk.diabetes.R;
 import com.czk.diabetes.util.FontIconDrawable;
 import com.czk.diabetes.util.StringUtil;
 import com.czk.diabetes.util.ThemeUtil;
+import com.czk.diabetes.util.TimeUtil;
 import com.czk.diabetes.util.ToastUtil;
+import com.fourmob.datetimepicker.date.DatePickerDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +26,7 @@ import java.util.List;
  * Created by 陈忠凯 on 2017/5/9.
  */
 
-public class AddMedicineActivity extends BaseActivity {
+public class AddMedicineActivity extends BaseFragmentActivity {
     //检查是否输入
     final private static int CHECKNAME = 0;
     final private static int CHECKDOSES = 1;
@@ -39,6 +43,13 @@ public class AddMedicineActivity extends BaseActivity {
     private int period = -1;
     private CheckBox cbToggle;
     private View layoutDIYPeriod;
+    private TextView tvUnit;
+    private String[] times = new String[]{"", "", "", "", "", ""};
+    private String peroidStart;
+    private String peroidEnd;
+    private EditText etRemarks;
+    private TextView tvStartTime;
+    private TextView tvEndTime;
 
 
     @Override
@@ -63,6 +74,7 @@ public class AddMedicineActivity extends BaseActivity {
         ImageView ivAdd = (ImageView) findViewById(R.id.iv_add);
         FontIconDrawable iconPlus = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_plus);
         ivAdd.setImageDrawable(iconPlus);
+        tvUnit = (TextView) findViewById(R.id.tv_unit);
         cbToggle = (CheckBox) findViewById(R.id.cb_toggle);
         setCheckBox(cbToggle, true);
 
@@ -77,6 +89,10 @@ public class AddMedicineActivity extends BaseActivity {
         viewPeriod.add((TextView) findViewById(R.id.tv_period_4));
 
         layoutDIYPeriod = findViewById(R.id.diy_period);
+        tvStartTime = (TextView) findViewById(R.id.tv_start_time);
+        tvEndTime = (TextView) findViewById(R.id.tv_end_time);
+
+        etRemarks = (EditText) findViewById(R.id.et_remarks);
     }
 
     private void setCheckBox(CheckBox checkBox, boolean check) {
@@ -137,9 +153,63 @@ public class AddMedicineActivity extends BaseActivity {
         findViewById(R.id.button_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkEvent(CHECKSAVE)){
-
+                if (checkEvent(CHECKSAVE)) {
+                    String time = "";
+                    for (String t : times) {
+                        time = time+String.valueOf(t) + ",";
+                    }
+                    DBOpenHelper helper = new DBOpenHelper(AddMedicineActivity.this);
+                    SQLiteDatabase db = helper.getWritableDatabase();  //得到的是SQLiteDatabase对象
+                    StringBuffer sBuffer = new StringBuffer();
+                    sBuffer.append("REPLACE INTO medicine_record ");
+                    sBuffer.append("(name,doses,time,peroid_start,peroid_end,notifition,description) values (");
+                    sBuffer.append("'" + etName.getText() + "',");
+                    sBuffer.append("'" + etDoses.getText() + "',");
+                    sBuffer.append("'" + time + "',");
+                    sBuffer.append("'" + peroidStart + "',");
+                    sBuffer.append("'" + peroidEnd + "',");
+                    sBuffer.append("'" + String.valueOf(cbToggle.isChecked()) + "',");
+                    sBuffer.append("'" + etRemarks.getText()+"'");
+                    sBuffer.append(")");
+                    // 执行创建表的SQL语句
+                    db.execSQL(sBuffer.toString());
+                    db.close();
+                    finish();
                 }
+            }
+        });
+
+        tvStartTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog.newInstance(
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
+                                tvStartTime.setText(year + "-" + TimeUtil.format(month) + "-" + TimeUtil.format(day));
+                            }
+                        }
+                        , TimeUtil.getYear(System.currentTimeMillis())
+                        , TimeUtil.getMonth(System.currentTimeMillis())
+                        , TimeUtil.getDay(System.currentTimeMillis())
+                        , false).show(getSupportFragmentManager(), "datePicker");
+            }
+        });
+
+        tvEndTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog.newInstance(
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
+                                tvEndTime.setText(year + "-" + TimeUtil.format(month) + "-" + TimeUtil.format(day));
+                            }
+                        }
+                        , TimeUtil.getYear(System.currentTimeMillis())
+                        , TimeUtil.getMonth(System.currentTimeMillis())
+                        , TimeUtil.getDay(System.currentTimeMillis())
+                        , false).show(getSupportFragmentManager(), "datePicker");
             }
         });
     }
@@ -176,12 +246,44 @@ public class AddMedicineActivity extends BaseActivity {
         FontIconDrawable iconVin = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_bin);
         ivBin.setImageDrawable(iconVin);
 
+        TextView tvDoses = (TextView) view.findViewById(R.id.tv_doses);
+        tvDoses.setText(etDoses.getText().toString() + tvUnit.getText());
+
+        TextView tvTime = (TextView) view.findViewById(R.id.tv_time);
+        switch (cardNumber) {
+            case 0:
+                times[0] = "08:00";
+                tvTime.setText("8:00");
+                break;
+            case 1:
+                times[1] = "12:30";
+                tvTime.setText("12:30");
+                break;
+            case 2:
+                times[2] = "18:00";
+                tvTime.setText("18:00");
+                break;
+            case 3:
+                times[3] = "19:00";
+                tvTime.setText("19:00");
+                break;
+            case 4:
+                times[4] = "20:00";
+                tvTime.setText("20:00");
+                break;
+            case 5:
+                times[5] = "21:00";
+                tvTime.setText("21:00");
+                break;
+        }
+
         ivBin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 layoutAddTime.setVisibility(View.VISIBLE);
                 showTimeCard[cardNumber] = false;
+                times[cardNumber] = "";
             }
         });
     }
@@ -195,15 +297,33 @@ public class AddMedicineActivity extends BaseActivity {
                         clearPeriondStatus(viewPeriod);
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             view.setBackground(getResources().getDrawable(R.drawable.rectangle_line_them_r_2, getTheme()));
-                        }else {
+                        } else {
                             view.setBackgroundDrawable(getResources().getDrawable(R.drawable.rectangle_line_them_r_2));
                         }
                         view.setTextColor(ThemeUtil.getThemeColor());
                         period = viewPeriod.indexOf(view);
-                        if(period == 3){//自定义
+                        if (period == 3) {//自定义
+                            tvStartTime.setText(TimeUtil.getYearMonthDay(System.currentTimeMillis()));
+                            tvEndTime.setText(TimeUtil.getYearMonthDay(System.currentTimeMillis() + 7 * 24 * 60 * 60 * 1000));
                             layoutDIYPeriod.setVisibility(View.VISIBLE);
-                        }else {
+                        } else {
                             layoutDIYPeriod.setVisibility(View.GONE);
+                        }
+                        peroidStart = TimeUtil.getYearMonthDay(System.currentTimeMillis());
+                        switch (period) {
+                            case 0://一周
+                                peroidEnd = TimeUtil.getYearMonthDay(System.currentTimeMillis() + 7 * 24 * 60 * 60 * 1000);
+                                break;
+                            case 1://二周
+                                peroidEnd = TimeUtil.getYearMonthDay(System.currentTimeMillis() + 14 * 24 * 60 * 60 * 1000);
+                                break;
+                            case 2://一月
+                                peroidEnd = TimeUtil.getYearMonthDay(System.currentTimeMillis() + 30 * 24 * 60 * 60 * 1000);
+                                break;
+                            case 3://自定义
+                                peroidStart = tvStartTime.getText().toString();
+                                peroidEnd = tvEndTime.getText().toString();
+                                break;
                         }
                     }
                 }
@@ -215,10 +335,11 @@ public class AddMedicineActivity extends BaseActivity {
         for (TextView view : viewPeriod) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 view.setBackground(getResources().getDrawable(R.drawable.rectangle_line_them_light_r_2, getTheme()));
-            }else {
+            } else {
                 view.setBackgroundDrawable(getResources().getDrawable(R.drawable.rectangle_line_them_light_r_2));
             }
             view.setTextColor(ThemeUtil.getThemeColorLight());
+
         }
     }
 }
