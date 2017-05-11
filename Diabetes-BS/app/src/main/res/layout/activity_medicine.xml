@@ -125,5 +125,18 @@
                 android:text="@string/add_my_leechdom_tip"
                 android:textColor="@color/txt_light_color"/>
         </LinearLayout>
+
+        <ListView
+            android:visibility="gone"
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
+            android:cacheColorHint="#00000000"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:drawSelectorOnTop="false"
+            android:listSelector="@color/transparent"
+            android:scrollbars="none" />
     </LinearLayout>
 </LinearLayout>
