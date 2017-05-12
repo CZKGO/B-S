@@ -114,7 +114,7 @@ public class MedicineFragment extends Fragment {
         ImageView leechdomLeftIconIV = (ImageView) fragment.findViewById(R.id.leechdom_left_icon);
         leechdomLeftIconIV.setImageDrawable(leechdomIconDrawable);
         tvLeechdomName = (TextView) fragment.findViewById(R.id.txt_leechdom_name);
-        tvLeechdomDosage = (TextView) fragment.findViewById(R.id.txt_leechdom_dosage);
+        tvLeechdomDosage = (TextView) fragment.findViewById(R.id.txt_leechdom_doses);
         tvLeechdomTime = (TextView) fragment.findViewById(R.id.txt_leechdom_time);
 
 
