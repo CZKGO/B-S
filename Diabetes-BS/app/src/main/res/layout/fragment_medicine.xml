@@ -114,13 +114,13 @@
                                 android:background="@color/divide_line" />
 
                             <TextView
-                                android:id="@+id/txt_leechdom_usage"
+                                android:id="@+id/txt_leechdom_doses"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="4dp"
                                 android:layout_marginTop="12dp"
                                 android:singleLine="true"
-                                android:text="@string/usage"
+                                android:text="@string/dosage"
                                 android:textColor="@color/txt_light_color"
                                 android:textSize="16sp" />
 
@@ -130,13 +130,13 @@
                                 android:background="@color/divide_line" />
 
                             <TextView
-                                android:id="@+id/txt_leechdom_dosage"
+                                android:id="@+id/txt_leechdom_time"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="4dp"
                                 android:layout_marginTop="12dp"
                                 android:singleLine="true"
-                                android:text="@string/dosage"
+                                android:text="@string/medication_time_colon"
                                 android:textColor="@color/txt_light_color"
                                 android:textSize="16sp" />
 

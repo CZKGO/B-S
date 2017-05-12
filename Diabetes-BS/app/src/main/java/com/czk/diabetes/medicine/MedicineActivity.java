@@ -167,25 +167,7 @@ public class MedicineActivity extends BaseActivity {
         });
     }
 
-    private class MedicineRecord {
-        private String name;
-        private String doses;
-        private String times;
-        private String peroidStart;
-        private String peroidEnd;
-        private String notifition;
-        private String description;
 
-        public MedicineRecord(String name, String doses, String times, String peroidStart, String peroidEnd, String notifition, String description) {
-            this.name = name;
-            this.doses = doses;
-            this.times = times;
-            this.peroidStart = peroidStart;
-            this.peroidEnd = peroidEnd;
-            this.notifition = notifition;
-            this.description = description;
-        }
-    }
 
     private class RecordAdapter extends BaseAdapter {
         private List<MedicineRecord> records;
@@ -219,7 +201,7 @@ public class MedicineActivity extends BaseActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = convertView;
             ViewHolder holder;
-
+            MedicineRecord record = records.get(position);
             if (null == view) {
                 view = LayoutInflater.from(context).inflate(R.layout.item_medicine_record_layout, null);
                 holder = new ViewHolder();
@@ -232,8 +214,8 @@ public class MedicineActivity extends BaseActivity {
                 holder = (ViewHolder) view.getTag();
             }
 
-            holder.txtNamw.setText(records.get(position).name);
-            holder.txtDoses.setText(records.get(position).doses + getResources().getString(R.string.mg));
+            holder.txtNamw.setText(record.name);
+            holder.txtDoses.setText(record.doses + getResources().getString(R.string.mg));
             holder.txtTime.setText(records.get(position).times);
             holder.ivIcon.setImageDrawable(FontIconDrawable.inflate(context, R.xml.icon_pill));
             return view;
