@@ -116,4 +116,5 @@
     <string name="save">Save</string>
     <string name="start_time">Start time</string>
     <string name="end_time">End time</string>
+    <string name="mg">mg</string>
 </resources>

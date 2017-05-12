@@ -49,6 +49,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         sBuffer = new StringBuffer();
         sBuffer.append("CREATE TABLE [medicine_record] (");
         sBuffer.append("[_id] INTEGER PRIMARY KEY, ");
+        sBuffer.append("[add_time] TEXT,");
         sBuffer.append("[name] TEXT,");
         sBuffer.append("[doses] TEXT,");
         sBuffer.append("[time] TEXT,");

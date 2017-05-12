@@ -41,11 +41,11 @@ public class MedicineActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case QUERY_FINSH:
-                    if(records.size()>0){
+                    if (records.size() > 0) {
                         laoutAdd.setVisibility(View.GONE);
                         lvRecord.setVisibility(View.VISIBLE);
                         adapter.notifyDataSetChanged();
-                    }else {
+                    } else {
                         laoutAdd.setVisibility(View.VISIBLE);
                         lvRecord.setVisibility(View.GONE);
                         adapter.notifyDataSetChanged();
@@ -84,7 +84,7 @@ public class MedicineActivity extends BaseActivity {
                         , new String[]{"name", "doses", "time", "peroid_start", "peroid_end", "notifition", "description"}
                         , "peroid_end >= ?"
                         , new String[]{TimeUtil.getYearMonthDay(System.currentTimeMillis())}
-                        , null, null, "peroid_start" + " ASC");
+                        , null, null, "time" + " ASC");
                 while (c.moveToNext()) {
                     MedicineRecord data = new MedicineRecord(
                             c.getString(c.getColumnIndex("name")),
@@ -128,8 +128,8 @@ public class MedicineActivity extends BaseActivity {
         ivPlus.setImageDrawable(iconPlus);
         laoutAdd = findViewById(R.id.add_layout);
 
-        lvRecord = (ListView)findViewById(R.id.list);
-        adapter = new RecordAdapter(MedicineActivity.this,records);
+        lvRecord = (ListView) findViewById(R.id.list);
+        adapter = new RecordAdapter(MedicineActivity.this, records);
         lvRecord.setAdapter(adapter);
 
     }
@@ -196,6 +196,7 @@ public class MedicineActivity extends BaseActivity {
             this.context = context;
 
         }
+
         @Override
         public int getCount() {
             // TODO Auto-generated method stub
@@ -221,20 +222,28 @@ public class MedicineActivity extends BaseActivity {
 
             if (null == view) {
                 view = LayoutInflater.from(context).inflate(R.layout.item_medicine_record_layout, null);
-                holder=new ViewHolder();
+                holder = new ViewHolder();
                 holder.txtNamw = (TextView) view.findViewById(R.id.tv_name);
+                holder.txtDoses = (TextView) view.findViewById(R.id.tv_doses);
+                holder.txtTime = (TextView) view.findViewById(R.id.tv_time);
+                holder.ivIcon = (ImageView) view.findViewById(R.id.icon);
                 view.setTag(holder);
             } else {
-                holder=(ViewHolder)view.getTag();
+                holder = (ViewHolder) view.getTag();
             }
 
             holder.txtNamw.setText(records.get(position).name);
-
+            holder.txtDoses.setText(records.get(position).doses + getResources().getString(R.string.mg));
+            holder.txtTime.setText(records.get(position).times);
+            holder.ivIcon.setImageDrawable(FontIconDrawable.inflate(context, R.xml.icon_pill));
             return view;
         }
 
-        class ViewHolder{
+        class ViewHolder {
             TextView txtNamw;
+            TextView txtDoses;
+            TextView txtTime;
+            ImageView ivIcon;
         }
     }
 }

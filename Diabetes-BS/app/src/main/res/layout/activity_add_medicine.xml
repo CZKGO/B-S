@@ -113,7 +113,7 @@
                             android:id="@+id/tv_unit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="mg"
+                            android:text="@string/mg"
                             android:textColor="@color/txt_light_color"
                             android:textSize="16sp" />
                     </LinearLayout>

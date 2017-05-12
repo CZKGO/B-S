@@ -44,7 +44,7 @@ public class AddMedicineActivity extends BaseFragmentActivity {
     private CheckBox cbToggle;
     private View layoutDIYPeriod;
     private TextView tvUnit;
-    private String[] times = new String[]{"", "", "", "", "", ""};
+    private String[] times = new String[]{null, null, null, null, null, null};
     private String peroidStart;
     private String peroidEnd;
     private EditText etRemarks;
@@ -154,25 +154,27 @@ public class AddMedicineActivity extends BaseFragmentActivity {
             @Override
             public void onClick(View v) {
                 if (checkEvent(CHECKSAVE)) {
-                    String time = "";
-                    for (String t : times) {
-                        time = time+String.valueOf(t) + ",";
-                    }
                     DBOpenHelper helper = new DBOpenHelper(AddMedicineActivity.this);
                     SQLiteDatabase db = helper.getWritableDatabase();  //得到的是SQLiteDatabase对象
-                    StringBuffer sBuffer = new StringBuffer();
-                    sBuffer.append("REPLACE INTO medicine_record ");
-                    sBuffer.append("(name,doses,time,peroid_start,peroid_end,notifition,description) values (");
-                    sBuffer.append("'" + etName.getText() + "',");
-                    sBuffer.append("'" + etDoses.getText() + "',");
-                    sBuffer.append("'" + time + "',");
-                    sBuffer.append("'" + peroidStart + "',");
-                    sBuffer.append("'" + peroidEnd + "',");
-                    sBuffer.append("'" + String.valueOf(cbToggle.isChecked()) + "',");
-                    sBuffer.append("'" + etRemarks.getText()+"'");
-                    sBuffer.append(")");
-                    // 执行创建表的SQL语句
-                    db.execSQL(sBuffer.toString());
+                    long time = System.currentTimeMillis();
+                    for (String t : times) {
+                        if (null != t) {
+                            StringBuffer sBuffer = new StringBuffer();
+                            sBuffer.append("REPLACE INTO medicine_record ");
+                            sBuffer.append("(add_time,name,doses,time,peroid_start,peroid_end,notifition,description) values (");
+                            sBuffer.append("'" + time + "',");
+                            sBuffer.append("'" + etName.getText() + "',");
+                            sBuffer.append("'" + etDoses.getText() + "',");
+                            sBuffer.append("'" + t + "',");
+                            sBuffer.append("'" + peroidStart + "',");
+                            sBuffer.append("'" + peroidEnd + "',");
+                            sBuffer.append("'" + String.valueOf(cbToggle.isChecked()) + "',");
+                            sBuffer.append("'" + etRemarks.getText() + "'");
+                            sBuffer.append(")");
+                            // 执行创建表的SQL语句
+                            db.execSQL(sBuffer.toString());
+                        }
+                    }
                     db.close();
                     finish();
                 }
@@ -283,7 +285,7 @@ public class AddMedicineActivity extends BaseFragmentActivity {
                 view.setVisibility(View.GONE);
                 layoutAddTime.setVisibility(View.VISIBLE);
                 showTimeCard[cardNumber] = false;
-                times[cardNumber] = "";
+                times[cardNumber] = null;
             }
         });
     }
