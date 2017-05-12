@@ -39,9 +39,8 @@ public class MedicineFragment extends Fragment {
             switch (msg.what) {
                 case MEDICINE_QUERY_FINSH:
                     MedicineRecord medicineData = (MedicineRecord) msg.obj;
-
                     tvLeechdomName.setText(Html.fromHtml(getResources().getString(R.string.designation,medicineData.name)));
-                    tvLeechdomDosage.setText(Html.fromHtml(getResources().getString(R.string.dosage,medicineData.doses)));
+                    tvLeechdomDosage.setText(Html.fromHtml(getResources().getString(R.string.dosage,medicineData.doses))+getString(R.string.mg));
                     tvLeechdomTime.setText(Html.fromHtml(getResources().getString(R.string.medication_time_colon,medicineData.times)));
                     break;
             }
@@ -59,11 +58,16 @@ public class MedicineFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         initData();
         initView();
-        initAscnData();
         dealEvent();
     }
 
-    private void initAscnData() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshData();
+    }
+
+    private void refreshData() {
         getData();
     }
 
@@ -75,7 +79,7 @@ public class MedicineFragment extends Fragment {
                 SQLiteDatabase db = helper.getWritableDatabase();
                 Cursor c = db.query("medicine_record"
                         , new String[]{"name", "doses", "time", "peroid_start", "peroid_end", "notifition", "description"}
-                        , "peroid_end <= ?"
+                        , "peroid_end >= ?"
                         , new String[]{TimeUtil.getYearMonthDay(System.currentTimeMillis())}
                         , null, null, "time" + " ASC");
                 while (c.moveToNext()) {
