@@ -5,18 +5,20 @@ package com.czk.diabetes.medicine;
  */
 
 public class MedicineRecord {
+    public String addTime;
     public String name;
     public String doses;
-    public String times;
+    public String time;
     public String peroidStart;
     public String peroidEnd;
     public String notifition;
     public String description;
 
-    public MedicineRecord(String name, String doses, String times, String peroidStart, String peroidEnd, String notifition, String description) {
+    public MedicineRecord(String addTime, String name, String doses, String time, String peroidStart, String peroidEnd, String notifition, String description) {
+        this.addTime = addTime;
         this.name = name;
         this.doses = doses;
-        this.times = times;
+        this.time = time;
         this.peroidStart = peroidStart;
         this.peroidEnd = peroidEnd;
         this.notifition = notifition;

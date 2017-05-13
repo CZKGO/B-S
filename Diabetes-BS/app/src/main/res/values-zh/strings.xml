@@ -118,4 +118,6 @@
     <string name="end_time">结束时间</string>
     <string name="nothing_hear">哎呀，这里什么都没有</string>
     <string name="medication_time_colon">用药时间：%1$s</string>
+    <string name="unknown">未知</string>
+    <string name="data_eorr">数据错误</string>
 </resources>

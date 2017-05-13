@@ -10,6 +10,7 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -35,6 +36,7 @@ public class MedicineActivity extends BaseActivity {
     private List<MedicineRecord> records = new ArrayList<>();
     private ListView lvRecord;
     private RecordAdapter adapter;
+    private ImageView ivRightIcon;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -45,10 +47,12 @@ public class MedicineActivity extends BaseActivity {
                         laoutAdd.setVisibility(View.GONE);
                         lvRecord.setVisibility(View.VISIBLE);
                         adapter.notifyDataSetChanged();
+                        ivRightIcon.setVisibility(View.VISIBLE);
                     } else {
                         laoutAdd.setVisibility(View.VISIBLE);
                         lvRecord.setVisibility(View.GONE);
                         adapter.notifyDataSetChanged();
+                        ivRightIcon.setVisibility(View.GONE);
                     }
                     break;
             }
@@ -81,12 +85,17 @@ public class MedicineActivity extends BaseActivity {
                 DBOpenHelper helper = new DBOpenHelper(MedicineActivity.this);
                 SQLiteDatabase db = helper.getWritableDatabase();
                 Cursor c = db.query("medicine_record"
-                        , new String[]{"name", "doses", "time", "peroid_start", "peroid_end", "notifition", "description"}
-                        , "peroid_end >= ?"
-                        , new String[]{TimeUtil.getYearMonthDay(System.currentTimeMillis())}
-                        , null, null, "time" + " ASC");
+                        , new String[]{"add_time","name", "doses", "time", "peroid_start", "peroid_end", "notifition", "description"}
+                        , "peroid_end >= ? and peroid_start <= ? and time >= ?"
+                        , new String[]{TimeUtil.getYearMonthDay(System.currentTimeMillis())
+                                , TimeUtil.getYearMonthDay(System.currentTimeMillis())
+                                ,TimeUtil.getSringByFormat(System.currentTimeMillis(),"HH:mm")}
+                        , "add_time"
+                        , "min(time)"
+                        , "time" + " ASC");
                 while (c.moveToNext()) {
                     MedicineRecord data = new MedicineRecord(
+                            c.getString(c.getColumnIndex("add_time")),
                             c.getString(c.getColumnIndex("name")),
                             c.getString(c.getColumnIndex("doses")),
                             c.getString(c.getColumnIndex("time")),
@@ -128,6 +137,9 @@ public class MedicineActivity extends BaseActivity {
         ivPlus.setImageDrawable(iconPlus);
         laoutAdd = findViewById(R.id.add_layout);
 
+        ivRightIcon = (ImageView) findViewById(R.id.title_right_icon);
+        ivRightIcon.setImageDrawable(iconPlus);
+
         lvRecord = (ListView) findViewById(R.id.list);
         adapter = new RecordAdapter(MedicineActivity.this, records);
         lvRecord.setAdapter(adapter);
@@ -165,8 +177,24 @@ public class MedicineActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-    }
 
+        ivRightIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MedicineActivity.this, AddMedicineActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        lvRecord.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MedicineActivity.this, AddMedicineActivity.class);
+                intent.putExtra(AddMedicineActivity.INTENT_ADD_TIME, records.get(position).addTime);
+                startActivity(intent);
+            }
+        });
+    }
 
 
     private class RecordAdapter extends BaseAdapter {
@@ -216,7 +244,7 @@ public class MedicineActivity extends BaseActivity {
 
             holder.txtNamw.setText(record.name);
             holder.txtDoses.setText(record.doses + getResources().getString(R.string.mg));
-            holder.txtTime.setText(records.get(position).times);
+            holder.txtTime.setText(records.get(position).time);
             holder.ivIcon.setImageDrawable(FontIconDrawable.inflate(context, R.xml.icon_pill));
             return view;
         }

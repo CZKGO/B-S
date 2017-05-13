@@ -94,21 +94,36 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_marginTop="8dp"
-            android:id="@+id/my_function_name"
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/my_leechdom"
-            android:textColor="@color/txt_black"
-            android:textSize="16sp" />
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/my_function_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/my_leechdom"
+                android:textColor="@color/txt_black"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/title_right_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:padding="2dp"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginRight="8dp"
+                android:visibility="gone" />
+        </FrameLayout>
 
         <LinearLayout
             android:id="@+id/add_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/add_icon"
@@ -116,18 +131,17 @@
                 android:layout_height="80dp" />
 
             <TextView
-                android:layout_marginTop="8dp"
                 android:id="@+id/add_text"
-                android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
                 android:text="@string/add_my_leechdom_tip"
-                android:textColor="@color/txt_light_color"/>
+                android:textColor="@color/txt_light_color"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <ListView
-            android:visibility="gone"
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -137,6 +151,7 @@
             android:dividerHeight="0dp"
             android:drawSelectorOnTop="false"
             android:listSelector="@color/transparent"
-            android:scrollbars="none" />
+            android:scrollbars="none"
+            android:visibility="gone" />
     </LinearLayout>
 </LinearLayout>

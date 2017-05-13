@@ -127,8 +127,7 @@ public class TimeUtil {
     }
 
     /**
-     *
-     * @param strTime 要转换的string类型的时间
+     * @param strTime    要转换的string类型的时间
      * @param formatType 要转换的格式
      * @return
      * @throws ParseException
@@ -143,6 +142,7 @@ public class TimeUtil {
 
     /**
      * 要转换的date类型的时间
+     *
      * @param date
      * @return
      */
@@ -150,4 +150,16 @@ public class TimeUtil {
         return date.getTime();
     }
 
+    /**
+     * 将时间转换成指定格式
+     *
+     * @param timeMillis
+     * @param format
+     * @return
+     */
+    public static String getSringByFormat(long timeMillis, String format) {
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        Date date = new Date(timeMillis);
+        return sdf.format(date);
+    }
 }

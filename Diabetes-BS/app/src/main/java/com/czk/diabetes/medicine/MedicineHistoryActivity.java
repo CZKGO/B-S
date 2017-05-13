@@ -18,7 +18,6 @@ import com.czk.diabetes.BaseActivity;
 import com.czk.diabetes.DB.DBOpenHelper;
 import com.czk.diabetes.R;
 import com.czk.diabetes.util.FontIconDrawable;
-import com.czk.diabetes.util.TimeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,12 +79,15 @@ public class MedicineHistoryActivity extends BaseActivity {
                 DBOpenHelper helper = new DBOpenHelper(MedicineHistoryActivity.this);
                 SQLiteDatabase db = helper.getWritableDatabase();
                 Cursor c = db.query("medicine_record"
-                        , new String[]{"name", "doses", "time", "peroid_start", "peroid_end", "notifition", "description"}
-                        , "peroid_end <= ?"
-                        , new String[]{TimeUtil.getYearMonthDay(System.currentTimeMillis())}
-                        , null, null, "time" + " ASC");
+                        , new String[]{"add_time", "name", "doses", "time", "peroid_start", "peroid_end", "notifition", "description"}
+                        , null
+                        , null
+                        , "add_time"
+                        , "min(time)"
+                        , "time" + " ASC");
                 while (c.moveToNext()) {
                     MedicineRecord data = new MedicineRecord(
+                            c.getString(c.getColumnIndex("add_time")),
                             c.getString(c.getColumnIndex("name")),
                             c.getString(c.getColumnIndex("doses")),
                             c.getString(c.getColumnIndex("time")),
@@ -175,7 +177,7 @@ public class MedicineHistoryActivity extends BaseActivity {
 
             holder.txtNamw.setText(record.name);
             holder.txtDoses.setText(record.doses + getResources().getString(R.string.mg));
-            holder.txtTime.setText(records.get(position).times);
+            holder.txtTime.setText(records.get(position).time);
             holder.ivIcon.setImageDrawable(FontIconDrawable.inflate(context, R.xml.icon_pill));
             return view;
         }

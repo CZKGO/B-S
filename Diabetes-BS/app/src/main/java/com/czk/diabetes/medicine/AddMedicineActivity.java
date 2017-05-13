@@ -1,8 +1,11 @@
 package com.czk.diabetes.medicine;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 
 import com.czk.diabetes.BaseFragmentActivity;
 import com.czk.diabetes.DB.DBOpenHelper;
+import com.czk.diabetes.MyApplication;
 import com.czk.diabetes.R;
 import com.czk.diabetes.util.FontIconDrawable;
 import com.czk.diabetes.util.StringUtil;
@@ -18,6 +22,8 @@ import com.czk.diabetes.util.ThemeUtil;
 import com.czk.diabetes.util.TimeUtil;
 import com.czk.diabetes.util.ToastUtil;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
+import com.sleepbot.datetimepicker.time.RadialPickerLayout;
+import com.sleepbot.datetimepicker.time.TimePickerDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +33,13 @@ import java.util.List;
  */
 
 public class AddMedicineActivity extends BaseFragmentActivity {
+    public final static String INTENT_ADD_TIME = "add_time";
+    private String addTimeIntent;
+
+    private static final int HANDLER_QUERY_FINSH = 0;
+
     //检查是否输入
+    private List<MedicineRecord> records = new ArrayList<>();
     final private static int CHECKNAME = 0;
     final private static int CHECKDOSES = 1;
     final private static int CHECKTIME = 2;
@@ -39,6 +51,7 @@ public class AddMedicineActivity extends BaseFragmentActivity {
     private View layoutAddTime;
     private EditText etName;
     private EditText etDoses;
+    private List<View> viewTimeCard;
     private List<TextView> viewPeriod;
     private int period = -1;
     private CheckBox cbToggle;
@@ -51,16 +64,83 @@ public class AddMedicineActivity extends BaseFragmentActivity {
     private TextView tvStartTime;
     private TextView tvEndTime;
 
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case HANDLER_QUERY_FINSH:
+                    setData();
+                    break;
+            }
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_medicine);
-//        initData();
+        initData();
         initView();
+        initAsncData();
         dealEvent();
     }
 
+    private void initData() {
+        addTimeIntent = getIntent().getStringExtra(INTENT_ADD_TIME);
+    }
+
+    private void initAsncData() {
+        if (null != addTimeIntent) {
+            getData();
+        }
+    }
+
+    public void getData() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                records.clear();
+                DBOpenHelper helper = new DBOpenHelper(AddMedicineActivity.this);
+                SQLiteDatabase db = helper.getWritableDatabase();
+                Cursor c = db.query("medicine_record"
+                        , new String[]{"add_time", "name", "doses", "time", "peroid_start", "peroid_end", "notifition", "description"}
+                        , "add_time = ?"
+                        , new String[]{addTimeIntent}
+                        , null
+                        , null
+                        , "time" + " ASC");
+                while (c.moveToNext()) {
+                    MedicineRecord data = new MedicineRecord(
+                            c.getString(c.getColumnIndex("add_time")),
+                            c.getString(c.getColumnIndex("name")),
+                            c.getString(c.getColumnIndex("doses")),
+                            c.getString(c.getColumnIndex("time")),
+                            c.getString(c.getColumnIndex("peroid_start")),
+                            c.getString(c.getColumnIndex("peroid_end")),
+                            c.getString(c.getColumnIndex("notifition")),
+                            c.getString(c.getColumnIndex("description")));
+                    records.add(data);
+                }
+                if (records.size() <= 0) {
+                    finish();
+                    ToastUtil.showShortToast(MyApplication.getInstance(), getResources().getString(R.string.data_eorr));
+                }
+                handler.sendEmptyMessage(HANDLER_QUERY_FINSH);
+                c.close();
+                db.close();
+            }
+        }).start();
+    }
+
+    private void setData() {
+        etName.setText(records.get(0).name);
+        etDoses.setText(records.get(0).doses);
+        for (MedicineRecord record : records) {
+
+        }
+    }
 
     private void initView() {
         /**头部**/
@@ -81,6 +161,14 @@ public class AddMedicineActivity extends BaseFragmentActivity {
         etName = (EditText) findViewById(R.id.et_name);
         etDoses = (EditText) findViewById(R.id.et_doses);
         layoutAddTime = findViewById(R.id.add_time);
+
+        viewTimeCard = new ArrayList<>();
+        viewTimeCard.add(findViewById(R.id.time_card_one));
+        viewTimeCard.add(findViewById(R.id.time_card_tow));
+        viewTimeCard.add(findViewById(R.id.time_card_three));
+        viewTimeCard.add(findViewById(R.id.time_card_four));
+        viewTimeCard.add(findViewById(R.id.time_card_five));
+        viewTimeCard.add(findViewById(R.id.time_card_six));
 
         viewPeriod = new ArrayList<>();
         viewPeriod.add((TextView) findViewById(R.id.tv_period_1));
@@ -109,30 +197,30 @@ public class AddMedicineActivity extends BaseFragmentActivity {
 
 
     private void dealEvent() {
+        //头部
+        ivIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         layoutAddTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (checkEvent(CHECKTIME)) {
-                    if (!showTimeCard[0]) {
-                        showTimeCard[0] = true;
-                        showTimeCard(findViewById(R.id.time_card_one), 0);
-                    } else if (!showTimeCard[1]) {
-                        showTimeCard[1] = true;
-                        showTimeCard(findViewById(R.id.time_card_tow), 1);
-                    } else if (!showTimeCard[2]) {
-                        showTimeCard[2] = true;
-                        showTimeCard(findViewById(R.id.time_card_three), 2);
-                    } else if (!showTimeCard[3]) {
-                        showTimeCard[3] = true;
-                        showTimeCard(findViewById(R.id.time_card_four), 2);
-                    } else if (!showTimeCard[4]) {
-                        showTimeCard[4] = true;
-                        showTimeCard(findViewById(R.id.time_card_five), 4);
-                    } else if (!showTimeCard[5]) {
-                        showTimeCard[5] = true;
-                        showTimeCard(findViewById(R.id.time_card_six), 5);
-                        v.setVisibility(View.GONE);
+                    for (int i = 0; i < 6; i++) {
+                        if (!showTimeCard[i]) {
+                            showTimeCard[i] = true;
+                            String time = "8:00";
+
+                            showTimeCard(viewTimeCard.get(i), i, time);
+                            if (i >= 5) {
+                                v.setVisibility(View.GONE);
+                            }
+                        }
                     }
+
                 }
             }
         });
@@ -242,7 +330,7 @@ public class AddMedicineActivity extends BaseFragmentActivity {
         return doEvent;
     }
 
-    private void showTimeCard(final View view, final int cardNumber) {
+    private void showTimeCard(final View view, final int cardNumber, String time) {
         view.setVisibility(View.VISIBLE);
         ImageView ivBin = (ImageView) view.findViewById(R.id.iv_bin);
         FontIconDrawable iconVin = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_bin);
@@ -251,33 +339,25 @@ public class AddMedicineActivity extends BaseFragmentActivity {
         TextView tvDoses = (TextView) view.findViewById(R.id.tv_doses);
         tvDoses.setText(etDoses.getText().toString() + tvUnit.getText());
 
-        TextView tvTime = (TextView) view.findViewById(R.id.tv_time);
-        switch (cardNumber) {
-            case 0:
-                times[0] = "08:00";
-                tvTime.setText("8:00");
-                break;
-            case 1:
-                times[1] = "12:30";
-                tvTime.setText("12:30");
-                break;
-            case 2:
-                times[2] = "18:00";
-                tvTime.setText("18:00");
-                break;
-            case 3:
-                times[3] = "19:00";
-                tvTime.setText("19:00");
-                break;
-            case 4:
-                times[4] = "20:00";
-                tvTime.setText("20:00");
-                break;
-            case 5:
-                times[5] = "21:00";
-                tvTime.setText("21:00");
-                break;
-        }
+        final TextView tvTime = (TextView) view.findViewById(R.id.tv_time);
+        times[cardNumber] = time;
+        tvTime.setText(time);
+        
+        findViewById(R.id.time_chose).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
+                                tvTime.setText(hourOfDay + ":" + minute);
+                            }
+                        }
+                        , TimeUtil.getHourOfTheDay(System.currentTimeMillis())
+                        , TimeUtil.getMinuteOfTheHour(System.currentTimeMillis())
+                        , false).show(getSupportFragmentManager(), "timePicker");
+            }
+        });
 
         ivBin.setOnClickListener(new View.OnClickListener() {
             @Override

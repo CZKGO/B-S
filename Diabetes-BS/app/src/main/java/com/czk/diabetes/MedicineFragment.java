@@ -32,6 +32,12 @@ public class MedicineFragment extends Fragment {
     private TextView tvLeechdomDosage;
     private TextView tvLeechdomName;
     private TextView tvLeechdomTime;
+    private TextView tvDietName;
+    private TextView tvSugarChange;
+    private TextView tvDietTime;
+    private TextView tvAthleticsName;
+    private TextView tvAthleticsSugarChange;
+    private TextView tvAthleticsTime;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -41,7 +47,7 @@ public class MedicineFragment extends Fragment {
                     MedicineRecord medicineData = (MedicineRecord) msg.obj;
                     tvLeechdomName.setText(Html.fromHtml(getResources().getString(R.string.designation,medicineData.name)));
                     tvLeechdomDosage.setText(Html.fromHtml(getResources().getString(R.string.dosage,medicineData.doses))+getString(R.string.mg));
-                    tvLeechdomTime.setText(Html.fromHtml(getResources().getString(R.string.medication_time_colon,medicineData.times)));
+                    tvLeechdomTime.setText(Html.fromHtml(getResources().getString(R.string.medication_time_colon,medicineData.time)));
                     break;
             }
         }
@@ -78,12 +84,17 @@ public class MedicineFragment extends Fragment {
                 DBOpenHelper helper = new DBOpenHelper(MyApplication.getInstance());
                 SQLiteDatabase db = helper.getWritableDatabase();
                 Cursor c = db.query("medicine_record"
-                        , new String[]{"name", "doses", "time", "peroid_start", "peroid_end", "notifition", "description"}
-                        , "peroid_end >= ?"
-                        , new String[]{TimeUtil.getYearMonthDay(System.currentTimeMillis())}
-                        , null, null, "time" + " ASC");
+                        , new String[]{"add_time","name", "doses", "time", "peroid_start", "peroid_end", "notifition", "description"}
+                        , "peroid_end >= ? and peroid_start <= ? and time >= ?"
+                        , new String[]{TimeUtil.getYearMonthDay(System.currentTimeMillis())
+                                , TimeUtil.getYearMonthDay(System.currentTimeMillis())
+                                ,TimeUtil.getSringByFormat(System.currentTimeMillis(),"HH:mm")}
+                        , null
+                        , null
+                        , "time" + " ASC");
                 while (c.moveToNext()) {
                     MedicineRecord data = new MedicineRecord(
+                            c.getString(c.getColumnIndex("add_time")),
                             c.getString(c.getColumnIndex("name")),
                             c.getString(c.getColumnIndex("doses")),
                             c.getString(c.getColumnIndex("time")),
@@ -120,6 +131,9 @@ public class MedicineFragment extends Fragment {
         tvLeechdomName = (TextView) fragment.findViewById(R.id.txt_leechdom_name);
         tvLeechdomDosage = (TextView) fragment.findViewById(R.id.txt_leechdom_doses);
         tvLeechdomTime = (TextView) fragment.findViewById(R.id.txt_leechdom_time);
+        tvLeechdomName.setText(Html.fromHtml(getResources().getString(R.string.designation,getString(R.string.unknown))));
+        tvLeechdomDosage.setText(Html.fromHtml(getResources().getString(R.string.dosage,getString(R.string.unknown))));
+        tvLeechdomTime.setText(Html.fromHtml(getResources().getString(R.string.medication_time_colon,getString(R.string.unknown))));
 
 
         /**************************************************
@@ -131,6 +145,12 @@ public class MedicineFragment extends Fragment {
         dietIconIV.setImageDrawable(dietIconDrawable);
         ImageView dietLeftIconIV = (ImageView) fragment.findViewById(R.id.diet_left_icon);
         dietLeftIconIV.setImageDrawable(dietIconDrawable);
+        tvDietName = (TextView) fragment.findViewById(R.id.txt_diet_name);
+        tvSugarChange = (TextView) fragment.findViewById(R.id.txt_diet_time);
+        tvDietTime = (TextView) fragment.findViewById(R.id.txt_diet_blood_sugar);
+        tvDietName.setText(Html.fromHtml(getResources().getString(R.string.designation,getString(R.string.unknown))));
+        tvDietTime.setText(Html.fromHtml(getResources().getString(R.string.diet_time,getString(R.string.unknown))));
+        tvSugarChange.setText(Html.fromHtml(getResources().getString(R.string.blood_sugar_change,getString(R.string.unknown))));
         /**************************************************
          * 运动                                           *
          **************************************************/
@@ -140,6 +160,12 @@ public class MedicineFragment extends Fragment {
         athleticsIconIV.setImageDrawable(athleticsIconDrawable);
         ImageView athleticsLeftIconIV = (ImageView) fragment.findViewById(R.id.athletics_left_icon);
         athleticsLeftIconIV.setImageDrawable(athleticsIconDrawable);
+        tvAthleticsName = (TextView) fragment.findViewById(R.id.txt_athletics_name);
+        tvAthleticsSugarChange = (TextView) fragment.findViewById(R.id.txt_athletics_time);
+        tvAthleticsTime = (TextView) fragment.findViewById(R.id.txt_athletics_consume);
+        tvAthleticsName.setText(Html.fromHtml(getResources().getString(R.string.designation,getString(R.string.unknown))));
+        tvAthleticsSugarChange.setText(Html.fromHtml(getResources().getString(R.string.athletics_time,getString(R.string.unknown))));
+        tvAthleticsTime.setText(Html.fromHtml(getResources().getString(R.string.blood_sugar_change,getString(R.string.unknown))));
 
     }
 

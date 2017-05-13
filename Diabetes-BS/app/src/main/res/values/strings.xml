@@ -118,4 +118,6 @@
     <string name="end_time">End time</string>
     <string name="mg">mg</string>
     <string name="nothing_hear">Oh, there\'s nothing here</string>
+    <string name="unknown">Unknown</string>
+    <string name="data_eorr">Data eorr</string>
 </resources>
