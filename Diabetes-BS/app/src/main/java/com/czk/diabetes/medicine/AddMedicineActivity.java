@@ -25,6 +25,7 @@ import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
 import com.sleepbot.datetimepicker.time.TimePickerDialog;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,9 +138,52 @@ public class AddMedicineActivity extends BaseFragmentActivity {
     private void setData() {
         etName.setText(records.get(0).name);
         etDoses.setText(records.get(0).doses);
-        for (MedicineRecord record : records) {
-
+        for (int i = 0; i < records.size(); i++) {
+            showTimeCard(viewTimeCard.get(i), i, records.get(i).time);
         }
+        try {
+            long petoid = TimeUtil.stringToLong(records.get(0).peroidEnd, "yyyy-MM-dd") - TimeUtil.stringToLong(records.get(0).peroidStart, "yyyy-MM-dd");
+            if (TimeUtil.ONE_WEEK == petoid) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    viewPeriod.get(0).setBackground(getResources().getDrawable(R.drawable.rectangle_line_them_r_2, getTheme()));
+                } else {
+                    viewPeriod.get(0).setBackgroundDrawable(getResources().getDrawable(R.drawable.rectangle_line_them_r_2));
+                }
+            } else if (TimeUtil.ONE_WEEK * 2 == petoid) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    viewPeriod.get(1).setBackground(getResources().getDrawable(R.drawable.rectangle_line_them_r_2, getTheme()));
+                } else {
+                    viewPeriod.get(1).setBackgroundDrawable(getResources().getDrawable(R.drawable.rectangle_line_them_r_2));
+                }
+            } else if (TimeUtil.ONE_MONTH == petoid) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    viewPeriod.get(2).setBackground(getResources().getDrawable(R.drawable.rectangle_line_them_r_2, getTheme()));
+                } else {
+                    viewPeriod.get(2).setBackgroundDrawable(getResources().getDrawable(R.drawable.rectangle_line_them_r_2));
+                }
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    viewPeriod.get(3).setBackground(getResources().getDrawable(R.drawable.rectangle_line_them_r_2, getTheme()));
+                } else {
+                    viewPeriod.get(3).setBackgroundDrawable(getResources().getDrawable(R.drawable.rectangle_line_them_r_2));
+                }
+                tvStartTime.setText(records.get(0).peroidStart);
+                tvEndTime.setText(records.get(0).peroidEnd);
+                layoutDIYPeriod.setVisibility(View.VISIBLE);
+            }
+        } catch (ParseException e) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                viewPeriod.get(3).setBackground(getResources().getDrawable(R.drawable.rectangle_line_them_r_2, getTheme()));
+            } else {
+                viewPeriod.get(3).setBackgroundDrawable(getResources().getDrawable(R.drawable.rectangle_line_them_r_2));
+            }
+            tvStartTime.setText(records.get(0).peroidStart);
+            tvEndTime.setText(records.get(0).peroidEnd);
+            layoutDIYPeriod.setVisibility(View.VISIBLE);
+            e.printStackTrace();
+        }
+        setCheckBox(cbToggle, Boolean.parseBoolean(records.get(0).notifition));
+        etRemarks.setText(records.get(0).description);
     }
 
     private void initView() {
@@ -213,11 +257,24 @@ public class AddMedicineActivity extends BaseFragmentActivity {
                         if (!showTimeCard[i]) {
                             showTimeCard[i] = true;
                             String time = "8:00";
-
+                            if (i == 0) {
+                                time = "8:00";
+                            } else if (i == 1) {
+                                time = "12:30";
+                            } else if (i == 2) {
+                                time = "18:00";
+                            } else if (i == 3) {
+                                time = "19:00";
+                            } else if (i == 4) {
+                                time = "20:00";
+                            } else if (i == 5) {
+                                time = "21:00";
+                            }
                             showTimeCard(viewTimeCard.get(i), i, time);
                             if (i >= 5) {
                                 v.setVisibility(View.GONE);
                             }
+                            break;
                         }
                     }
 
@@ -342,7 +399,7 @@ public class AddMedicineActivity extends BaseFragmentActivity {
         final TextView tvTime = (TextView) view.findViewById(R.id.tv_time);
         times[cardNumber] = time;
         tvTime.setText(time);
-        
+
         findViewById(R.id.time_chose).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -394,13 +451,13 @@ public class AddMedicineActivity extends BaseFragmentActivity {
                         peroidStart = TimeUtil.getYearMonthDay(System.currentTimeMillis());
                         switch (period) {
                             case 0://一周
-                                peroidEnd = TimeUtil.getYearMonthDay(System.currentTimeMillis() + 7 * 24 * 60 * 60 * 1000);
+                                peroidEnd = TimeUtil.getYearMonthDay(System.currentTimeMillis() + TimeUtil.ONE_WEEK);
                                 break;
                             case 1://二周
-                                peroidEnd = TimeUtil.getYearMonthDay(System.currentTimeMillis() + 14 * 24 * 60 * 60 * 1000);
+                                peroidEnd = TimeUtil.getYearMonthDay(System.currentTimeMillis() + TimeUtil.ONE_WEEK * 2);
                                 break;
                             case 2://一月
-                                peroidEnd = TimeUtil.getYearMonthDay(System.currentTimeMillis() + 30 * 24 * 60 * 60 * 1000);
+                                peroidEnd = TimeUtil.getYearMonthDay(System.currentTimeMillis() + TimeUtil.ONE_MONTH);
                                 break;
                             case 3://自定义
                                 peroidStart = tvStartTime.getText().toString();

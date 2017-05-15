@@ -10,6 +10,9 @@ import java.util.Date;
  */
 public class TimeUtil {
 
+    public static final long ONE_WEEK = 604800000l;//7 * 24 * 60 * 60 * 1000;
+    public static final long ONE_MONTH = 2592000000l;//30 * 24 * 60 * 60 * 1000;
+
     /**
      * 得到给定时间的时钟
      *
