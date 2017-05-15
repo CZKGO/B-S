@@ -1,99 +1,392 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_white_light">
+    android:background="@color/background_white_light"
+    android:orientation="vertical">
     <!--头部-->
     <include layout="@layout/layout_title" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/left_card"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="4dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/shadow_white_card"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="8dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!--基本信息-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shadow_white_card"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
 
-            <RelativeLayout
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/tip_theme_light_circular_bc"
-                android:gravity="center">
+                <!--标题-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/base_info"
+                        android:textColor="@color/txt_light_color"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txt_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="4dp"
+                            android:singleLine="true"
+                            android:text="@string/food_name"
+                            android:textSize="16sp" />
+
+                        <EditText
+                            android:id="@+id/et_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:gravity="center_vertical|right"
+                            android:hint="@string/eg_food_name"
+                            android:maxLines="1"
+                            android:textColor="@color/txt_light_color"
+                            android:textCursorDrawable="@drawable/cursor"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/divide_line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txt_food_material"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="4dp"
+                            android:singleLine="true"
+                            android:text="@string/food_material"
+                            android:textSize="16sp" />
+
+                        <EditText
+                            android:id="@+id/et_material"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/rectangle_line_them_light_r_2"
+                            android:gravity="top"
+                            android:hint="@string/eg_food_material"
+                            android:padding="2dp"
+                            android:textColor="@color/txt_light_color"
+                            android:textCursorDrawable="@drawable/cursor"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <!--用餐时间-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shadow_white_card"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <!--标题-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/eat_time"
+                        android:textColor="@color/txt_light_color"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txt_type"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="4dp"
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:text="@string/dining_category"
+                            android:textSize="16sp" />
+
+                        <LinearLayout
+                            android:gravity="center_vertical"
+                            android:id="@+id/chose_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/tv_type_choose"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="4dp"
+                                android:singleLine="true"
+                                android:text="@string/breakfast"
+                                android:textSize="16sp" />
+
+                            <ImageView
+                                android:id="@+id/triangle_down"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:padding="6dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/chose_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/time"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="4dp"
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:text="@string/eat_time"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="4dp"
+                            android:singleLine="true"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="4dp"
+                            android:singleLine="true"
+                            android:text="08:00"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <!--用药周期-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shadow_white_card"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <!--标题-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/blood_sugar_level"
+                        android:textColor="@color/txt_light_color"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="4dp"
+                        android:singleLine="true"
+                        android:text="@string/before_dining"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/et_before_dining"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/transparent"
+                        android:gravity="center_vertical|right"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:textColor="@color/txt_light_color"
+                        android:textCursorDrawable="@drawable/cursor"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mmol_l"
+                        android:textColor="@color/txt_light_color"
+                        android:textSize="16sp" />
+                </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/left_icon"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp" />
-            </RelativeLayout>
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divide_line" />
 
-            <TextView
-                android:id="@+id/left_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/txt_black"
-                android:textSize="16sp" />
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/right_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/shadow_white_card"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="8dp">
+                    <TextView
+                        android:id="@+id/txt_after_dining"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="4dp"
+                        android:singleLine="true"
+                        android:text="@string/after_dining"
+                        android:textSize="16sp" />
 
-            <RelativeLayout
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/tip_theme_light_circular_bc"
-                android:gravity="center">
+                    <EditText
+                        android:id="@+id/et_after_dining"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/transparent"
+                        android:gravity="center_vertical|right"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:textColor="@color/txt_light_color"
+                        android:textCursorDrawable="@drawable/cursor"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mmol_l"
+                        android:textColor="@color/txt_light_color"
+                        android:textSize="16sp" />
+                </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/right_icon"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp" />
-            </RelativeLayout>
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divide_line" />
+            </LinearLayout>
+
+            <!--备注-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shadow_white_card"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <!--标题-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/remarks"
+                        android:textColor="@color/txt_light_color"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/et_remarks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/rectangle_line_them_light_r_2"
+                    android:padding="4dp"
+                    android:textColor="@color/txt_light_color"
+                    android:textCursorDrawable="@drawable/cursor"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/right_text"
-                android:layout_width="wrap_content"
+                android:id="@+id/button_save"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/txt_black"
-                android:textSize="16sp" />
+                android:background="@drawable/button_background"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/save"
+                android:textColor="@color/txt_white"
+                android:textSize="16sp"></TextView>
         </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:padding="8dp"
-        android:background="@drawable/shadow_white_card"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
-        <TextView
-            android:id="@+id/my_function_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"/>
-    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

@@ -59,6 +59,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".recipe.RecipeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".recipe.AddRecipeActivity"
             android:screenOrientation="portrait" />
 

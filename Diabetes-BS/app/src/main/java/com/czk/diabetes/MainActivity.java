@@ -56,12 +56,12 @@ public class MainActivity extends BaseFragmentActivity {
     private void initData() {
         fragments = new ArrayList<>();
         MainFragment mainFragment = new MainFragment();
-        MedicineFragment medicineFragment = new MedicineFragment();
+        OtherFunctionFragment otherFunctionFragment = new OtherFunctionFragment();
         StatisticsFragment statisticsFragment = new StatisticsFragment();
         ContactFragment contactFragment = new ContactFragment();
         fragments.add(mainFragment);
         fragments.add(statisticsFragment);
-        fragments.add(medicineFragment);
+        fragments.add(otherFunctionFragment);
         fragments.add(contactFragment);
         adapter = new MainPagerAdapter(getSupportFragmentManager(), fragments);
     }

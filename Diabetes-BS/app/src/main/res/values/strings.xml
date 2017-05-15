@@ -117,7 +117,22 @@
     <string name="start_time">Start time</string>
     <string name="end_time">End time</string>
     <string name="mg">mg</string>
+    <string name="mmol_l">mmol/l</string>
     <string name="nothing_hear">Oh, there\'s nothing here</string>
     <string name="unknown">Unknown</string>
     <string name="data_eorr">Data eorr</string>
+    <string name="add_my_recipe_tip">Add your recipes\nSo that we can analyze your diet condition</string>
+    <string name="eg_food_name">eg:steak</string>
+    <string name="food_name">Food name</string>
+    <string name="food_material">Food material</string>
+    <string name="eg_food_material">eg:\n a steak,\n a egg,\n a pasta\n ...</string>
+    <string name="eat_time">Eat time</string>
+    <string name="dining_category">Dining category</string>
+    <string name="blood_sugar_level">Blood sugar level</string>
+    <string name="before_dining">Before dining</string>
+    <string name="after_dining">After dining</string>
+    <string name="please_input_food_name">Please input food name</string>
+    <string name="please_input_food_material">Please input food material"</string>
+    <string name="please_input_blood_sugar_level_before_dining">Please input blood sugar level before dining</string>
+    <string name="please_input_blood_sugar_level_after_dining">Please input blood sugar level after dining</string>
 </resources>

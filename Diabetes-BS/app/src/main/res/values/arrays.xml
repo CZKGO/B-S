@@ -25,4 +25,9 @@
         <item>@string/every_week</item>
         <item>@string/diy</item>
     </array>
+    <array name="dining_type_chose">
+        <item>@string/breakfast</item>
+        <item>@string/lunch</item>
+        <item>@string/dinner</item>
+    </array>
 </resources>

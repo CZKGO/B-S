@@ -120,4 +120,21 @@
     <string name="medication_time_colon">用药时间：%1$s</string>
     <string name="unknown">未知</string>
     <string name="data_eorr">数据错误</string>
+    <string name="add_my_recipe_tip">添加你的食谱\n帮助我们分析你的饮食情况</string>
+    <string name="eg_food_name">例：火锅</string>
+    <string name="food_name">食物名称</string>
+    <string name="food_material">食材</string>
+    <string name="eg_food_material">例:\n 一份毛肚\n 一份黄喉，\n 一份金针菇，\n ...</string>
+    <string name="eat_time">用餐时间</string>
+    <string name="breakfast">早餐</string>
+    <string name="lunch">午餐</string>
+    <string name="dinner">晚餐</string>
+    <string name="dining_category">用餐类别</string>
+    <string name="blood_sugar_level">血糖水平</string>
+    <string name="before_dining">餐前</string>
+    <string name="after_dining">餐后</string>
+    <string name="please_input_food_name">请输入食物名称</string>
+    <string name="please_input_food_material">请输入食材</string>
+    <string name="please_input_blood_sugar_level_before_dining">请输入餐前血糖水平</string>
+    <string name="please_input_blood_sugar_level_after_dining">请输入餐后血糖水平</string>
 </resources>

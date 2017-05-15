@@ -19,15 +19,17 @@ import com.czk.diabetes.DB.DBOpenHelper;
 import com.czk.diabetes.athletic.AddAthleticActivity;
 import com.czk.diabetes.medicine.MedicineActivity;
 import com.czk.diabetes.medicine.MedicineRecord;
-import com.czk.diabetes.recipe.AddRecipeActivity;
+import com.czk.diabetes.recipe.EatRecord;
+import com.czk.diabetes.recipe.RecipeActivity;
 import com.czk.diabetes.util.FontIconDrawable;
 import com.czk.diabetes.util.TimeUtil;
 
 /**
  * Created by 陈忠凯 on 2017/3/7.
  */
-public class MedicineFragment extends Fragment {
+public class OtherFunctionFragment extends Fragment {
     private static final int MEDICINE_QUERY_FINSH = 0;
+    private static final int FOOD_QUERY_FINSH = 1;
     private View fragment;
     private TextView tvLeechdomDosage;
     private TextView tvLeechdomName;
@@ -48,6 +50,19 @@ public class MedicineFragment extends Fragment {
                     tvLeechdomName.setText(Html.fromHtml(getResources().getString(R.string.designation,medicineData.name)));
                     tvLeechdomDosage.setText(Html.fromHtml(getResources().getString(R.string.dosage,medicineData.doses))+getString(R.string.mg));
                     tvLeechdomTime.setText(Html.fromHtml(getResources().getString(R.string.medication_time_colon,medicineData.time)));
+                    break;
+                case FOOD_QUERY_FINSH:
+                    EatRecord eatData = (EatRecord) msg.obj;
+                    tvDietName.setText(Html.fromHtml(getResources().getString(R.string.designation,eatData.name)));
+                    float dValue = Float.parseFloat(eatData.afterDining) - Float.parseFloat(eatData.beforeDining);
+                    String value = "";
+                    if(dValue<0){
+                        value = "-"+Math.abs(dValue);
+                    }else {
+                        value = "+"+dValue;
+                    }
+                    tvSugarChange.setText(Html.fromHtml(getResources().getString(R.string.dosage,value))+getString(R.string.mmol_l));
+                    tvDietTime.setText(Html.fromHtml(getResources().getString(R.string.medication_time_colon,eatData.type)));
                     break;
             }
         }
@@ -104,6 +119,38 @@ public class MedicineFragment extends Fragment {
                             c.getString(c.getColumnIndex("description")));
                     Message msg = new Message();
                     msg.what = MEDICINE_QUERY_FINSH;
+                    msg.obj = data;
+                    handler.sendMessage(msg);
+                    break;
+                }
+                c.close();
+                db.close();
+            }
+        }).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DBOpenHelper helper = new DBOpenHelper(MyApplication.getInstance());
+                SQLiteDatabase db = helper.getWritableDatabase();
+                Cursor c = db.query("eat_record"
+                        , new String[]{"add_time", "name", "material", "type", "time", "before_dining", "after_dining", "description"}
+                        , "add_time <= ?"
+                        , new String[]{String.valueOf(System.currentTimeMillis())}
+                        , null
+                        , null
+                        , "add_time" + " DESC");
+                while (c.moveToNext()) {
+                    EatRecord data =  new EatRecord(
+                            c.getString(c.getColumnIndex("add_time")),
+                            c.getString(c.getColumnIndex("name")),
+                            c.getString(c.getColumnIndex("material")),
+                            c.getString(c.getColumnIndex("type")),
+                            c.getString(c.getColumnIndex("time")),
+                            c.getString(c.getColumnIndex("before_dining")),
+                            c.getString(c.getColumnIndex("after_dining")),
+                            c.getString(c.getColumnIndex("description")));
+                    Message msg = new Message();
+                    msg.what = FOOD_QUERY_FINSH;
                     msg.obj = data;
                     handler.sendMessage(msg);
                     break;
@@ -181,7 +228,7 @@ public class MedicineFragment extends Fragment {
         fragment.findViewById(R.id.card_diet).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AddRecipeActivity.class);
+                Intent intent = new Intent(getActivity(), RecipeActivity.class);
                 startActivity(intent);
             }
         });
