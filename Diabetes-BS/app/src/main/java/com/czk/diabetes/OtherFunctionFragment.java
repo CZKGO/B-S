@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.czk.diabetes.DB.DBOpenHelper;
-import com.czk.diabetes.athletic.AddAthleticActivity;
+import com.czk.diabetes.athletic.AthleticActivity;
 import com.czk.diabetes.medicine.MedicineActivity;
 import com.czk.diabetes.medicine.MedicineRecord;
 import com.czk.diabetes.recipe.EatRecord;
@@ -237,7 +237,7 @@ public class OtherFunctionFragment extends Fragment {
         fragment.findViewById(R.id.card_athletics).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AddAthleticActivity.class);
+                Intent intent = new Intent(getActivity(), AthleticActivity.class);
                 startActivity(intent);
             }
         });

@@ -139,4 +139,6 @@
     <string name="please_input_food_material">请输入食材</string>
     <string name="please_input_blood_sugar_level_before_dining">请输入餐前血糖水平</string>
     <string name="please_input_blood_sugar_level_after_dining">请输入餐后血糖水平</string>
+    <string name="find">发现</string>
+    <string name="add_my_athletic_tip">让我们一起见证你的健身历程</string>
 </resources>

@@ -139,4 +139,6 @@
     <string name="please_input_food_material">Please input food material"</string>
     <string name="please_input_blood_sugar_level_before_dining">Please input blood sugar level before dining</string>
     <string name="please_input_blood_sugar_level_after_dining">Please input blood sugar level after dining</string>
+    <string name="find">Find</string>
+    <string name="add_my_athletic_tip">Let us together witness your fitness journey</string>
 </resources>
