@@ -62,7 +62,7 @@ public class OtherFunctionFragment extends Fragment {
                         value = "+"+dValue;
                     }
                     tvSugarChange.setText(Html.fromHtml(getResources().getString(R.string.dosage,value))+getString(R.string.mmol_l));
-                    tvDietTime.setText(Html.fromHtml(getResources().getString(R.string.medication_time_colon,eatData.type)));
+                    tvDietTime.setText(Html.fromHtml(getResources().getString(R.string.diet_time,eatData.type)));
                     break;
             }
         }
@@ -193,8 +193,8 @@ public class OtherFunctionFragment extends Fragment {
         ImageView dietLeftIconIV = (ImageView) fragment.findViewById(R.id.diet_left_icon);
         dietLeftIconIV.setImageDrawable(dietIconDrawable);
         tvDietName = (TextView) fragment.findViewById(R.id.txt_diet_name);
-        tvSugarChange = (TextView) fragment.findViewById(R.id.txt_diet_time);
-        tvDietTime = (TextView) fragment.findViewById(R.id.txt_diet_blood_sugar);
+        tvSugarChange = (TextView) fragment.findViewById(R.id.txt_diet_blood_sugar);
+        tvDietTime = (TextView) fragment.findViewById(R.id.txt_diet_time);
         tvDietName.setText(Html.fromHtml(getResources().getString(R.string.designation,getString(R.string.unknown))));
         tvDietTime.setText(Html.fromHtml(getResources().getString(R.string.diet_time,getString(R.string.unknown))));
         tvSugarChange.setText(Html.fromHtml(getResources().getString(R.string.blood_sugar_change,getString(R.string.unknown))));

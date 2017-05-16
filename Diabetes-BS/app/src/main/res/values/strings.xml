@@ -119,6 +119,7 @@
     <string name="mg">mg</string>
     <string name="mmol_l">mmol/l</string>
     <string name="nothing_hear">Oh, there\'s nothing here</string>
+    <string name="medication_time_colon">Medication_time：%1$s</string>
     <string name="unknown">Unknown</string>
     <string name="data_eorr">Data eorr</string>
     <string name="add_my_recipe_tip">Add your recipes\nSo that we can analyze your diet condition</string>
@@ -127,6 +128,9 @@
     <string name="food_material">Food material</string>
     <string name="eg_food_material">eg:\n a steak,\n a egg,\n a pasta\n ...</string>
     <string name="eat_time">Eat time</string>
+    <string name="breakfast">Breakfast</string>
+    <string name="lunch">Lunch</string>
+    <string name="dinner">Dinner</string>
     <string name="dining_category">Dining category</string>
     <string name="blood_sugar_level">Blood sugar level</string>
     <string name="before_dining">Before dining</string>
