@@ -141,4 +141,10 @@
     <string name="please_input_blood_sugar_level_after_dining">Please input blood sugar level after dining</string>
     <string name="find">Find</string>
     <string name="add_my_athletic_tip">Let us together witness your fitness journey</string>
+    <string name="register">Register</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="user_name_not_null">The user name cannot be null</string>
+    <string name="pwd_not_null">The password cannot be empty</string>
+    <string name="code_error">Verificaton code error</string>
+    <string name="user_name_or_pwd_error">Error Incorrect username or password</string>
 </resources>

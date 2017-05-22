@@ -44,6 +44,7 @@
                     android:orientation="vertical">
 
                     <EditText
+                        android:id="@+id/et_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
@@ -79,6 +80,7 @@
                     android:orientation="vertical">
 
                     <EditText
+                        android:id="@+id/et_pwd"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
@@ -106,10 +108,11 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="56dp"
+                    android:layout_marginLeft="16dp"
                     android:orientation="vertical">
 
                     <EditText
+                        android:id="@+id/et_code"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
@@ -127,19 +130,19 @@
 
                 <ImageView
                     android:id="@+id/img_code"
-                    android:layout_width="wrap_content"
-                    android:layout_height="24dp"
+                    android:layout_width="60dp"
+                    android:layout_height="20dp"
                     android:layout_margin="16dp" />
             </LinearLayout>
 
             <TextView
+                android:id="@+id/bt_singn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/button_background"
-
                 android:gravity="center"
                 android:padding="8dp"
                 android:text="@string/sign_in"

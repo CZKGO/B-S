@@ -121,6 +121,26 @@ public class DiabetesClient {
      * 来自智抗糖的end
      ****************************************************************/
 
+    /****************************************************************
+     * 来自云服务器的start
+     ****************************************************************/
+    private static final String MY_BASE_URL = "http://120.24.2.161/";
+    public static String getAbsoluteUrl(String relativeUrl) {
+        return MY_BASE_URL + relativeUrl+".php";
+    }
+
+    public static RequestParams checkLogIn(String name, String pwd) {
+        RequestParams params = new RequestParams();
+        params.add("name",name);
+        params.add("pwd", pwd);
+        return params;
+    }
+
+    /****************************************************************
+     * 来自云服务器的end
+     ****************************************************************/
+
+
     public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         client.get(url, params, responseHandler);
     }
@@ -128,6 +148,7 @@ public class DiabetesClient {
     public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         client.post(url, params, responseHandler);
     }
+
 
 
 }

@@ -140,4 +140,8 @@ public class VerificationCode {
         padding_left += base_padding_left + random.nextInt(range_padding_left);
         padding_top = base_padding_top + random.nextInt(range_padding_top);
     }
+
+    public VerificationCode setSize(int width, int hight) {
+        return getInstance();
+    }
 }
