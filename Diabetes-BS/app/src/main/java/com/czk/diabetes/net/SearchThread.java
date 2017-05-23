@@ -12,6 +12,7 @@ import java.io.InputStream;
  */
 
 public class SearchThread extends Thread {
+    private JSONObject jsonObject;
     private InputStream inputStream;
     private Object type;
     private OnSearchResult onSearchResult;
@@ -22,17 +23,29 @@ public class SearchThread extends Thread {
         this.onSearchResult = onSearchResult;
     }
 
+    public SearchThread(JSONObject jsonObject, Object type, OnSearchResult onSearchResult) {
+        this.jsonObject = jsonObject;
+        this.type = type;
+        this.onSearchResult = onSearchResult;
+    }
+
     @Override
     public void run() {
         try {
-            onSearchResult.searchResult(StringUtil.readJsonFromInputStream(inputStream),type);
+            if(null==jsonObject){
+                jsonObject = StringUtil.readJsonFromInputStream(inputStream);
+            }
+            onSearchResult.searchResult(jsonObject,type);
         } catch (Exception e) {
             e.printStackTrace();
+            onSearchResult.error();
         }
 
     }
 
     public interface OnSearchResult {
         void searchResult(JSONObject jsonObject, Object type);
+
+        void error();
     }
 }

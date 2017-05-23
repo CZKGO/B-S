@@ -110,6 +110,11 @@ public class RecipeListActivity extends BaseActivity {
                                         e.printStackTrace();
                                     }
                                 }
+
+                                @Override
+                                public void error() {
+                                    handler.sendEmptyMessage(SEARCH_ERRO);
+                                }
                             });
                             searchThread.start();
                         }

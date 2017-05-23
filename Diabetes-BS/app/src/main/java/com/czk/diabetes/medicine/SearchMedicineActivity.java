@@ -172,6 +172,11 @@ public class SearchMedicineActivity extends BaseActivity {
                                     e.printStackTrace();
                                 }
                             }
+
+                            @Override
+                            public void error() {
+                                handler.sendEmptyMessage(SEARCH_ERRO);
+                            }
                         });
                         searchThread.start();
                     }
@@ -275,6 +280,11 @@ public class SearchMedicineActivity extends BaseActivity {
                                             } catch (Exception e) {
                                                 e.printStackTrace();
                                             }
+                                        }
+
+                                        @Override
+                                        public void error() {
+                                            handler.sendEmptyMessage(SEARCH_ERRO);
                                         }
                                     });
                                     searchThread.start();

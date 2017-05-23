@@ -136,6 +136,12 @@ public class DiabetesClient {
         return params;
     }
 
+    public static RequestParams getDoctor(int id) {
+        RequestParams params = new RequestParams();
+        params.add("id",String.valueOf(id));
+        return params;
+    }
+
     /****************************************************************
      * 来自云服务器的end
      ****************************************************************/

@@ -10,4 +10,5 @@ public class SharedPreferencesUtils {
     public final static String THEME = "theme";
     public final static String USER_NAME = "user_name";
     public final static String USER_PWD = "user_pwd";
+    public final static String DOCTOR_INFO = "doctor_info";
 }
