@@ -13,7 +13,7 @@ public class DimensUtil {
      * @param dp
      * @return
      */
-    public static int dpTopx(Context context, int dp) {
+    public static int dpTopx(Context context, float dp) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dp * scale + 0.5f);
     }

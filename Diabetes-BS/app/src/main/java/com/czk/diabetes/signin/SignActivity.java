@@ -1,5 +1,6 @@
 package com.czk.diabetes.signin;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,13 +12,19 @@ import android.widget.TextView;
 
 import com.czk.diabetes.BaseActivity;
 import com.czk.diabetes.MainActivity;
+import com.czk.diabetes.MyApplication;
 import com.czk.diabetes.R;
 import com.czk.diabetes.net.DiabetesClient;
 import com.czk.diabetes.util.DimensUtil;
 import com.czk.diabetes.util.FontIconDrawable;
+import com.czk.diabetes.util.SharedPreferencesUtils;
 import com.czk.diabetes.util.StringUtil;
 import com.czk.diabetes.util.ToastUtil;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.json.JSONObject;
+
+import java.io.ByteArrayInputStream;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -26,13 +33,16 @@ import cz.msebera.android.httpclient.Header;
  */
 public class SignActivity extends BaseActivity {
     private static final int HANDLER_NET_ERROR = -1;
-
-    private ImageView ivIcon;
     private ImageView ivCode;
     private String realCode;
     private EditText etName;
     private EditText etPwd;
     private EditText etCode;
+
+    private int lastSingIn = -1;//0表示登录成功，1表示登录失败，-1表示还未登录完毕
+
+    private View layoutSignIn;
+    private View layoutSplash;
 
     private Handler handler = new Handler() {
         @Override
@@ -50,19 +60,51 @@ public class SignActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign);
         initView();
+        checkLastUser();
         dealEvent();
     }
 
+    private void checkLastUser() {
+        String lastName = MyApplication.getInstance()
+                .getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
+                .getString(SharedPreferencesUtils.USER_NAME, null);
+        String lastPwd = MyApplication.getInstance()
+                .getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
+                .getString(SharedPreferencesUtils.USER_PWD, "null");
+        if (null == lastName) {
+            lastSingIn = 1;
+        } else {
+            DiabetesClient.get(DiabetesClient.getAbsoluteUrl("checkLogIn")
+                    , DiabetesClient.checkLogIn(lastName, lastPwd)
+                    , new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                            try {
+                                JSONObject jsonObject = StringUtil.readJsonFromInputStream(new ByteArrayInputStream(responseBody));
+                                switch (jsonObject.getInt("code")) {
+                                    case 0:
+                                        lastSingIn = 0;
+                                        break;
+                                    case 1:
+                                    default:
+                                        lastSingIn = 1;
+                                        break;
+                                }
+                            } catch (Exception e) {
+                                lastSingIn = 1;
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                            handler.sendEmptyMessage(HANDLER_NET_ERROR);
+                        }
+                    });
+        }
+    }
+
     private void initView() {
-        //头部
-        ivIcon = (ImageView) findViewById(R.id.icon);
-        FontIconDrawable iconArrowLeft = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_arrow_left);
-        iconArrowLeft.setTextColor(getResources().getColor(R.color.white));
-        ivIcon.setImageDrawable(iconArrowLeft);
-        TextView tvTitle = (TextView) findViewById(R.id.title);
-        tvTitle.setText(getResources().getString(R.string.sign_in));
-        TextView tvRight = (TextView) findViewById(R.id.tv_right);
-        tvRight.setText(getResources().getString(R.string.register));
         //主体
         ImageView ivIconName = (ImageView) findViewById(R.id.icon_name);
         ivIconName.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_user));
@@ -78,6 +120,12 @@ public class SignActivity extends BaseActivity {
         etPwd = (EditText) findViewById(R.id.et_pwd);
         etCode = (EditText) findViewById(R.id.et_code);
 
+        layoutSignIn = findViewById(R.id.sign_layout);
+        layoutSplash = findViewById(R.id.splash_layout);
+
+        TextView textView = (TextView) findViewById(R.id.phone_type);
+        textView.setText(android.os.Build.MODEL);
+
     }
 
     @Override
@@ -87,16 +135,23 @@ public class SignActivity extends BaseActivity {
     }
 
     private void dealEvent() {
-        ivIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
         findViewById(R.id.bt_singn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkUser();
+            }
+        });
+
+        findViewById(R.id.bt_go).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (0 == lastSingIn) {
+                    startActivity(new Intent(SignActivity.this, MainActivity.class));
+                    finish();
+                } else if (1 == lastSingIn) {
+                    layoutSplash.setVisibility(View.GONE);
+                    layoutSignIn.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
@@ -115,17 +170,31 @@ public class SignActivity extends BaseActivity {
                     , new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                            int result = new Integer(new String(responseBody));
-                            switch (result){
-                                case 0:
-                                    startActivity(new Intent(SignActivity.this, MainActivity.class));
-                                    break;
-                                case 1:
-                                    ToastUtil.showShortToast(SignActivity.this, getResources().getString(R.string.user_name_or_pwd_error));
-                                    break;
-                                default:
-                                    handler.sendEmptyMessage(HANDLER_NET_ERROR);
-                                    break;
+                            try {
+                                JSONObject jsonObject = StringUtil.readJsonFromInputStream(new ByteArrayInputStream(responseBody));
+                                switch (jsonObject.getInt("code")) {
+                                    case 0:
+                                        MyApplication.getInstance()
+                                                .getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
+                                                .edit()
+                                                .putString(SharedPreferencesUtils.USER_NAME, etName.getText().toString()).commit();
+                                        MyApplication.getInstance()
+                                                .getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
+                                                .edit()
+                                                .putString(SharedPreferencesUtils.USER_PWD, etPwd.getText().toString()).commit();
+                                        startActivity(new Intent(SignActivity.this, MainActivity.class));
+                                        finish();
+                                        break;
+                                    case 1:
+                                        ToastUtil.showShortToast(SignActivity.this, getResources().getString(R.string.user_name_or_pwd_error));
+                                        break;
+                                    default:
+                                        ToastUtil.showShortToast(SignActivity.this, getResources().getString(R.string.user_name_or_pwd_error));
+                                        break;
+                                }
+                            } catch (Exception e) {
+                                ToastUtil.showShortToast(SignActivity.this, getResources().getString(R.string.user_name_or_pwd_error));
+                                e.printStackTrace();
                             }
                         }
 

@@ -147,4 +147,5 @@
     <string name="pwd_not_null">The password cannot be empty</string>
     <string name="code_error">Verificaton code error</string>
     <string name="user_name_or_pwd_error">Error Incorrect username or password</string>
+    <string name="enter">Enter</string>
 </resources>
