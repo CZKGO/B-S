@@ -172,7 +172,7 @@ public class ContactFragment extends Fragment {
                             , obj.getString("position")
                             , obj.getString("years")
                             , obj.getString("feedback")
-                            , obj.getString("imgUrl"));
+                            , obj.getString("img"));
                     Message msg = new Message();
                     msg.obj = doctorData;
                     msg.what = SEARCH_FINSH;
