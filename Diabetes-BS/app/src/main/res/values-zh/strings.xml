@@ -148,4 +148,5 @@
     <string name="code_error">验证码错误</string>
     <string name="user_name_or_pwd_error">用户名或密码错误</string>
     <string name="enter">进入</string>
+    <string name="loging_in">登录中...</string>
 </resources>

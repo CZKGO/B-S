@@ -96,7 +96,7 @@ public class ContactFragment extends Fragment {
     private void initAsnData() {
         if (!MyApplication.getInstance().getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
                 .contains(SharedPreferencesUtils.DOCTOR_INFO)) {
-            DiabetesClient.post(DiabetesClient.getAbsoluteUrl("getDoctor")
+            DiabetesClient.get(DiabetesClient.getAbsoluteUrl("getDoctor")
                     , DiabetesClient.getDoctor(ID)
                     , new AsyncHttpResponseHandler() {
                         @Override

@@ -28,9 +28,8 @@ public class WaterBottleLoadingRenderer extends LoadingRenderer {
     private static final float DEFAULT_WIDTH = 200.0f;
     private static final float DEFAULT_HEIGHT = 150.0f;
     private static final float DEFAULT_STROKE_WIDTH = 1.5f;
-    private static final float DEFAULT_BOTTLE_WIDTH = 30;
-    private static final float DEFAULT_BOTTLE_HEIGHT = 43;
-    private static final float WATER_LOWEST_POINT_TO_BOTTLENECK_DISTANCE = 30;
+    private static final float DEFAULT_BOTTLE_WIDTH = 60;
+    private static final float DEFAULT_BOTTLE_HEIGHT = 86;
 
     private static final int DEFAULT_WAVE_COUNT = 5;
     private static final int DEFAULT_WATER_DROP_COUNT = 25;
@@ -41,10 +40,6 @@ public class WaterBottleLoadingRenderer extends LoadingRenderer {
     private static final int DEFAULT_BOTTLE_COLOR = Color.parseColor("#FFDAEBEB");
     private static final int DEFAULT_WATER_COLOR = Color.parseColor("#FF29E3F2");
 
-    private static final float DEFAULT_TEXT_SIZE = 7.0f;
-
-    private static final String LOADING_TEXT = "loading";
-
     private static final long ANIMATION_DURATION = 11111;
 
     private final Random mRandom = new Random();
@@ -53,10 +48,8 @@ public class WaterBottleLoadingRenderer extends LoadingRenderer {
     private final RectF mCurrentBounds = new RectF();
     private final RectF mBottleBounds = new RectF();
     private final RectF mWaterBounds = new RectF();
-    private final Rect mLoadingBounds = new Rect();
     private final List<WaterDropHolder> mWaterDropHolders = new ArrayList<>();
 
-    private float mTextSize;
     private float mProgress;
 
     private float mBottleWidth;
@@ -76,7 +69,6 @@ public class WaterBottleLoadingRenderer extends LoadingRenderer {
     }
 
     private void init(Context context) {
-        mTextSize = DimensUtil.dpTopx(context, DEFAULT_TEXT_SIZE);
 
         mWidth = DimensUtil.dpTopx(context, DEFAULT_WIDTH);
         mHeight = DimensUtil.dpTopx(context, DEFAULT_HEIGHT);
@@ -84,7 +76,7 @@ public class WaterBottleLoadingRenderer extends LoadingRenderer {
 
         mBottleWidth = DimensUtil.dpTopx(context, DEFAULT_BOTTLE_WIDTH);
         mBottleHeight = DimensUtil.dpTopx(context, DEFAULT_BOTTLE_HEIGHT);
-        mWaterLowestPointToBottleneckDistance = DimensUtil.dpTopx(context, WATER_LOWEST_POINT_TO_BOTTLENECK_DISTANCE);
+        mWaterLowestPointToBottleneckDistance = mBottleWidth;
 
         mBottleColor = DEFAULT_BOTTLE_COLOR;
         mWaterColor = DEFAULT_WATER_COLOR;
@@ -127,8 +119,6 @@ public class WaterBottleLoadingRenderer extends LoadingRenderer {
 
         //draw loading text
         mPaint.setColor(mBottleColor);
-        canvas.drawText(LOADING_TEXT, mBottleBounds.centerX() - mLoadingBounds.width() / 2.0f,
-                mBottleBounds.bottom + mBottleBounds.height() * 0.2f, mPaint);
         canvas.restoreToCount(saveCount);
     }
 
@@ -175,9 +165,6 @@ public class WaterBottleLoadingRenderer extends LoadingRenderer {
             }
         }
 
-        //measure loading text
-        mPaint.setTextSize(mTextSize);
-        mPaint.getTextBounds(LOADING_TEXT, 0, LOADING_TEXT.length(), mLoadingBounds);
     }
 
     private Path createBottlePath(RectF bottleRect) {
@@ -319,6 +306,7 @@ public class WaterBottleLoadingRenderer extends LoadingRenderer {
 
         public WaterBottleLoadingRenderer build() {
             WaterBottleLoadingRenderer loadingRenderer = new WaterBottleLoadingRenderer(mContext);
+
             return loadingRenderer;
         }
     }

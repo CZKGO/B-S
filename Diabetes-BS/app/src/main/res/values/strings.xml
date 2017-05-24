@@ -148,4 +148,5 @@
     <string name="code_error">Verificaton code error</string>
     <string name="user_name_or_pwd_error">Error Incorrect username or password</string>
     <string name="enter">Enter</string>
+    <string name="loging_in">be loging in...</string>
 </resources>

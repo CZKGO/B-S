@@ -103,7 +103,7 @@
                 <com.czk.diabetes.view.TagCloud.TagFlowLayout xmlns:tf="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/hot_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     tf:max_select="1"></com.czk.diabetes.view.TagCloud.TagFlowLayout>
             </LinearLayout>
         </LinearLayout>
