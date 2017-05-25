@@ -14,7 +14,7 @@
     <string name="after_lunch">After lunch</string>
     <string name="before_dinner">Before dinner</string>
     <string name="after_dinner">After dinner</string>
-    <string name="sign_in">Sign in</string>
+    <string name="log_in">Log in</string>
     <string name="user_name">User name</string>
     <string name="password">Password</string>
     <string name="safe_range">Safe range: 4.4-10.0 mmol/L</string>
@@ -141,7 +141,7 @@
     <string name="please_input_blood_sugar_level_after_dining">Please input blood sugar level after dining</string>
     <string name="find">Find</string>
     <string name="add_my_athletic_tip">Let us together witness your fitness journey</string>
-    <string name="register">Register</string>
+    <string name="sidn_in">Sign in</string>
     <string name="unknown_error">Unknown error</string>
     <string name="user_name_not_null">The user name cannot be null</string>
     <string name="pwd_not_null">The password cannot be empty</string>
@@ -149,4 +149,8 @@
     <string name="user_name_or_pwd_error">Error Incorrect username or password</string>
     <string name="enter">Enter</string>
     <string name="loging_in">be loging in...</string>
+    <string name="age">Age</string>
+    <string name="man">Man</string>
+    <string name="woman">Woman</string>
+    <string name="age_not_null">The age cannot be empty</string>
 </resources>

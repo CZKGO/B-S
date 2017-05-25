@@ -142,6 +142,11 @@ public class DiabetesClient {
         return params;
     }
 
+    public static RequestParams doSql(String sql) {
+        RequestParams params = new RequestParams();
+        params.add("sql",sql);
+        return params;
+    }
     /****************************************************************
      * 来自云服务器的end
      ****************************************************************/

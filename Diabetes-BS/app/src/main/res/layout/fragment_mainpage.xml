@@ -35,13 +35,18 @@
                     android:layout_height="40dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="16dp"
-                    android:background="@drawable/circular_theme"
+                    android:background="@drawable/tip_purple_circular_bc"
                     android:gravity="center">
-
                     <ImageView
                         android:id="@+id/user_icon"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp" />
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/default_people"
+                        android:scaleType="centerCrop"/>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/image_view_oval" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -52,6 +57,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/user_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/not_logged_in"
@@ -129,7 +135,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/daily_reading"
-                        android:textColor="@color/txt_light_color"
+                        android:textColor="@color/txt_link_color"
                         android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>

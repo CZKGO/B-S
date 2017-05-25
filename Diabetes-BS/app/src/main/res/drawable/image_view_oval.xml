@@ -26,7 +26,7 @@
 
                 android:width="10dp"
 
-                android:color="@color/white" />
+                android:color="@color/transparent" />
 
             <!-- oval_inner_size[大小(除去边线)] ，也是最终裸露出来的圆形图像区域-->
 

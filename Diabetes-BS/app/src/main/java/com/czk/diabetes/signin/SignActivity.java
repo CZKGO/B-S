@@ -1,270 +1,172 @@
 package com.czk.diabetes.signin;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.czk.diabetes.BaseActivity;
-import com.czk.diabetes.MainActivity;
-import com.czk.diabetes.MyApplication;
 import com.czk.diabetes.R;
-import com.czk.diabetes.net.DiabetesClient;
-import com.czk.diabetes.util.DimensUtil;
+import com.czk.diabetes.util.CameraUtil;
 import com.czk.diabetes.util.FontIconDrawable;
-import com.czk.diabetes.util.SharedPreferencesUtils;
 import com.czk.diabetes.util.StringUtil;
 import com.czk.diabetes.util.ToastUtil;
-import com.czk.diabetes.view.dialog.LoadingDialog;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-
-import org.json.JSONObject;
-
-import java.io.ByteArrayInputStream;
-
-import cz.msebera.android.httpclient.Header;
 
 /**
- * Created by 陈忠凯 on 2017/3/12.
+ * Created by 陈忠凯 on 2017/5/25.
  */
+
 public class SignActivity extends BaseActivity {
-    private static final int HANDLER_NET_ERROR = -1;
-    private ImageView ivCode;
-    private String realCode;
+    private final static int CODE_CHOSE_IMAGE = 1024;
+    private final static int CODE_RESULT_REQUEST = 1025;
+    private ImageView ivIcon;
+    private View layoutMan;
+    private View layoutWoman;
+    private ImageView ivMan;
+    private ImageView ivWoman;
+    private TextView tvMan;
+    private TextView tvWoman;
+    private View layoutHead;
+    private ImageView ivHead;
     private EditText etName;
     private EditText etPwd;
-    private EditText etCode;
-
-    private int lastSingIn = -1;//0表示登录成功，1表示登录失败，-1表示还未登录完毕
-
-    private View layoutSignIn;
-    private View layoutSplash;
-    private LoadingDialog loadingDialog;
-    private long loadingStartTime;
-
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case HANDLER_NET_ERROR:
-                    if (null != loadingDialog) {
-                        long loadingTime = System.currentTimeMillis() - loadingStartTime;
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                loadingDialog.dismiss();
-                                ToastUtil.showShortToast(SignActivity.this, getResources().getString(R.string.server_time_out));
-                            }
-                        },  loadingTime>3000?loadingTime:3000-loadingTime);
-                    } else {
-                        ToastUtil.showShortToast(SignActivity.this, getResources().getString(R.string.server_time_out));
-                    }
-                    break;
-            }
-        }
-    };
+    private EditText etAge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign);
         initView();
-        checkLastUser();
         dealEvent();
     }
 
-    private void checkLastUser() {
-        String lastName = MyApplication.getInstance()
-                .getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
-                .getString(SharedPreferencesUtils.USER_NAME, null);
-        String lastPwd = MyApplication.getInstance()
-                .getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
-                .getString(SharedPreferencesUtils.USER_PWD, "null");
-        if (null == lastName) {
-            lastSingIn = 1;
-        } else {
-            lastSingIn = 0;
-            startActivity(new Intent(SignActivity.this, MainActivity.class));
-            finish();
-//            重新验证代码
-//            DiabetesClient.get(DiabetesClient.getAbsoluteUrl("checkLogIn")
-//                    , DiabetesClient.checkLogIn(lastName, lastPwd)
-//                    , new AsyncHttpResponseHandler() {
-//                        @Override
-//                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-//                            try {
-//                                JSONObject jsonObject = StringUtil.readJsonFromInputStream(new ByteArrayInputStream(responseBody));
-//                                switch (jsonObject.getInt("code")) {
-//                                    case 0:
-//                                        lastSingIn = 0;
-//                                        break;
-//                                    case 1:
-//                                    default:
-//                                        lastSingIn = 1;
-//                                        break;
-//                                }
-//                            } catch (Exception e) {
-//                                lastSingIn = 1;
-//                                e.printStackTrace();
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-//                            handler.sendEmptyMessage(HANDLER_NET_ERROR);
-//                        }
-//                    });
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent intent) {
+
+//        // 用户没有进行有效的设置操作，返回
+//        if (resultCode == RESULT_CANCELED) {
+//            Toast.makeText(getApplication(), "取消", Toast.LENGTH_LONG).show();
+//            return;
+//        }
+
+        switch (requestCode) {
+            case CODE_CHOSE_IMAGE:
+                CameraUtil.cropRawPhoto(SignActivity.this,intent.getData(),CODE_RESULT_REQUEST);
+                break;
+            case CODE_RESULT_REQUEST:
+                if (intent != null) {
+                    ivHead.setImageBitmap(CameraUtil.setImageToHeadView(intent));
+                }
+
+                break;
         }
+
+        super.onActivityResult(requestCode, resultCode, intent);
     }
 
-    private void initView() {
-        //主体
-        ImageView ivIconName = (ImageView) findViewById(R.id.icon_name);
-        ivIconName.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_user));
-        ImageView ivIconPassword = (ImageView) findViewById(R.id.icon_password);
-        ivIconPassword.setImageDrawable(FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_lock_rounded));
 
-        ivCode = (ImageView) findViewById(R.id.img_code);
-        //将验证码用图片的形式显示出来
-        ivCode.setImageBitmap(VerificationCode.getInstance().setSize(DimensUtil.dpTopx(SignActivity.this, 60), DimensUtil.dpTopx(SignActivity.this, 24)).createBitmap());
-        realCode = VerificationCode.getInstance().getCode().toLowerCase();
+    private void initView() {
+        /**头部**/
+        ivIcon = (ImageView) findViewById(R.id.icon);
+        FontIconDrawable iconArrowLeft = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_arrow_left);
+        iconArrowLeft.setTextColor(getResources().getColor(R.color.white));
+        ivIcon.setImageDrawable(iconArrowLeft);
+        TextView tvTitle = (TextView) findViewById(R.id.title);
+        tvTitle.setText(getResources().getString(R.string.sidn_in));
+
+        /**主体**/
+        layoutHead = findViewById(R.id.head_layout);
+        ivHead = (ImageView) findViewById(R.id.iv_head);
 
         etName = (EditText) findViewById(R.id.et_name);
         etPwd = (EditText) findViewById(R.id.et_pwd);
-        etCode = (EditText) findViewById(R.id.et_code);
+        etAge = (EditText) findViewById(R.id.et_age);
 
-        layoutSignIn = findViewById(R.id.sign_layout);
-        layoutSplash = findViewById(R.id.splash_layout);
+        layoutMan = findViewById(R.id.man_layout);
+        ivMan = (ImageView) findViewById(R.id.man_iv);
+        tvMan = (TextView) findViewById(R.id.man_text);
 
-        TextView textView = (TextView) findViewById(R.id.phone_type);
-        textView.setText(android.os.Build.MODEL);
+        layoutWoman = findViewById(R.id.woman_layout);
+        ivWoman = (ImageView) findViewById(R.id.woman_iv);
+        tvWoman = (TextView) findViewById(R.id.woman_text);
 
-        loadingDialog = new LoadingDialog(SignActivity.this);
+        FontIconDrawable iconMan = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_radio_checked);
+        iconMan.setTextColor(getResources().getColor(R.color.safe_color));
+        ivMan.setImageDrawable(iconMan);
+        tvMan.setTextColor(getResources().getColor(R.color.safe_color));
 
+        FontIconDrawable iconWoman = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_radio_checked);
+        iconWoman.setTextColor(getResources().getColor(R.color.txt_light_color));
+        ivWoman.setImageDrawable(iconWoman);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
 
     private void dealEvent() {
+        //头部
+        ivIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        layoutHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CameraUtil.choseHeadImageFromGallery(SignActivity.this, CODE_CHOSE_IMAGE);
+            }
+        });
+
+        layoutMan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FontIconDrawable iconMan = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_radio_checked);
+                iconMan.setTextColor(getResources().getColor(R.color.safe_color));
+                ivMan.setImageDrawable(iconMan);
+                tvMan.setTextColor(getResources().getColor(R.color.safe_color));
+
+                FontIconDrawable iconWoman = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_radio_checked);
+                iconWoman.setTextColor(getResources().getColor(R.color.txt_light_color));
+                ivWoman.setImageDrawable(iconWoman);
+                tvWoman.setTextColor(getResources().getColor(R.color.txt_light_color));
+            }
+        });
+
+        layoutWoman.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FontIconDrawable iconMan = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_radio_checked);
+                iconMan.setTextColor(getResources().getColor(R.color.txt_light_color));
+                ivMan.setImageDrawable(iconMan);
+                tvMan.setTextColor(getResources().getColor(R.color.txt_light_color));
+
+                FontIconDrawable iconWoman = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_radio_checked);
+                iconWoman.setTextColor(getResources().getColor(R.color.safe_color));
+                ivWoman.setImageDrawable(iconWoman);
+                tvWoman.setTextColor(getResources().getColor(R.color.safe_color));
+            }
+        });
+
         findViewById(R.id.bt_singn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkUser();
-            }
-        });
-
-        findViewById(R.id.bt_go).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (0 == lastSingIn) {
-                    startActivity(new Intent(SignActivity.this, MainActivity.class));
-                    finish();
-                } else if (1 == lastSingIn) {
-                    layoutSplash.setVisibility(View.GONE);
-                    layoutSignIn.setVisibility(View.VISIBLE);
-                }
+                checkInfo();
             }
         });
     }
 
-    private void checkUser() {
+    private void checkInfo() {
         if (StringUtil.isEmpty(etName.getText().toString())) {
             ToastUtil.showShortToast(SignActivity.this, getResources().getString(R.string.user_name_not_null));
         } else if (StringUtil.isEmpty(etPwd.getText().toString())) {
             ToastUtil.showShortToast(SignActivity.this, getResources().getString(R.string.pwd_not_null));
-        } else if (StringUtil.isEmpty(etCode.getText().toString()) || !realCode.equals(etCode.getText().toString().toLowerCase())) {
-            ToastUtil.showShortToast(SignActivity.this, getResources().getString(R.string.code_error));
-            refreshCode();
+        } else if (StringUtil.isEmpty(etAge.getText().toString())) {
+            ToastUtil.showShortToast(SignActivity.this, getResources().getString(R.string.age_not_null));
         } else {
-            if (null != loadingDialog) {
-                loadingDialog.show();
-                loadingStartTime = System.currentTimeMillis();
-            }
-            DiabetesClient.get(DiabetesClient.getAbsoluteUrl("checkLogIn")
-                    , DiabetesClient.checkLogIn(etName.getText().toString(), etPwd.getText().toString())
-                    , new AsyncHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                            try {
-                                JSONObject jsonObject = StringUtil.readJsonFromInputStream(new ByteArrayInputStream(responseBody));
-                                switch (jsonObject.getInt("code")) {
-                                    case 0:
-                                        MyApplication.getInstance()
-                                                .getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
-                                                .edit()
-                                                .putString(SharedPreferencesUtils.USER_NAME, etName.getText().toString()).commit();
-                                        MyApplication.getInstance()
-                                                .getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
-                                                .edit()
-                                                .putString(SharedPreferencesUtils.USER_PWD, etPwd.getText().toString()).commit();
-                                        if (null != loadingDialog) {
-                                            long loadingTime = System.currentTimeMillis() - loadingStartTime;
-                                            handler.postDelayed(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    startActivity(new Intent(SignActivity.this, MainActivity.class));
-                                                    finish();
-                                                    loadingDialog.dismiss();
-                                                }
-                                            },  loadingTime>3000?loadingTime:3000-loadingTime);
-                                        } else {
-                                            startActivity(new Intent(SignActivity.this, MainActivity.class));
-                                            finish();
-                                        }
-                                        break;
-                                    case 1:
-                                    default:
-                                        if (null != loadingDialog) {
-                                            long loadingTime = System.currentTimeMillis() - loadingStartTime;
-                                            handler.postDelayed(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    ToastUtil.showShortToast(SignActivity.this, getResources().getString(R.string.user_name_or_pwd_error));
-                                                    loadingDialog.dismiss();
-                                                }
-                                            },  loadingTime>3000?loadingTime:3000-loadingTime);
-                                        } else {
-                                            ToastUtil.showShortToast(SignActivity.this, getResources().getString(R.string.user_name_or_pwd_error));
-                                        }
-                                        break;
-                                }
-                            } catch (Exception e) {
-                                if (null != loadingDialog) {
-                                    long loadingTime = System.currentTimeMillis() - loadingStartTime;
-                                    handler.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            ToastUtil.showShortToast(SignActivity.this, getResources().getString(R.string.user_name_or_pwd_error));
-                                            loadingDialog.dismiss();
-                                        }
-                                    },  loadingTime>3000?loadingTime:3000-loadingTime);
-                                } else {
-                                    ToastUtil.showShortToast(SignActivity.this, getResources().getString(R.string.user_name_or_pwd_error));
-                                }
-                                e.printStackTrace();
-                            }
-                        }
 
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                            handler.sendEmptyMessage(HANDLER_NET_ERROR);
-                        }
-                    });
         }
-
-    }
-
-    private void refreshCode() {
-        ivCode.setImageBitmap(VerificationCode.getInstance().createBitmap());
-        realCode = VerificationCode.getInstance().getCode().toLowerCase();
     }
 }

@@ -19,7 +19,7 @@
 
 
         <activity
-            android:name=".signin.SignActivity"
+            android:name=".signin.LogInActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,14 +28,18 @@
             </intent-filter>
         </activity>
 
-        <!--<activity-->
-            <!--android:name=".SocketTest"-->
-            <!--android:screenOrientation="portrait">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+        <activity
+            android:name=".signin.SignActivity"
+            android:screenOrientation="portrait" />
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+        <!--<activity-->
+        <!--android:name=".SocketTest"-->
+        <!--android:screenOrientation="portrait">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.MAIN" />-->
+
+        <!--<category android:name="android.intent.category.LAUNCHER" />-->
+        <!--</intent-filter>-->
         <!--</activity>-->
 
         <activity

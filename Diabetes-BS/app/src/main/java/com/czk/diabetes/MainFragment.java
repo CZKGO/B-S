@@ -1,5 +1,6 @@
 package com.czk.diabetes;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,26 +11,37 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.czk.diabetes.DB.DBOpenHelper;
-import com.czk.diabetes.signin.SignActivity;
-import com.czk.diabetes.util.ThemeUtil;
+import com.czk.diabetes.net.DiabetesClient;
+import com.czk.diabetes.net.SearchThread;
+import com.czk.diabetes.util.DimensUtil;
 import com.czk.diabetes.util.FontIconDrawable;
+import com.czk.diabetes.util.Imageloader;
+import com.czk.diabetes.util.SharedPreferencesUtils;
+import com.czk.diabetes.util.ThemeUtil;
 import com.czk.diabetes.util.TimeUtil;
+import com.czk.diabetes.util.ToastUtil;
 import com.czk.diabetes.view.MeterView;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by 陈忠凯 on 2017/3/7.
@@ -38,9 +50,12 @@ public class MainFragment extends Fragment {
 
     private final static int SELECT_DATA_FROM_DB = 0;
     private final static int GET_TITLE_FINISH = 1;
+    private final static int SEARCH_ERRO = 2;
+    private final static int SEARCH_FINSH = 3;
     String url;
     private View fragment;
     private ImageView userIV;
+    private TextView userTv;
     private long currentTime;
     private MeterView meterOne;
     private MeterView meterTow;
@@ -59,6 +74,19 @@ public class MainFragment extends Fragment {
                     break;
                 case GET_TITLE_FINISH:
                     dailyReadTV.setText(Html.fromHtml(String.format(getResources().getString(R.string.daily_reading), msg.obj)));
+                    break;
+                case SEARCH_ERRO:
+                    ToastUtil.showShortToast(MyApplication.getInstance(), getResources().getString(R.string.server_time_out));
+                    break;
+                case SEARCH_FINSH:
+                    UserData data = (UserData) msg.obj;
+                    Imageloader.getInstance().loadImageByUrl(data.imgUrl
+                            , DimensUtil.dpTopx(MyApplication.getInstance(), 40)
+                            , DimensUtil.dpTopx(MyApplication.getInstance(), 40)
+                            , R.drawable.default_people
+                            , userIV
+                            , true);
+                    userTv.setText(data.name);
                     break;
             }
         }
@@ -82,12 +110,73 @@ public class MainFragment extends Fragment {
     private void initData() {
         timeSlots = Arrays.asList(getResources().getStringArray(R.array.time_slots));
         url = "http://holdok.com/pageinfo/tnb/"
-                +Long.parseLong(TimeUtil.getYearMonthDay(System.currentTimeMillis()).replace("-",""))%1152;
+                + Long.parseLong(TimeUtil.getYearMonthDay(System.currentTimeMillis()).replace("-", "")) % 1152;
     }
 
     private void initAsnData() {
         NewsThread newsThread = new NewsThread();
         newsThread.start();
+        String sql = "SELECT * FROM `users` WHERE name='" + MyApplication.getInstance()
+                .getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
+                .getString(SharedPreferencesUtils.USER_NAME, "") + "'";
+        if (!MyApplication.getInstance().getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
+                .contains(SharedPreferencesUtils.USER_INFO)) {
+            DiabetesClient.get(DiabetesClient.getAbsoluteUrl("doSql")
+                    , DiabetesClient.doSql(sql)
+                    , new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                            SearchThread searchThread = new SearchThread(new ByteArrayInputStream(responseBody)
+                                    , null
+                                    , new SearchThread.OnSearchResult() {
+                                @Override
+                                public void searchResult(JSONObject jsonObject, Object type) {
+                                    try {
+                                        analyticJSON(jsonObject);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                @Override
+                                public void error() {
+                                    handler.sendEmptyMessage(SEARCH_ERRO);
+                                }
+                            });
+                            searchThread.start();
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                            handler.sendEmptyMessage(SEARCH_ERRO);
+                        }
+                    });
+        } else {
+            try {
+                SearchThread searchThread = new SearchThread(new JSONObject(MyApplication.getInstance().getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
+                        .getString(SharedPreferencesUtils.USER_INFO, "null"))
+                        , null
+                        , new SearchThread.OnSearchResult() {
+                    @Override
+                    public void searchResult(JSONObject jsonObject, Object type) {
+                        try {
+                            analyticJSON(jsonObject);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void error() {
+                        handler.sendEmptyMessage(SEARCH_ERRO);
+                    }
+                });
+                searchThread.start();
+            } catch (JSONException e) {
+                e.printStackTrace();
+                handler.sendEmptyMessage(SEARCH_ERRO);
+            }
+        }
     }
 
     @Override
@@ -157,10 +246,7 @@ public class MainFragment extends Fragment {
     private void initView() {
         //登录卡片
         userIV = (ImageView) fragment.findViewById(R.id.user_icon);
-        FontIconDrawable userIVfontDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_user);
-        userIVfontDrawable.setTextColor(getResources().getColor(R.color.background_white));
-        userIV.setImageDrawable(userIVfontDrawable);
-        fragment.findViewById(R.id.user_icon_back).getBackground().setLevel(ThemeUtil.getTheme());
+        userTv = (TextView) fragment.findViewById(R.id.user_tv);
         ImageView chevronRightIV = (ImageView) fragment.findViewById(R.id.img_sig_chevron_right);
         FontIconDrawable chevronRightDrawable = FontIconDrawable.inflate(getActivity(), R.xml.icon_chevron_thin_right);
         chevronRightDrawable.setTextColor(ThemeUtil.getThemeColorLight());
@@ -201,26 +287,17 @@ public class MainFragment extends Fragment {
         signCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), SignActivity.class));
+//                startActivity(new Intent(getActivity(), LogInActivity.class));
             }
         });
         //每日一读
-        fragment.findViewById(R.id.daily_reading).setOnTouchListener(new View.OnTouchListener() {
+        fragment.findViewById(R.id.daily_reading).setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()){
-                    case MotionEvent.ACTION_DOWN:
-                        dailyReadTV.setTextColor(ThemeUtil.getThemeColor());
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        dailyReadTV.setTextColor(getResources().getColor(R.color.txt_light_color));
-                        Intent intent = new Intent(getActivity(), BrowserActivity.class);
-                        intent.putExtra("title", dailyReadTV.getText().toString());
-                        intent.putExtra("url", url);
-                        startActivity(intent);
-                        break;
-                }
-                return true;
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), BrowserActivity.class);
+                intent.putExtra("title", dailyReadTV.getText().toString());
+                intent.putExtra("url", url);
+                startActivity(intent);
             }
         });
 
@@ -258,12 +335,49 @@ public class MainFragment extends Fragment {
                 });
     }
 
+    private void analyticJSON(JSONObject obj) {
+        if (obj != null) {
+            try {
+                int code = obj.getInt("code");
+                if (0 == code) {
+                    JSONArray usersObj = obj.getJSONArray("obj");
+                    if (null != usersObj && usersObj.length() > 0) {
+                        JSONObject userObj = usersObj.getJSONObject(0);
+                        MyApplication.getInstance().getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
+                                .edit()
+                                .putString(SharedPreferencesUtils.USER_INFO, obj.toString())
+                                .apply();
+                        UserData doctorData = new UserData(
+                                userObj.getString("name")
+                                , userObj.getString("pwd")
+                                , userObj.getInt("sex")
+                                , userObj.getInt("year")
+                                , userObj.getString("img"));
+                        Message msg = new Message();
+                        msg.obj = doctorData;
+                        msg.what = SEARCH_FINSH;
+                        handler.sendMessage(msg);
+                    } else {
+                        handler.sendEmptyMessage(SEARCH_ERRO);
+                    }
+                } else {
+                    handler.sendEmptyMessage(SEARCH_ERRO);
+                }
+            } catch (JSONException e) {
+                handler.sendEmptyMessage(SEARCH_ERRO);
+                e.printStackTrace();
+            }
+        } else {
+            handler.sendEmptyMessage(SEARCH_ERRO);
+        }
+    }
+
     private class NewsThread extends Thread {
         @Override
         public void run() {
             try {
                 Document doc = Jsoup.connect(url).timeout(10000).get();
-                Elements titleElement = doc.getElementsByAttributeValue("class","title");
+                Elements titleElement = doc.getElementsByAttributeValue("class", "title");
                 Message message = new Message();
                 message.obj = titleElement.text();
                 message.what = GET_TITLE_FINISH;
@@ -271,6 +385,22 @@ public class MainFragment extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private class UserData {
+        private final String name;
+        private final String pwd;
+        private final int sex;
+        private final int year;
+        private final String imgUrl;
+
+        public UserData(String name, String pwd, int sex, int year, String imgUrl) {
+            this.name = name;
+            this.pwd = pwd;
+            this.sex = sex;
+            this.year = year;
+            this.imgUrl = imgUrl;
         }
     }
 }

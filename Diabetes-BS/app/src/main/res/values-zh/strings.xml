@@ -14,7 +14,7 @@
     <string name="after_lunch">午餐后</string>
     <string name="before_dinner">晚餐前</string>
     <string name="after_dinner">晚餐后</string>
-    <string name="sign_in">登录</string>
+    <string name="log_in">登录</string>
     <string name="user_name">用户名</string>
     <string name="password">密码</string>
     <string name="safe_range">安全范围: 4.4-10.0 mmol/L</string>
@@ -141,7 +141,7 @@
     <string name="please_input_blood_sugar_level_after_dining">请输入餐后血糖水平</string>
     <string name="find">发现</string>
     <string name="add_my_athletic_tip">让我们一起见证你的健身历程</string>
-    <string name="register">注册</string>
+    <string name="sidn_in">注册</string>
     <string name="unknown_error">未知错误</string>
     <string name="user_name_not_null">用户名不能为空</string>
     <string name="pwd_not_null">密码不能为空</string>
@@ -149,4 +149,8 @@
     <string name="user_name_or_pwd_error">用户名或密码错误</string>
     <string name="enter">进入</string>
     <string name="loging_in">登录中...</string>
+    <string name="age">年龄</string>
+    <string name="man">男</string>
+    <string name="woman">女</string>
+    <string name="age_not_null">年龄不能为空</string>
 </resources>
