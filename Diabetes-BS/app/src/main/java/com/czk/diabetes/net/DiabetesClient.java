@@ -1,14 +1,11 @@
 package com.czk.diabetes.net;
 
-import com.czk.diabetes.util.LogUtil;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-
-import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by 陈忠凯 on 2017/3/30.
@@ -163,20 +160,13 @@ public class DiabetesClient {
         return params;
     }
 
-    public static void upLoadByAsyncHttpClient(String uploadUrl, String path) throws FileNotFoundException {
+    public static RequestParams saveFile(String path,String name) throws FileNotFoundException {
         RequestParams params = new RequestParams();
+        params.put("path", "./img/users/");
+        params.put("name", name);
         params.put("uploadfile", new File(path));
-        client.post(uploadUrl, params, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-            }
+        return params;
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                LogUtil.d("sdfsafsadf",new String(responseBody));
-            }
-
-        });
     }
     /****************************************************************
      * 来自云服务器的end

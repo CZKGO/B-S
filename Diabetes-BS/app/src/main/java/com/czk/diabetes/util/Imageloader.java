@@ -246,7 +246,7 @@ public class Imageloader {
                     Bitmap mBitmap = null;
                     if (storage) {
                         try {
-                            String path = imageView.getContext().getFilesDir() + File.separator + FileUtil.CACHEPATH + packageName;
+                            String path = imageView.getContext().getFilesDir() + File.separator + FileUtil.CACHEPATH + File.separator + packageName;
                             BitmapFactory.Options outOptions = new BitmapFactory.Options();
                             outOptions.inJustDecodeBounds = true;
                             BitmapFactory.decodeFile(path, outOptions);
@@ -642,7 +642,7 @@ public class Imageloader {
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
-                File file = new File(mContext.getFilesDir() + File.separator + FileUtil.CACHEPATH + bitName);
+                File file = new File(mContext.getFilesDir() + File.separator + FileUtil.CACHEPATH + File.separator + bitName);
                 if (file.exists()) {
                     file.delete();
                 }
@@ -670,14 +670,14 @@ public class Imageloader {
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
-                File file = new File(mContext.getFilesDir() + File.separator + FileUtil.CACHEPATH + bitName);
+                File file = new File(mContext.getFilesDir() + File.separator + FileUtil.CACHEPATH + File.separator + bitName);
                 if (file.exists()) {
                     file.delete();
                 }
                 FileOutputStream out;
                 try {
                     out = new FileOutputStream(file);
-                    if (bitmap.compress(Bitmap.CompressFormat.JPEG, 0, out)) {
+                    if (bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)) {
                         out.flush();
                         out.close();
                     }

@@ -19,6 +19,7 @@ import com.czk.diabetes.util.CameraUtil;
 import com.czk.diabetes.util.FileUtil;
 import com.czk.diabetes.util.FontIconDrawable;
 import com.czk.diabetes.util.Imageloader;
+import com.czk.diabetes.util.LogUtil;
 import com.czk.diabetes.util.StringUtil;
 import com.czk.diabetes.util.ToastUtil;
 import com.czk.diabetes.view.dialog.LoadingDialog;
@@ -43,6 +44,7 @@ public class SignActivity extends BaseActivity {
     private final static int HANDLER_SIGN_ERRO = 0;
     private final static int HANDLER_SIGN_SUCCESS = 1;
     private final static int HANDLER_NAME_DUPLICATE = 3;
+    private final static String TEM_IMG_NAMW = "username.jpg";
     private ImageView ivIcon;
     private View layoutMan;
     private View layoutWoman;
@@ -99,7 +101,7 @@ public class SignActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 Intent intent = new Intent(SignActivity.this, LogInActivity.class);
-                                intent.putExtra(LogInActivity.INTENT_SHOW_SPLASH,false);
+                                intent.putExtra(LogInActivity.INTENT_SHOW_SPLASH, false);
                                 startActivity(intent);
                                 finish();
                                 loadingDialog.dismiss();
@@ -107,12 +109,27 @@ public class SignActivity extends BaseActivity {
                         }, loadingTime > 3000 ? loadingTime : 3000 - loadingTime);
                     } else {
                         Intent intent = new Intent(SignActivity.this, LogInActivity.class);
-                        intent.putExtra(LogInActivity.INTENT_SHOW_SPLASH,false);
+                        intent.putExtra(LogInActivity.INTENT_SHOW_SPLASH, false);
                         startActivity(intent);
                         finish();
                     }
                     try {
-                        DiabetesClient.upLoadByAsyncHttpClient(DiabetesClient.getAbsoluteUrl("saveImg"),SignActivity.this.getFilesDir() + File.separator + FileUtil.CACHEPATH+"123.jpg");
+                        DiabetesClient.post(DiabetesClient.getAbsoluteUrl("saveFile")
+                                , DiabetesClient.saveFile(SignActivity.this.getFilesDir() + File.separator + FileUtil.CACHEPATH + File.separator + TEM_IMG_NAMW
+                                        ,etName.getText()+".jpg")
+                                , new AsyncHttpResponseHandler() {
+                                    @Override
+                                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                        LogUtil.d("sdfsafsadf", new String(responseBody));
+                                    }
+
+                                    @Override
+                                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                        LogUtil.d("sdfsafsadf", new String(responseBody));
+                                    }
+
+                                });
+
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -140,7 +157,7 @@ public class SignActivity extends BaseActivity {
                 if (intent != null) {
                     Bitmap bitmap = CameraUtil.setImageToHeadView(intent);
                     ivHead.setImageBitmap(bitmap);
-                    Imageloader.getInstance().saveImgToJpg(SignActivity.this,bitmap,"123.jpg");
+                    Imageloader.getInstance().saveImgToJpg(SignActivity.this, bitmap, TEM_IMG_NAMW);
                 }
 
                 break;
@@ -257,7 +274,7 @@ public class SignActivity extends BaseActivity {
                 loadingStartTime = System.currentTimeMillis();
             }
             String sql = "INSERT INTO `users` (`name`, `pwd`, `sex`, `year`, `img`) " +
-                    "VALUES ('" + etName.getText() + "','" + etPwd.getText() + "'," + sex + "," + etAge.getText() + ",'" + DiabetesClient.getUserImgUrl(etName.getText()+".jpg") + "')";
+                    "VALUES ('" + etName.getText() + "','" + etPwd.getText() + "'," + sex + "," + etAge.getText() + ",'" + DiabetesClient.getUserImgUrl(etName.getText() + ".jpg") + "')";
             DiabetesClient.get(DiabetesClient.getAbsoluteUrl("doSqlTow")
                     , DiabetesClient.doSqlTow(sql)
                     , new AsyncHttpResponseHandler() {
@@ -297,13 +314,13 @@ public class SignActivity extends BaseActivity {
                 int code = obj.getInt("code");
                 if (0 == code) {
                     handler.sendEmptyMessage(HANDLER_SIGN_SUCCESS);
-                } else if (1 == code){
-                    if(obj.getString("obj").contains("Duplicate entry")){
+                } else if (1 == code) {
+                    if (obj.getString("obj").contains("Duplicate entry")) {
                         handler.sendEmptyMessage(HANDLER_NAME_DUPLICATE);
-                    }else {
+                    } else {
                         handler.sendEmptyMessage(HANDLER_SIGN_ERRO);
                     }
-                }else {
+                } else {
                     handler.sendEmptyMessage(HANDLER_SIGN_ERRO);
                 }
             } catch (JSONException e) {
