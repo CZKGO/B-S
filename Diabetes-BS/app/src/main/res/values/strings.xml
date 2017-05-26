@@ -153,4 +153,7 @@
     <string name="man">Man</string>
     <string name="woman">Woman</string>
     <string name="age_not_null">The age cannot be empty</string>
+    <string name="sign_error">Sign error</string>
+    <string name="sign_success">Sign success</string>
+    <string name="duplicate_user_name">Duplicate user name，please log in again</string>
 </resources>

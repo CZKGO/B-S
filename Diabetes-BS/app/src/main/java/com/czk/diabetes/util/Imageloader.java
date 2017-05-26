@@ -662,6 +662,34 @@ public class Imageloader {
         });
     }
 
+    public void saveImgToJpg(final Context mContext, final Bitmap bitmap, final String bitName) {
+        threadPool.execute(new Runnable() {
+            @Override
+            public void run() {
+                File dir = new File(mContext.getFilesDir() + File.separator + FileUtil.CACHEPATH);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                File file = new File(mContext.getFilesDir() + File.separator + FileUtil.CACHEPATH + bitName);
+                if (file.exists()) {
+                    file.delete();
+                }
+                FileOutputStream out;
+                try {
+                    out = new FileOutputStream(file);
+                    if (bitmap.compress(Bitmap.CompressFormat.JPEG, 0, out)) {
+                        out.flush();
+                        out.close();
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
     /**
      * 加载异步图片的回调接口
      *

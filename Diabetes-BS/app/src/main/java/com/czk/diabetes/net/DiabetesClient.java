@@ -1,8 +1,14 @@
 package com.czk.diabetes.net;
 
+import com.czk.diabetes.util.LogUtil;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by 陈忠凯 on 2017/3/30.
@@ -129,6 +135,10 @@ public class DiabetesClient {
         return MY_BASE_URL + relativeUrl+".php";
     }
 
+    public static String getUserImgUrl(String imgName) {
+        return MY_BASE_URL + "img/users/" + imgName;
+    }
+
     public static RequestParams checkLogIn(String name, String pwd) {
         RequestParams params = new RequestParams();
         params.add("name",name);
@@ -146,6 +156,27 @@ public class DiabetesClient {
         RequestParams params = new RequestParams();
         params.add("sql",sql);
         return params;
+    }
+    public static RequestParams doSqlTow(String sql) {
+        RequestParams params = new RequestParams();
+        params.add("sql",sql);
+        return params;
+    }
+
+    public static void upLoadByAsyncHttpClient(String uploadUrl, String path) throws FileNotFoundException {
+        RequestParams params = new RequestParams();
+        params.put("uploadfile", new File(path));
+        client.post(uploadUrl, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                LogUtil.d("sdfsafsadf",new String(responseBody));
+            }
+
+        });
     }
     /****************************************************************
      * 来自云服务器的end

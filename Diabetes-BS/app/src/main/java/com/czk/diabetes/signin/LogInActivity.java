@@ -34,6 +34,8 @@ import cz.msebera.android.httpclient.Header;
  */
 public class LogInActivity extends BaseActivity {
     private static final int HANDLER_NET_ERROR = -1;
+    public static final String INTENT_SHOW_SPLASH = "isIntentShowSplash";
+    private boolean isIntentShowSplash = true;
     private ImageView ivCode;
     private String realCode;
     private EditText etName;
@@ -73,9 +75,14 @@ public class LogInActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+        initData();
         initView();
         checkLastUser();
         dealEvent();
+    }
+
+    private void initData() {
+        isIntentShowSplash = getIntent().getBooleanExtra(INTENT_SHOW_SPLASH,true);
     }
 
     private void checkLastUser() {
@@ -145,7 +152,10 @@ public class LogInActivity extends BaseActivity {
         textView.setText(android.os.Build.MODEL);
 
         loadingDialog = new LoadingDialog(LogInActivity.this);
-
+        if(!isIntentShowSplash){
+            layoutSplash.setVisibility(View.GONE);
+            layoutSignIn.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -179,7 +189,6 @@ public class LogInActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LogInActivity.this, SignActivity.class));
-                finish();
             }
         });
     }

@@ -116,11 +116,11 @@ public class MainFragment extends Fragment {
     private void initAsnData() {
         NewsThread newsThread = new NewsThread();
         newsThread.start();
-        String sql = "SELECT * FROM `users` WHERE name='" + MyApplication.getInstance()
-                .getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
-                .getString(SharedPreferencesUtils.USER_NAME, "") + "'";
         if (!MyApplication.getInstance().getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
                 .contains(SharedPreferencesUtils.USER_INFO)) {
+            String sql = "SELECT * FROM `users` WHERE name='" + MyApplication.getInstance()
+                    .getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
+                    .getString(SharedPreferencesUtils.USER_NAME, "") + "'";
             DiabetesClient.get(DiabetesClient.getAbsoluteUrl("doSql")
                     , DiabetesClient.doSql(sql)
                     , new AsyncHttpResponseHandler() {

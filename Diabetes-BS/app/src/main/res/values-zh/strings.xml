@@ -153,4 +153,7 @@
     <string name="man">男</string>
     <string name="woman">女</string>
     <string name="age_not_null">年龄不能为空</string>
+    <string name="sign_error">注册失败</string>
+    <string name="sign_success">注册成功，请重新登陆</string>
+    <string name="duplicate_user_name">用户名重复</string>
 </resources>
