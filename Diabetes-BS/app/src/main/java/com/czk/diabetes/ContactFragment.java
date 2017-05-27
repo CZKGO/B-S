@@ -17,6 +17,7 @@ import com.czk.diabetes.net.DiabetesClient;
 import com.czk.diabetes.net.SearchThread;
 import com.czk.diabetes.util.DimensUtil;
 import com.czk.diabetes.util.Imageloader;
+import com.czk.diabetes.util.LogUtil;
 import com.czk.diabetes.util.SharedPreferencesUtils;
 import com.czk.diabetes.util.ToastUtil;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -25,6 +26,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -35,6 +41,7 @@ public class ContactFragment extends Fragment {
     private final static int SEARCH_FINSH = 0;
     private final static int SEARCH_ERRO = 1;
     private final static int ID = 1;//默认医生
+    private final static String TAG = "ContactFragment";//默认医生
     private View fragment;
     private ImageView doctorIV;
     private TextView nameTv;
@@ -94,6 +101,40 @@ public class ContactFragment extends Fragment {
     }
 
     private void initAsnData() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() { try {
+                LogUtil.d(TAG,"准备连接");
+                Socket socket = new Socket();
+                socket.connect(new InetSocketAddress("120.24.2.161", 3333), 5000);
+                LogUtil.d(TAG,"连接上了");
+
+//            Intent intent = new Intent();
+//            intent.setClass(SocketTest.this, ConnectActivity.class);
+//            SocketTest.this.startActivity(intent);
+                InputStream inputStream = socket.getInputStream();
+                byte buffer[] = new byte[1024*4];
+                int temp = 0;
+                String res = null;
+                //从inputstream中读取客户端所发送的数据
+                LogUtil.d(TAG,"接收到服务器的信息是");
+
+                while ((temp = inputStream.read(buffer)) != -1){
+                    System.out.println(new String(buffer, 0, temp));
+                    res += new String(buffer, 0, temp);
+                }
+                LogUtil.d(TAG,"已经结束接收信息");
+
+                socket.close();
+                inputStream.close();
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            }
+        }).start();
+
         if (!MyApplication.getInstance().getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
                 .contains(SharedPreferencesUtils.DOCTOR_INFO)) {
             DiabetesClient.get(DiabetesClient.getAbsoluteUrl("getDoctor")

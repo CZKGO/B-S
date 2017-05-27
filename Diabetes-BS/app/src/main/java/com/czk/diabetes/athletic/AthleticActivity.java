@@ -21,7 +21,6 @@ import com.czk.diabetes.DB.DBOpenHelper;
 import com.czk.diabetes.R;
 import com.czk.diabetes.recipe.EatRecord;
 import com.czk.diabetes.recipe.RecipeHistoryActivity;
-import com.czk.diabetes.recipe.RecipeListActivity;
 import com.czk.diabetes.util.FontIconDrawable;
 
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ import java.util.List;
  * Created by 陈忠凯 on 2017/5/8.
  */
 
-public class AthleticActivity extends BaseActivity{
+public class AthleticActivity extends BaseActivity {
     private static final int QUERY_FINSH = 0;
     private ImageView ivIcon;
     private View laoutAdd;
@@ -60,6 +59,7 @@ public class AthleticActivity extends BaseActivity{
             }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +94,7 @@ public class AthleticActivity extends BaseActivity{
                         , null
                         , "add_time" + " ASC");
                 while (c.moveToNext()) {
-                    EatRecord data =  new EatRecord(
+                    EatRecord data = new EatRecord(
                             c.getString(c.getColumnIndex("add_time")),
                             c.getString(c.getColumnIndex("name")),
                             c.getString(c.getColumnIndex("material")),
@@ -158,7 +158,7 @@ public class AthleticActivity extends BaseActivity{
         findViewById(R.id.left_card).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AthleticActivity.this, RecipeListActivity.class);
+                Intent intent = new Intent(AthleticActivity.this, AthleticListActivity.class);
                 startActivity(intent);
             }
         });
@@ -244,10 +244,10 @@ public class AthleticActivity extends BaseActivity{
             holder.txtNamw.setText(record.name);
             float dValue = Float.parseFloat(record.afterDining) - Float.parseFloat(record.beforeDining);
             String value = "";
-            if(dValue<0){
-                value = "-"+Math.abs(dValue);
-            }else {
-                value = "+"+dValue;
+            if (dValue < 0) {
+                value = "-" + Math.abs(dValue);
+            } else {
+                value = "+" + dValue;
             }
             holder.txtDoses.setText(value + getResources().getString(R.string.mmol_l));
             holder.txtTime.setText(records.get(position).time);
