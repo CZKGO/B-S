@@ -156,4 +156,5 @@
     <string name="sign_error">注册失败</string>
     <string name="sign_success">注册成功，请重新登陆</string>
     <string name="duplicate_user_name">用户名重复</string>
+    <string name="signing">注册中...</string>
 </resources>

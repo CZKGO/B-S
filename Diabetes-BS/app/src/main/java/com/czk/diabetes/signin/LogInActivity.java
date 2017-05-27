@@ -151,7 +151,7 @@ public class LogInActivity extends BaseActivity {
         TextView textView = (TextView) findViewById(R.id.phone_type);
         textView.setText(android.os.Build.MODEL);
 
-        loadingDialog = new LoadingDialog(LogInActivity.this);
+        loadingDialog = new LoadingDialog(LogInActivity.this, getResources().getString(R.string.loging_in));
         if(!isIntentShowSplash){
             layoutSplash.setVisibility(View.GONE);
             layoutSignIn.setVisibility(View.VISIBLE);

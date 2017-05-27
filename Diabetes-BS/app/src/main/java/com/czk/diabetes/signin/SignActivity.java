@@ -201,7 +201,7 @@ public class SignActivity extends BaseActivity {
         iconWoman.setTextColor(getResources().getColor(R.color.txt_light_color));
         ivWoman.setImageDrawable(iconWoman);
 
-        loadingDialog = new LoadingDialog(SignActivity.this);
+        loadingDialog = new LoadingDialog(SignActivity.this,getResources().getString(R.string.signing));
     }
 
 
