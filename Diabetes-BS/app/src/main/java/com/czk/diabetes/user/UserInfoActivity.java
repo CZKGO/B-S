@@ -1,6 +1,7 @@
 package com.czk.diabetes.user;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -118,6 +119,22 @@ public class UserInfoActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+        findViewById(R.id.bt_log_out).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyApplication.getInstance()
+                        .getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
+                        .edit()
+                        .clear()
+                        .commit();
+                Intent intent = new Intent(UserInfoActivity.this, LogInActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra(LogInActivity.INTENT_SHOW_SPLASH, false);
+                startActivity(intent);
+                finish();
             }
         });
     }
