@@ -162,4 +162,8 @@
     <string name="uploading">Uploading...</string>
     <string name="publish_failure">Publish failure</string>
     <string name="publish_success">Publish success</string>
+    <string name="user_info">User information</string>
+    <string name="sex">Sex</string>
+    <string name="log_out">Log out</string>
+    <string name="n_year_old">%1$s-year-old</string>
 </resources>

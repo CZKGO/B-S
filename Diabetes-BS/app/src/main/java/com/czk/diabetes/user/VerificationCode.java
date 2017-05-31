@@ -1,4 +1,4 @@
-package com.czk.diabetes.signin;
+package com.czk.diabetes.user;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

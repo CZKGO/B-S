@@ -162,4 +162,8 @@
     <string name="uploading">上传中...</string>
     <string name="publish_failure">发表失败</string>
     <string name="publish_success">发表成功</string>
+    <string name="user_info">用户信息</string>
+    <string name="sex">性别</string>
+    <string name="log_out">退出登录</string>
+    <string name="n_year_old">%1$s岁</string>
 </resources>

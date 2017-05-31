@@ -19,6 +19,8 @@ import android.widget.TextView;
 import com.czk.diabetes.DB.DBOpenHelper;
 import com.czk.diabetes.net.DiabetesClient;
 import com.czk.diabetes.net.SearchThread;
+import com.czk.diabetes.user.UserData;
+import com.czk.diabetes.user.UserInfoActivity;
 import com.czk.diabetes.util.DimensUtil;
 import com.czk.diabetes.util.FontIconDrawable;
 import com.czk.diabetes.util.Imageloader;
@@ -287,7 +289,7 @@ public class MainFragment extends Fragment {
         signCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(getActivity(), LogInActivity.class));
+                startActivity(new Intent(getActivity(), UserInfoActivity.class));
             }
         });
         //每日一读
@@ -385,22 +387,6 @@ public class MainFragment extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    private class UserData {
-        private final String name;
-        private final String pwd;
-        private final int sex;
-        private final int year;
-        private final String imgUrl;
-
-        public UserData(String name, String pwd, int sex, int year, String imgUrl) {
-            this.name = name;
-            this.pwd = pwd;
-            this.sex = sex;
-            this.year = year;
-            this.imgUrl = imgUrl;
         }
     }
 }
