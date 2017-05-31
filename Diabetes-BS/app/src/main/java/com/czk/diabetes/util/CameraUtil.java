@@ -6,8 +6,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.czk.diabetes.MyApplication;
-
 /**
  * Created by 陈忠凯 on 2017/5/25.
  */
@@ -26,7 +24,8 @@ public class CameraUtil {
     /**
      * 裁剪原始的图片
      */
-    public static void cropRawPhoto(Activity activity, Uri uri, int code) {
+    public static void cropRawPhoto(Activity activity, Uri uri,
+                                    int width, int hight, int code) {
 
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
@@ -39,8 +38,8 @@ public class CameraUtil {
         intent.putExtra("aspectY", 1);
 
         // outputX , outputY : 裁剪图片宽高
-        intent.putExtra("outputX", DimensUtil.dpTopx(MyApplication.getInstance(), 80));
-        intent.putExtra("outputY", DimensUtil.dpTopx(MyApplication.getInstance(), 80));
+        intent.putExtra("outputX", width);
+        intent.putExtra("outputY", hight);
         intent.putExtra("return-data", true);
 
         activity.startActivityForResult(intent, code);

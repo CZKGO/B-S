@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +18,6 @@ import com.czk.diabetes.BaseActivity;
 import com.czk.diabetes.R;
 import com.czk.diabetes.net.DiabetesClient;
 import com.czk.diabetes.net.SearchThread;
-import com.czk.diabetes.net.SearchType;
-import com.czk.diabetes.recipe.RecipeInfoActivity;
 import com.czk.diabetes.util.DimensUtil;
 import com.czk.diabetes.util.FontIconDrawable;
 import com.czk.diabetes.util.Imageloader;
@@ -49,6 +46,7 @@ public class AthleticListActivity extends BaseActivity {
     private final static int LOAD_SUCCESS = 0;
     private final static int LOAD_FIALD = 1;
     private ImageView ivIcon;
+    private ImageView ivIconRight;
     private List<AthleticData> cookBooks = new ArrayList<>();
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
@@ -95,14 +93,14 @@ public class AthleticListActivity extends BaseActivity {
     private void getAthleticList() {
         if (LOADING != loadPageSuccess) {
             loadPageSuccess = LOADING;
-            String sql = "SELECT * FROM 'athletic' order by time desc";
-            DiabetesClient.post(DiabetesClient.getAbsoluteUrl("doSql")
+            String sql = "SELECT `athletic`.* , `users`.`img` FROM `athletic` , `users` WHERE `athletic`.`user` = `users`.`name` ORDER BY `athletic`.time DESC ";
+            DiabetesClient.get(DiabetesClient.getAbsoluteUrl("doSql")
                     , DiabetesClient.doSql(sql)
                     , new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                             SearchThread searchThread = new SearchThread(new ByteArrayInputStream(responseBody)
-                                    , SearchType.RECIPE_LIST
+                                    , null
                                     , new SearchThread.OnSearchResult() {
                                 @Override
                                 public void searchResult(JSONObject jsonObject, Object type) {
@@ -140,6 +138,11 @@ public class AthleticListActivity extends BaseActivity {
         ivIcon.setImageDrawable(iconArrowLeft);
         TextView tvTitle = (TextView) findViewById(R.id.title);
         tvTitle.setText(getResources().getString(R.string.find));
+        ivIconRight = (ImageView) findViewById(R.id.icon_right);
+        ivIconRight.setVisibility(View.VISIBLE);
+        FontIconDrawable iconPlus = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_plus);
+        iconPlus.setTextColor(getResources().getColor(R.color.white));
+        ivIconRight.setImageDrawable(iconPlus);
         /**
          * 主体
          */
@@ -157,27 +160,10 @@ public class AthleticListActivity extends BaseActivity {
                 onBackPressed();
             }
         });
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        ivIconRight.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                //当前RecyclerView显示出来的最后一个的item的position
-                int lastPosition = -1;
-                //当前状态为停止滑动状态SCROLL_STATE_IDLE时
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-                    int[] lastPositions = new int[((StaggeredGridLayoutManager) layoutManager).getSpanCount()];
-                    ((StaggeredGridLayoutManager) layoutManager).findLastVisibleItemPositions(lastPositions);
-                    lastPosition = findMax(lastPositions);
-
-
-                    //时判断界面显示的最后item的position是否等于itemCount总数-1也就是最后一个item的position
-                    //如果相等则说明已经滑动到最后了
-                    if (lastPosition == recyclerView.getLayoutManager().getItemCount() - 1) {
-                        getAthleticList();
-                    }
-
-                }
+            public void onClick(View v) {
+                startActivity(new Intent(AthleticListActivity.this, AddMyAthleticActivity.class));
             }
         });
     }
@@ -197,18 +183,18 @@ public class AthleticListActivity extends BaseActivity {
         if (obj != null) {
             JSONArray keyArray = null;
             try {
-                keyArray = obj.getJSONArray("rows");
+                keyArray = obj.getJSONArray("obj");
 
                 for (int i = 0; i < keyArray.length(); i++) {
                     AthleticData medicineData = new AthleticData(
                             keyArray.getJSONObject(i).getString("user")
+                            , keyArray.getJSONObject(i).getString("img")
+                            , keyArray.getJSONObject(i).getString("text")
                             , keyArray.getJSONObject(i).getString("imgUrl")
-                            , keyArray.getJSONObject(i).optInt("collectNum")
-                            , keyArray.getJSONObject(i).optInt("likeNum", 0)
-                            , keyArray.getJSONObject(i).optInt("picWidth", 0)
-                            , keyArray.getJSONObject(i).optInt("picHeight", 0)
-                            , keyArray.getJSONObject(i).toString()
-                            , keyArray.getJSONObject(i).getLong("time"));
+                            , keyArray.getJSONObject(i).getInt("likeNum")
+                            , keyArray.getJSONObject(i).getString("likeUsers")
+                            , keyArray.getJSONObject(i).getLong("time")
+                            , false);
                     cookBooks.add(medicineData);
                 }
             } catch (JSONException e) {
@@ -222,26 +208,21 @@ public class AthleticListActivity extends BaseActivity {
 
     private class AthleticData {
         private String user;
+        private String userIconUrl;
+        private String text;
         private String imgUrl;
-        private int collection;
-        private int like;
-        private int imgWidth;
-        private int imgHight;
-        private String obj;
-        public boolean isCollect;
-        public boolean islike;
+        private int likeNum;
+        private String likeUsers;
         public long time;
+        public boolean islike;
 
-        public AthleticData(String user, String imgUrl, int collection, int like, int imgWidth, int imgHight, String obj, long time) {
+        public AthleticData(String user, String userIconUrl, String text, String imgUrl, int likeNum, String likeUsers, long time, boolean islike) {
             this.user = user;
+            this.userIconUrl = userIconUrl;
+            this.text = text;
             this.imgUrl = imgUrl;
-            this.collection = collection;
-            this.like = like;
-            this.obj = obj;
-            this.imgWidth = imgWidth;
-            this.imgHight = imgHight;
-            this.isCollect = false;
-            this.islike = false;
+            this.likeNum = likeNum;
+            this.likeUsers = likeUsers;
             this.time = time;
         }
     }
@@ -267,7 +248,7 @@ public class AthleticListActivity extends BaseActivity {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             CardViewHolder holder = new CardViewHolder(LayoutInflater.from(AthleticListActivity.this)
-                    .inflate(R.layout.item_recipe_card, parent, false));
+                    .inflate(R.layout.item_athletic_card, parent, false));
             return holder;
         }
 
@@ -275,62 +256,44 @@ public class AthleticListActivity extends BaseActivity {
         public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
             final AthleticData data = cookBooks.get(position);
             if (holder instanceof CardViewHolder) {
-                setCardViewColor((CardViewHolder) holder, data.islike, data.isCollect);
+                setCardViewColor((CardViewHolder) holder, data.islike);
                 ((CardViewHolder) holder).tv.setText(data.user);
-                ((CardViewHolder) holder).tvLike.setText(String.valueOf(data.like));
-                ((CardViewHolder) holder).tvStar.setText(String.valueOf(data.collection));
-                float cardWidth = (DimensUtil.getScreenWidthDip(AthleticListActivity.this) - 24) / 2;
+                ((CardViewHolder) holder).tvDescribe.setText(data.text);
+                ((CardViewHolder) holder).tvLike.setText(String.valueOf(data.likeNum));
+                Imageloader.getInstance().loadImageByUrl(data.userIconUrl
+                        , DimensUtil.dpTopx(AthleticListActivity.this, 24)
+                        , DimensUtil.dpTopx(AthleticListActivity.this, 24)
+                        , R.drawable.default_people
+                        , ((CardViewHolder) holder).ivHead);
+                float cardWidth = (DimensUtil.getScreenWidthDip(AthleticListActivity.this) - 16);
+                double cardHight = cardWidth * 0.618;
                 ((CardViewHolder) holder).iv.setLayoutParams(
                         new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
-                                , DimensUtil.dpTopx(AthleticListActivity.this, (int) (data.imgHight * cardWidth / data.imgWidth))));
+                                , (int) cardHight));
                 Imageloader.getInstance().loadImageByUrl(data.imgUrl
-                        , data.imgWidth
-                        , data.imgHight
+                        , DimensUtil.dpTopx(AthleticListActivity.this, cardWidth)
+                        , DimensUtil.dpTopx(AthleticListActivity.this, (float) cardHight)
                         , R.drawable.img_default
                         , ((CardViewHolder) holder).iv);
-
-                ((CardViewHolder) holder).iv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(AthleticListActivity.this, RecipeInfoActivity.class);
-                        intent.putExtra("obj", data.obj);
-                        startActivity(intent);
-                    }
-                });
 
                 ((CardViewHolder) holder).likeView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (data.islike) {
-                            data.like--;
+                            data.likeNum--;
                             data.islike = false;
                         } else {
-                            data.like++;
+                            data.likeNum++;
                             data.islike = true;
                         }
-                        ((CardViewHolder) holder).tvLike.setText(String.valueOf(data.like));
-                        setCardViewColor((CardViewHolder) holder, data.islike, null);
-                    }
-                });
-
-                ((CardViewHolder) holder).starView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (data.isCollect) {
-                            data.collection--;
-                            data.isCollect = false;
-                        } else {
-                            data.collection++;
-                            data.isCollect = true;
-                        }
-                        ((CardViewHolder) holder).tvStar.setText(String.valueOf(data.collection));
-                        setCardViewColor((CardViewHolder) holder, null, data.isCollect);
+                        ((CardViewHolder) holder).tvLike.setText(String.valueOf(data.likeNum));
+                        setCardViewColor((CardViewHolder) holder, data.islike);
                     }
                 });
             }
         }
 
-        private void setCardViewColor(CardViewHolder holder, Object islike, Object isCollect) {
+        private void setCardViewColor(CardViewHolder holder, Object islike) {
             if (null != islike) {
                 FontIconDrawable iconThumbUp = FontIconDrawable.inflate(AthleticListActivity.this, R.xml.icon_thumb_up);
                 if ((boolean) islike) {
@@ -341,18 +304,6 @@ public class AthleticListActivity extends BaseActivity {
                     iconThumbUp.setTextColor(getResources().getColor(R.color.txt_light_color));
                     holder.tvLike.setTextColor(getResources().getColor(R.color.txt_light_color));
                     holder.ivLike.setImageDrawable(iconThumbUp);
-                }
-            }
-            if (null != isCollect) {
-                FontIconDrawable iconStarEmpty = FontIconDrawable.inflate(AthleticListActivity.this, R.xml.icon_star);
-                if ((boolean) isCollect) {
-                    iconStarEmpty.setTextColor(ThemeUtil.getThemeColor());
-                    holder.tvStar.setTextColor(ThemeUtil.getThemeColor());
-                    holder.ivStar.setImageDrawable(iconStarEmpty);
-                } else {
-                    iconStarEmpty.setTextColor(getResources().getColor(R.color.txt_light_color));
-                    holder.tvStar.setTextColor(getResources().getColor(R.color.txt_light_color));
-                    holder.ivStar.setImageDrawable(iconStarEmpty);
                 }
             }
         }
@@ -370,23 +321,21 @@ public class AthleticListActivity extends BaseActivity {
         private class CardViewHolder extends RecyclerView.ViewHolder {
             ImageView iv;
             TextView tv;
+            ImageView ivHead;
+            TextView tvDescribe;
             ImageView ivLike;
             TextView tvLike;
-            ImageView ivStar;
-            TextView tvStar;
             View likeView;
-            View starView;
 
             public CardViewHolder(View itemView) {
                 super(itemView);
                 iv = (ImageView) itemView.findViewById(R.id.img);
-                tv = (TextView) itemView.findViewById(R.id.txt);
+                ivHead = (ImageView) itemView.findViewById(R.id.iv_head);
+                tvDescribe = (TextView) itemView.findViewById(R.id.tv_describe);
+                tv = (TextView) itemView.findViewById(R.id.name);
                 ivLike = (ImageView) itemView.findViewById(R.id.like_img);
                 tvLike = (TextView) itemView.findViewById(R.id.like_num);
-                ivStar = (ImageView) itemView.findViewById(R.id.star_img);
-                tvStar = (TextView) itemView.findViewById(R.id.star_num);
                 likeView = itemView.findViewById(R.id.like_click_range);
-                starView = itemView.findViewById(R.id.star_click_range);
             }
         }
     }

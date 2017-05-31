@@ -157,4 +157,9 @@
     <string name="sign_success">注册成功，请重新登陆</string>
     <string name="duplicate_user_name">用户名重复</string>
     <string name="signing">注册中...</string>
+    <string name="edit">编辑</string>
+    <string name="publish">发表</string>
+    <string name="uploading">上传中...</string>
+    <string name="publish_failure">发表失败</string>
+    <string name="publish_success">发表成功</string>
 </resources>

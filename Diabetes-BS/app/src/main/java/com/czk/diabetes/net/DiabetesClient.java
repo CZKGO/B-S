@@ -136,6 +136,10 @@ public class DiabetesClient {
         return MY_BASE_URL + "img/users/" + imgName;
     }
 
+    public static String getAthleticImgUrl(String imgName) {
+        return MY_BASE_URL + "img/athletics/" + imgName;
+    }
+
     public static RequestParams checkLogIn(String name, String pwd) {
         RequestParams params = new RequestParams();
         params.add("name",name);
@@ -160,9 +164,9 @@ public class DiabetesClient {
         return params;
     }
 
-    public static RequestParams saveFile(String path,String name) throws FileNotFoundException {
+    public static RequestParams saveFile(String path,String savePath,String name) throws FileNotFoundException {
         RequestParams params = new RequestParams();
-        params.put("path", "./img/users/");
+        params.put("path", savePath);
         params.put("name", name);
         params.put("uploadfile", new File(path));
         return params;

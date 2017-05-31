@@ -89,6 +89,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".athletic.AddMyAthleticActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".medicine.SearchMedicineActivity"
             android:screenOrientation="portrait" />
 

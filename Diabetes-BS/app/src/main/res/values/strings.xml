@@ -157,4 +157,9 @@
     <string name="sign_success">Sign success</string>
     <string name="duplicate_user_name">Duplicate user name，please log in again</string>
     <string name="signing">Signing...</string>
+    <string name="edit">Edit</string>
+    <string name="publish">Publish</string>
+    <string name="uploading">Uploading...</string>
+    <string name="publish_failure">Publish failure</string>
+    <string name="publish_success">Publish success</string>
 </resources>

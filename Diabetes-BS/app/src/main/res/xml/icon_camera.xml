@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <font-icon xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:fonttext="@string/icon_pool"
+    app:fonttext="@string/icon_camera"
     app:fonttextSize="24dp" />

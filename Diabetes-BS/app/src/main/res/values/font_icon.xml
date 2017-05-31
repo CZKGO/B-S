@@ -47,4 +47,6 @@
     <!--42-->
     <string name="icon_bin" translatable="false">&#xe9ac;</string>
     <!--43-->
+    <string name="icon_camera" translatable="false">&#xe916;</string>
+    <!--44-->
 </resources>
