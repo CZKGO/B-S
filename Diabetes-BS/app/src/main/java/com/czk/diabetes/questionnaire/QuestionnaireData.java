@@ -36,6 +36,16 @@ public class QuestionnaireData {
     }
 
 
-    public  class AnswerData {
+    public static class AnswerData {
+        private String content;
+        private String code;
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
     }
 }

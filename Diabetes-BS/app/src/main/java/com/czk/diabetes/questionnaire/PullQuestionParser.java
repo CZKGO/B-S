@@ -3,10 +3,8 @@ package com.czk.diabetes.questionnaire;
 import android.util.Xml;
 
 import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlSerializer;
 
 import java.io.InputStream;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +19,7 @@ public class PullQuestionParser extends PullObjectParser<QuestionnaireData> {
         List<QuestionnaireData> questionnaireDatas = null;
         List<QuestionnaireData.AnswerData> answerDatas = null;
         QuestionnaireData questionnaireData = null;
+        QuestionnaireData.AnswerData answerData = null;
 
 //      XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
 //      XmlPullParser parser = factory.newPullParser();
@@ -40,22 +39,29 @@ public class PullQuestionParser extends PullObjectParser<QuestionnaireData> {
                         eventType = parser.next();
                         questionnaireData = new QuestionnaireData();
                         answerDatas = new ArrayList<>();
+                    } else if (parser.getName().equals("content")) {
+                        eventType = parser.next();
                         questionnaireData.setQuestion(parser.getText());
+                    } else if (parser.getName().equals("type")) {
+                        eventType = parser.next();
+                        questionnaireData.setType(parser.getText());
                     } else if (parser.getName().equals("answer")) {
                         eventType = parser.next();
-                        questionnaireData.setName(parser.getText());
-                    } else if (parser.getName().equals("price")) {
+                        answerData = new QuestionnaireData.AnswerData();
+                        answerData.setContent(parser.getText());
+                    } else if (parser.getName().equals("code")) {
                         eventType = parser.next();
-                        questionnaireData.setPrice(Float.parseFloat(parser.getText()));
+                        answerData.setCode(parser.getText());
                     }
                     break;
                 case XmlPullParser.END_TAG:
                     if (parser.getName().equals("question")) {
+                        questionnaireData.setAnswers(answerDatas);
                         questionnaireDatas.add(questionnaireData);
                         questionnaireData = null;
                     } else if (parser.getName().equals("answer")) {
-                        questionnaireDatas.add(questionnaireData);
-                        questionnaireData = null;
+                        answerDatas.add(answerData);
+                        answerDatas = null;
                     }
                     break;
             }
@@ -69,28 +75,7 @@ public class PullQuestionParser extends PullObjectParser<QuestionnaireData> {
 //      XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
 //      XmlSerializer serializer = factory.newSerializer();
 
-        XmlSerializer serializer = Xml.newSerializer(); //由android.util.Xml创建一个XmlSerializer实例
-        StringWriter writer = new StringWriter();
-        serializer.setOutput(writer);   //设置输出方向为writer
-        serializer.startDocument("UTF-8", true);
-        serializer.startTag("", "questionnaireDatas");
-        for (QuestionnaireData questionnaireData : questionnaireDatas) {
-            serializer.startTag("", "questionnaireData");
-            serializer.attribute("", "id", questionnaireData.getId() + "");
 
-            serializer.startTag("", "name");
-            serializer.text(questionnaireData.getName());
-            serializer.endTag("", "name");
-
-            serializer.startTag("", "price");
-            serializer.text(questionnaireData.getPrice() + "");
-            serializer.endTag("", "price");
-
-            serializer.endTag("", "questionnaireData");
-        }
-        serializer.endTag("", "questionnaireDatas");
-        serializer.endDocument();
-
-        return writer.toString();
+        return null;
     }
 }
