@@ -23,7 +23,6 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/shadow_white_card"
-
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="8dp"
@@ -80,7 +79,6 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/shadow_white_card"
-
                 android:gravity="center_vertical"
                 android:orientation="vertical"
                 android:padding="8dp"

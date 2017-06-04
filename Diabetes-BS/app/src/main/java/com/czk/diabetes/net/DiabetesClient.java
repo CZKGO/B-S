@@ -127,7 +127,7 @@ public class DiabetesClient {
     /****************************************************************
      * 来自云服务器的start
      ****************************************************************/
-    private static final String MY_BASE_URL = "http://120.24.2.161/";
+    public static final String MY_BASE_URL = "http://120.24.2.161/";
     public static String getAbsoluteUrl(String relativeUrl) {
         return MY_BASE_URL + relativeUrl+".php";
     }

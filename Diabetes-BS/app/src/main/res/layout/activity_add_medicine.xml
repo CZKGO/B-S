@@ -309,12 +309,13 @@
 
                 <LinearLayout
                     android:id="@+id/diy_period"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:orientation="horizontal"
-                    android:padding="8dp">
+                    android:padding="8dp"
+                    android:visibility="gone">
+
                     <LinearLayout
                         android:id="@+id/star_time"
                         android:layout_width="match_parent"
@@ -420,13 +421,13 @@
                         android:textSize="16sp" />
 
                     <CheckBox
-                        android:clickable="false"
-                        android:focusable="false"
                         android:id="@+id/cb_toggle"
                         android:layout_width="48dp"
                         android:layout_height="24dp"
-                        android:gravity="right"
-                        android:button="@null"/>
+                        android:button="@null"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:gravity="right" />
                 </LinearLayout>
             </LinearLayout>
 

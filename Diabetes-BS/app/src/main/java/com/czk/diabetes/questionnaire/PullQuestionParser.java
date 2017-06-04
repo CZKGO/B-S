@@ -30,28 +30,20 @@ public class PullQuestionParser extends PullObjectParser<QuestionnaireData> {
         int eventType = parser.getEventType();
         while (eventType != XmlPullParser.END_DOCUMENT) {
             switch (eventType) {
-                case XmlPullParser.START_DOCUMENT:
-                    break;
                 case XmlPullParser.START_TAG:
                     if (parser.getName().equals("questions")) {
                         questionnaireDatas = new ArrayList<QuestionnaireData>();
                     } else if (parser.getName().equals("question")) {
-                        eventType = parser.next();
                         questionnaireData = new QuestionnaireData();
+                        questionnaireData.setQuestion(parser.getAttributeValue(null,"content"));
+                        questionnaireData.setType(parser.getAttributeValue(null,"type"));
                         answerDatas = new ArrayList<>();
-                    } else if (parser.getName().equals("content")) {
                         eventType = parser.next();
-                        questionnaireData.setQuestion(parser.getText());
-                    } else if (parser.getName().equals("type")) {
-                        eventType = parser.next();
-                        questionnaireData.setType(parser.getText());
-                    } else if (parser.getName().equals("answer")) {
-                        eventType = parser.next();
+                    }  else if (parser.getName().equals("answer")) {
                         answerData = new QuestionnaireData.AnswerData();
-                        answerData.setContent(parser.getText());
-                    } else if (parser.getName().equals("code")) {
+                        answerData.setCode(parser.getAttributeValue(null,"code"));
                         eventType = parser.next();
-                        answerData.setCode(parser.getText());
+                        answerData.setContent(parser.getText());
                     }
                     break;
                 case XmlPullParser.END_TAG:
@@ -61,7 +53,7 @@ public class PullQuestionParser extends PullObjectParser<QuestionnaireData> {
                         questionnaireData = null;
                     } else if (parser.getName().equals("answer")) {
                         answerDatas.add(answerData);
-                        answerDatas = null;
+                        answerData = null;
                     }
                     break;
             }

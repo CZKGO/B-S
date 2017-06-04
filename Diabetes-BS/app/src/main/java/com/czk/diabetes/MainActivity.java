@@ -12,9 +12,10 @@ import android.widget.LinearLayout;
 
 import com.czk.diabetes.aboutUs.AboutUsActvity;
 import com.czk.diabetes.notification.AddNotificationActivity;
+import com.czk.diabetes.questionnaire.QuestionnaireActivity;
 import com.czk.diabetes.setting.SettingActvity;
-import com.czk.diabetes.util.ThemeUtil;
 import com.czk.diabetes.util.FontIconDrawable;
+import com.czk.diabetes.util.ThemeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,9 +75,6 @@ public class MainActivity extends BaseFragmentActivity {
         ivIcon.setImageDrawable(iconMenu);
         ivIconRight = (ImageView) findViewById(R.id.icon_right);
         ivIconRight.setVisibility(View.VISIBLE);
-        FontIconDrawable iconAlarm = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_alarm);
-        iconAlarm.setTextColor(getResources().getColor(R.color.white));
-        ivIconRight.setImageDrawable(iconAlarm);
         //底部
         icon_bottom1 = (ImageView) findViewById(R.id.icon_bottom1);
         fontDrawable1 = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_home);
@@ -114,13 +112,6 @@ public class MainActivity extends BaseFragmentActivity {
             @Override
             public void onClick(View v) {
                 drawerLayout.openDrawer(Gravity.START);
-            }
-        });
-
-        ivIconRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, AddNotificationActivity.class));
             }
         });
 
@@ -201,15 +192,51 @@ public class MainActivity extends BaseFragmentActivity {
         icon_bottom4.setImageDrawable(fontDrawable4);
         switch (index) {
             case 0:
+                FontIconDrawable icon0 = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_alarm);
+                icon0.setTextColor(getResources().getColor(R.color.white));
+                ivIconRight.setImageDrawable(icon0);
+                ivIconRight.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(MainActivity.this, AddNotificationActivity.class));
+                    }
+                });
                 setTabChose(fontDrawable1, icon_bottom1);
                 break;
             case 1:
+                FontIconDrawable icon1 = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_alarm);
+                icon1.setTextColor(getResources().getColor(R.color.white));
+                ivIconRight.setImageDrawable(icon1);
+                ivIconRight.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(MainActivity.this, AddNotificationActivity.class));
+                    }
+                });
                 setTabChose(fontDrawable2, icon_bottom2);
                 break;
             case 2:
+                FontIconDrawable icon2 = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_file);
+                icon2.setTextColor(getResources().getColor(R.color.white));
+                ivIconRight.setImageDrawable(icon2);
+                ivIconRight.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(MainActivity.this, QuestionnaireActivity.class));
+                    }
+                });
                 setTabChose(fontDrawable3, icon_bottom3);
                 break;
             case 3:
+                FontIconDrawable icon3 = FontIconDrawable.inflate(getApplicationContext(), R.xml.icon_alarm);
+                icon3.setTextColor(getResources().getColor(R.color.white));
+                ivIconRight.setImageDrawable(icon3);
+                ivIconRight.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(MainActivity.this, AddNotificationActivity.class));
+                    }
+                });
                 setTabChose(fontDrawable4, icon_bottom4);
                 break;
             default:

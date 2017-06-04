@@ -166,4 +166,8 @@
     <string name="sex">Sex</string>
     <string name="log_out">Log out</string>
     <string name="n_year_old">%1$s-year-old</string>
+    <string name="questionnaire">Questionnaire</string>
+    <string name="next_question">Next question</string>
+    <string name="survey_completion">Survey completion</string>
+    <string name="please_choose_answer">Please choose answer</string>
 </resources>

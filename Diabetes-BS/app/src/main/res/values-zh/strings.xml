@@ -166,4 +166,8 @@
     <string name="sex">性别</string>
     <string name="log_out">退出登录</string>
     <string name="n_year_old">%1$s岁</string>
+    <string name="questionnaire">问卷调查</string>
+    <string name="next_question">下一题</string>
+    <string name="survey_completion">问卷调查完成</string>
+    <string name="please_choose_answer">请选择一个答案</string>
 </resources>

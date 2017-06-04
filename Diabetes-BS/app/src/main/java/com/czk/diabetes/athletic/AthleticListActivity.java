@@ -50,7 +50,7 @@ public class AthleticListActivity extends BaseActivity {
     private List<AthleticData> cookBooks = new ArrayList<>();
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
-    private WaterFallAdapter adapter;
+    private ListAdapter adapter;
     private int requestPage = 1;
     private int loadPageSuccess = LOAD_SUCCESS;//0
 
@@ -83,7 +83,7 @@ public class AthleticListActivity extends BaseActivity {
 
 
     private void initData() {
-        adapter = new WaterFallAdapter();
+        adapter = new ListAdapter();
     }
 
     private void initAsnData() {
@@ -244,7 +244,7 @@ public class AthleticListActivity extends BaseActivity {
         }
     }
 
-    private class WaterFallAdapter extends RecyclerView.Adapter {
+    private class ListAdapter extends RecyclerView.Adapter {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             CardViewHolder holder = new CardViewHolder(LayoutInflater.from(AthleticListActivity.this)
