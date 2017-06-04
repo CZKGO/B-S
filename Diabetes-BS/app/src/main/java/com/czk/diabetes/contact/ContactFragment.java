@@ -10,6 +10,8 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ import com.czk.diabetes.net.SearchThread;
 import com.czk.diabetes.util.DimensUtil;
 import com.czk.diabetes.util.Imageloader;
 import com.czk.diabetes.util.SharedPreferencesUtils;
+import com.czk.diabetes.util.StringUtil;
 import com.czk.diabetes.util.ToastUtil;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -42,6 +45,8 @@ public class ContactFragment extends Fragment {
     private final static int SEARCH_ERRO = 1;
     private final static int SEARCH_CONTACT_FINSH = 3;
     private final static int SEARCH_CONTACT_ERRO = 4;
+    private final static int SEND_CONTACT_SUCCESS = 5;
+    private final static int SEND_CONTACT_ERRO = 6;
     private final static int ID = 1;//默认医生
     private final static String TAG = "ContactFragment";//默认医生
     private View fragment;
@@ -54,6 +59,8 @@ public class ContactFragment extends Fragment {
     private TextView tvNoContact;
     private ListView lvContact;
     private List<ContactData> contactList;
+    private ContactAdapter adpter;
+    private EditText etContent;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -76,13 +83,21 @@ public class ContactFragment extends Fragment {
                     ToastUtil.showShortToast(MyApplication.getInstance(), getResources().getString(R.string.server_time_out));
                     break;
                 case SEARCH_CONTACT_FINSH:
-                    ContactData contactData = (ContactData) msg.obj;
                     tvNoContact.setVisibility(View.GONE);
                     lvContact.setVisibility(View.VISIBLE);
+                    adpter.notifyDataSetChanged();
                     break;
                 case SEARCH_CONTACT_ERRO:
                     tvNoContact.setVisibility(View.VISIBLE);
                     lvContact.setVisibility(View.GONE);
+                    break;
+                case SEND_CONTACT_SUCCESS:
+                    refreshContactList(0);
+                    etContent.setText("");
+                    break;
+                case SEND_CONTACT_ERRO:
+                    tvNoContact.setVisibility(View.VISIBLE);
+                    ToastUtil.showShortToast(MyApplication.getInstance(), getResources().getString(R.string.send_fail));
                     break;
             }
         }
@@ -104,11 +119,80 @@ public class ContactFragment extends Fragment {
 
     private void initData() {
         contactList = new ArrayList<>();
+        adpter = new ContactAdapter(contactList);
     }
 
     private void dealEvent() {
+        fragment.findViewById(R.id.button_next).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!StringUtil.isEmpty(etContent.getText().toString())) {
+                    if (null != getActivity()) {
+                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        if (imm != null) {
+                            imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(), 0);
+                        }
+                    }
+                    final String name = MyApplication.getInstance()
+                            .getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
+                            .getString(SharedPreferencesUtils.USER_NAME, "");
+                    String sql = "create table if not exists `" + name + "` (" +
+                            "  `type` int(1) NOT NULL," +
+                            "  `text` text NOT NULL," +
+                            "  `time` varchar(13) NOT NULL," +
+                            "  `doctor` int(5) NOT NULL" +
+                            ") ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+                    final String sqlInsert = "INSERT INTO `" + name + "` (`type`, `text`, `time`, `doctor`) VALUES" +
+                            "(1, '" + etContent.getText() + "', '" + System.currentTimeMillis() + "', " + ID + ")";
+                    DiabetesClient.get(DiabetesClient.getAbsoluteUrl("doSqlTow")
+                            , DiabetesClient.doSqlTow(sql)
+                            , new AsyncHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                    DiabetesClient.get(DiabetesClient.getAbsoluteUrl("doSqlTow")
+                                            , DiabetesClient.doSqlTow(sqlInsert)
+                                            , new AsyncHttpResponseHandler() {
+                                                @Override
+                                                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                                    SearchThread searchThread = new SearchThread(new ByteArrayInputStream(responseBody)
+                                                            , null
+                                                            , new SearchThread.OnSearchResult() {
+                                                        @Override
+                                                        public void searchResult(JSONObject jsonObject, Object type) {
+                                                            try {
+                                                                analyticSendJSON(jsonObject);
+                                                            } catch (Exception e) {
+                                                                e.printStackTrace();
+                                                            }
+                                                        }
 
+                                                        @Override
+                                                        public void error() {
+                                                            handler.sendEmptyMessage(SEND_CONTACT_ERRO);
+                                                        }
+                                                    });
+                                                    searchThread.start();
+                                                }
+
+                                                @Override
+                                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                                    handler.sendEmptyMessage(SEARCH_ERRO);
+                                                }
+                                            });
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                    handler.sendEmptyMessage(SEARCH_ERRO);
+                                }
+                            });
+                } else {
+                    ToastUtil.showShortToast(MyApplication.getInstance(), getResources().getString(R.string.cant_null));
+                }
+            }
+        });
     }
+
 
     private void initView() {
         doctorIV = (ImageView) fragment.findViewById(R.id.iv_doctor);
@@ -120,6 +204,9 @@ public class ContactFragment extends Fragment {
 
         tvNoContact = (TextView) fragment.findViewById(R.id.tv_contact_list);
         lvContact = (ListView) fragment.findViewById(R.id.list);
+        lvContact.setAdapter(adpter);
+
+        etContent = (EditText) fragment.findViewById(R.id.et_contet);
     }
 
     private void initAsnData() {
@@ -181,9 +268,17 @@ public class ContactFragment extends Fragment {
                 handler.sendEmptyMessage(SEARCH_ERRO);
             }
         }
-        String sql = "SELECT * FROM `" + MyApplication.getInstance()
+        refreshContactList(1);
+    }
+
+    private void refreshContactList(final int type) {
+        final String name = MyApplication.getInstance()
                 .getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
-                .getString(SharedPreferencesUtils.USER_NAME, "") + "`  WHERE `doctor`=" + ID + " ORDER BY `time` DESC ";
+                .getString(SharedPreferencesUtils.USER_NAME, "");
+        String sql = "SELECT `" + name + "`.* , `users`.`img` AS `ui` , `doctor`.`img` AS `di` , `doctor`.`name` " +
+                "FROM `" + name + "`, `users`, `doctor` " +
+                "WHERE '" + name + "' = `users`.`name` AND `doctor`=" + ID + " AND `" + name + "`.`doctor`=`doctor`.`id` " +
+                " ORDER BY `time` ASC ";
         DiabetesClient.get(DiabetesClient.getAbsoluteUrl("doSql")
                 , DiabetesClient.doSql(sql)
                 , new AsyncHttpResponseHandler() {
@@ -193,9 +288,9 @@ public class ContactFragment extends Fragment {
                                 , null
                                 , new SearchThread.OnSearchResult() {
                             @Override
-                            public void searchResult(JSONObject jsonObject, Object type) {
+                            public void searchResult(JSONObject jsonObject, Object otype) {
                                 try {
-                                    analyticContactJSON(jsonObject);
+                                    analyticContactJSON(jsonObject, name, type);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -203,7 +298,10 @@ public class ContactFragment extends Fragment {
 
                             @Override
                             public void error() {
-                                handler.sendEmptyMessage(SEARCH_CONTACT_ERRO);
+                                if (type == 1)
+                                    handler.sendEmptyMessage(SEARCH_CONTACT_ERRO);
+                                else if (type == 0)
+                                    handler.sendEmptyMessage(SEND_CONTACT_ERRO);
                             }
                         });
                         searchThread.start();
@@ -211,33 +309,45 @@ public class ContactFragment extends Fragment {
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                        handler.sendEmptyMessage(SEARCH_ERRO);
+
+                        if (type == 1)
+                            handler.sendEmptyMessage(SEARCH_CONTACT_ERRO);
+                        else if (type == 0)
+                            handler.sendEmptyMessage(SEND_CONTACT_ERRO);
                     }
                 });
     }
 
-    private void analyticContactJSON(JSONObject obj) {
+    private void analyticContactJSON(JSONObject obj, String name, int type) {
         if (obj != null) {
             JSONArray keyArray = null;
             try {
                 keyArray = obj.getJSONArray("obj");
-
+                contactList.clear();
                 for (int i = 0; i < keyArray.length(); i++) {
-                    ContactData data = new ContactData(obj.getInt("type")
-                            , obj.getString("text")
-                            , obj.getString("time")
-                            , obj.getString("doctor"));
+                    ContactData data = new ContactData(keyArray.getJSONObject(i).getInt("type")
+                            , keyArray.getJSONObject(i).getString("text")
+                            , keyArray.getJSONObject(i).getString("time")
+                            , keyArray.getJSONObject(i).getString("doctor")
+                            , keyArray.getJSONObject(i).getString("ui")
+                            , keyArray.getJSONObject(i).getString("di")
+                            , name
+                            , keyArray.getJSONObject(i).getString("name"));
                     contactList.add(data);
                 }
                 handler.sendEmptyMessage(SEARCH_CONTACT_FINSH);
-
-
             } catch (JSONException e) {
-                handler.sendEmptyMessage(SEARCH_CONTACT_ERRO);
+                if (type == 1)
+                    handler.sendEmptyMessage(SEARCH_CONTACT_ERRO);
+                else if (type == 0)
+                    handler.sendEmptyMessage(SEND_CONTACT_ERRO);
                 e.printStackTrace();
             }
         } else {
-            handler.sendEmptyMessage(SEARCH_CONTACT_ERRO);
+            if (type == 1)
+                handler.sendEmptyMessage(SEARCH_CONTACT_ERRO);
+            else if (type == 0)
+                handler.sendEmptyMessage(SEND_CONTACT_ERRO);
         }
     }
 
@@ -274,17 +384,24 @@ public class ContactFragment extends Fragment {
         }
     }
 
-    private class ContactData {
-        public int type;
-        public String text;
-        public String time;
-        public String doctor;
 
-        public ContactData(int type, String text, String time, String doctor) {
-            this.type = type;
-            this.text = text;
-            this.time = time;
-            this.doctor = doctor;
+    private void analyticSendJSON(JSONObject obj) {
+        if (obj != null) {
+            try {
+                int code = obj.getInt("code");
+                if (0 == code) {
+                    handler.sendEmptyMessage(SEND_CONTACT_SUCCESS);
+                } else if (1 == code) {
+                    handler.sendEmptyMessage(SEND_CONTACT_ERRO);
+                } else {
+                    handler.sendEmptyMessage(SEND_CONTACT_ERRO);
+                }
+            } catch (JSONException e) {
+                handler.sendEmptyMessage(SEND_CONTACT_ERRO);
+                e.printStackTrace();
+            }
+        } else {
+            handler.sendEmptyMessage(SEND_CONTACT_ERRO);
         }
     }
 }

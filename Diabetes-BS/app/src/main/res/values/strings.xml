@@ -170,4 +170,7 @@
     <string name="next_question">Next question</string>
     <string name="survey_completion">Survey completion</string>
     <string name="please_choose_answer">Please choose answer</string>
+    <string name="send">Send</string>
+    <string name="cant_null">Cannot send an empty string</string>
+    <string name="send_fail">Fail in send</string>
 </resources>
