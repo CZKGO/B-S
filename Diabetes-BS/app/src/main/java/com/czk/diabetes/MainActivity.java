@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.czk.diabetes.aboutUs.AboutUsActvity;
+import com.czk.diabetes.contact.ContactFragment;
 import com.czk.diabetes.notification.AddNotificationActivity;
 import com.czk.diabetes.questionnaire.QuestionnaireActivity;
 import com.czk.diabetes.setting.SettingActvity;

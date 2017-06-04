@@ -39,7 +39,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/tip_purple_circular_bc"
-                        android:scaleType="centerCrop"/>
+                        android:scaleType="centerCrop" />
+
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -145,6 +146,16 @@
         android:orientation="vertical"
         android:paddingTop="8dp">
 
+        <TextView
+            android:id="@+id/tv_contact_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/nothing_hear"
+            android:textColor="@color/txt_light_color"
+            android:textSize="16sp" />
+
         <ListView
             android:id="@+id/list"
             android:layout_width="match_parent"
@@ -155,6 +166,7 @@
             android:dividerHeight="0dp"
             android:drawSelectorOnTop="false"
             android:listSelector="@color/transparent"
-            android:scrollbars="none" />
+            android:scrollbars="none"
+            android:visibility="gone" />
     </LinearLayout>
 </LinearLayout>

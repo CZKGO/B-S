@@ -1,4 +1,4 @@
-package com.czk.diabetes;
+package com.czk.diabetes.contact;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,26 +11,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.czk.diabetes.MyApplication;
+import com.czk.diabetes.R;
 import com.czk.diabetes.net.DiabetesClient;
 import com.czk.diabetes.net.SearchThread;
 import com.czk.diabetes.util.DimensUtil;
 import com.czk.diabetes.util.Imageloader;
-import com.czk.diabetes.util.LogUtil;
 import com.czk.diabetes.util.SharedPreferencesUtils;
 import com.czk.diabetes.util.ToastUtil;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -40,6 +40,8 @@ import cz.msebera.android.httpclient.Header;
 public class ContactFragment extends Fragment {
     private final static int SEARCH_FINSH = 0;
     private final static int SEARCH_ERRO = 1;
+    private final static int SEARCH_CONTACT_FINSH = 3;
+    private final static int SEARCH_CONTACT_ERRO = 4;
     private final static int ID = 1;//默认医生
     private final static String TAG = "ContactFragment";//默认医生
     private View fragment;
@@ -49,6 +51,9 @@ public class ContactFragment extends Fragment {
     private TextView positionTV;
     private TextView feedbackTV;
     private TextView yearsTV;
+    private TextView tvNoContact;
+    private ListView lvContact;
+    private List<ContactData> contactList;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -56,8 +61,8 @@ public class ContactFragment extends Fragment {
                 case SEARCH_FINSH:
                     DoctorData data = (DoctorData) msg.obj;
                     Imageloader.getInstance().loadImageByUrl(data.imgUrl
-                            , DimensUtil.dpTopx(MyApplication.getInstance(),80)
-                            , DimensUtil.dpTopx(MyApplication.getInstance(),80)
+                            , DimensUtil.dpTopx(MyApplication.getInstance(), 80)
+                            , DimensUtil.dpTopx(MyApplication.getInstance(), 80)
                             , R.drawable.default_people
                             , doctorIV
                             , true);
@@ -70,21 +75,35 @@ public class ContactFragment extends Fragment {
                 case SEARCH_ERRO:
                     ToastUtil.showShortToast(MyApplication.getInstance(), getResources().getString(R.string.server_time_out));
                     break;
+                case SEARCH_CONTACT_FINSH:
+                    ContactData contactData = (ContactData) msg.obj;
+                    tvNoContact.setVisibility(View.GONE);
+                    lvContact.setVisibility(View.VISIBLE);
+                    break;
+                case SEARCH_CONTACT_ERRO:
+                    tvNoContact.setVisibility(View.VISIBLE);
+                    lvContact.setVisibility(View.GONE);
+                    break;
             }
         }
     };
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        fragment = inflater.inflate(com.czk.diabetes.R.layout.fragment_contact, container, false);
+        fragment = inflater.inflate(R.layout.fragment_contact, container, false);
         return fragment;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        initData();
         initView();
         initAsnData();
         dealEvent();
+    }
+
+    private void initData() {
+        contactList = new ArrayList<>();
     }
 
     private void dealEvent() {
@@ -98,43 +117,12 @@ public class ContactFragment extends Fragment {
         positionTV = (TextView) fragment.findViewById(R.id.txt_position);
         feedbackTV = (TextView) fragment.findViewById(R.id.txt_feedback);
         yearsTV = (TextView) fragment.findViewById(R.id.txt_years);
+
+        tvNoContact = (TextView) fragment.findViewById(R.id.tv_contact_list);
+        lvContact = (ListView) fragment.findViewById(R.id.list);
     }
 
     private void initAsnData() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() { try {
-                LogUtil.d(TAG,"准备连接");
-                Socket socket = new Socket();
-                socket.connect(new InetSocketAddress("120.24.2.161", 3333), 5000);
-                LogUtil.d(TAG,"连接上了");
-
-//            Intent intent = new Intent();
-//            intent.setClass(SocketTest.this, ConnectActivity.class);
-//            SocketTest.this.startActivity(intent);
-                InputStream inputStream = socket.getInputStream();
-                byte buffer[] = new byte[1024*4];
-                int temp = 0;
-                String res = null;
-                //从inputstream中读取客户端所发送的数据
-                LogUtil.d(TAG,"接收到服务器的信息是");
-
-                while ((temp = inputStream.read(buffer)) != -1){
-                    System.out.println(new String(buffer, 0, temp));
-                    res += new String(buffer, 0, temp);
-                }
-                LogUtil.d(TAG,"已经结束接收信息");
-
-                socket.close();
-                inputStream.close();
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            }
-        }).start();
-
         if (!MyApplication.getInstance().getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
                 .contains(SharedPreferencesUtils.DOCTOR_INFO)) {
             DiabetesClient.get(DiabetesClient.getAbsoluteUrl("getDoctor")
@@ -170,7 +158,7 @@ public class ContactFragment extends Fragment {
         } else {
             try {
                 SearchThread searchThread = new SearchThread(new JSONObject(MyApplication.getInstance().getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
-                        .getString(SharedPreferencesUtils.DOCTOR_INFO,"null"))
+                        .getString(SharedPreferencesUtils.DOCTOR_INFO, "null"))
                         , null
                         , new SearchThread.OnSearchResult() {
                     @Override
@@ -192,6 +180,64 @@ public class ContactFragment extends Fragment {
                 e.printStackTrace();
                 handler.sendEmptyMessage(SEARCH_ERRO);
             }
+        }
+        String sql = "SELECT * FROM `" + MyApplication.getInstance()
+                .getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
+                .getString(SharedPreferencesUtils.USER_NAME, "") + "`  WHERE `doctor`=" + ID + " ORDER BY `time` DESC ";
+        DiabetesClient.get(DiabetesClient.getAbsoluteUrl("doSql")
+                , DiabetesClient.doSql(sql)
+                , new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                        SearchThread searchThread = new SearchThread(new ByteArrayInputStream(responseBody)
+                                , null
+                                , new SearchThread.OnSearchResult() {
+                            @Override
+                            public void searchResult(JSONObject jsonObject, Object type) {
+                                try {
+                                    analyticContactJSON(jsonObject);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void error() {
+                                handler.sendEmptyMessage(SEARCH_CONTACT_ERRO);
+                            }
+                        });
+                        searchThread.start();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                        handler.sendEmptyMessage(SEARCH_ERRO);
+                    }
+                });
+    }
+
+    private void analyticContactJSON(JSONObject obj) {
+        if (obj != null) {
+            JSONArray keyArray = null;
+            try {
+                keyArray = obj.getJSONArray("obj");
+
+                for (int i = 0; i < keyArray.length(); i++) {
+                    ContactData data = new ContactData(obj.getInt("type")
+                            , obj.getString("text")
+                            , obj.getString("time")
+                            , obj.getString("doctor"));
+                    contactList.add(data);
+                }
+                handler.sendEmptyMessage(SEARCH_CONTACT_FINSH);
+
+
+            } catch (JSONException e) {
+                handler.sendEmptyMessage(SEARCH_CONTACT_ERRO);
+                e.printStackTrace();
+            }
+        } else {
+            handler.sendEmptyMessage(SEARCH_CONTACT_ERRO);
         }
     }
 
@@ -228,23 +274,17 @@ public class ContactFragment extends Fragment {
         }
     }
 
-    private class DoctorData {
-        private final String position;
-        public int id;
-        public String name;
-        public String hospital;
-        public String years;
-        public String imgUrl;
-        public String feedback;
+    private class ContactData {
+        public int type;
+        public String text;
+        public String time;
+        public String doctor;
 
-        public DoctorData(int id, String name, String hospital, String position, String years, String feedback, String img) {
-            this.id = id;
-            this.name = name;
-            this.hospital = hospital;
-            this.years = years;
-            this.feedback = feedback;
-            this.imgUrl = img;
-            this.position = position;
+        public ContactData(int type, String text, String time, String doctor) {
+            this.type = type;
+            this.text = text;
+            this.time = time;
+            this.doctor = doctor;
         }
     }
 }
