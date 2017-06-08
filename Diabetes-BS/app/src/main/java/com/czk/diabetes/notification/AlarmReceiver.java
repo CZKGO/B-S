@@ -19,15 +19,12 @@ public class AlarmReceiver extends BroadcastReceiver {
         item.setDescription(intent.getStringExtra("Description"));
         String remind_number = intent.getStringExtra("remind_number");//提醒的日期
         switch (item.getType()) {
-
             case NotificationItem.TYPE_DIY_DAY://只提醒一次
                 MYNotificationManager.getInstance().showNotifition(item, context);
                 MYNotificationManager.getInstance().cancleAlarm(intent, context);
                 break;
             case NotificationItem.TYPE_EVERY_DAY://每天
-
                 MYNotificationManager.getInstance().showNotifition(item, context);
-
                 break;
             case NotificationItem.TYPE_WEEK://每周自定义
                 String[] arrr = remind_number.split(",");

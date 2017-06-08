@@ -1,5 +1,7 @@
 package com.czk.diabetes.net;
 
+import android.text.Editable;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -153,14 +155,29 @@ public class DiabetesClient {
         return params;
     }
 
-    public static RequestParams doSql(String sql) {
+    public static RequestParams getUserInfo(String name) {
         RequestParams params = new RequestParams();
-        params.add("sql",sql);
+        params.add("name",name);
         return params;
     }
-    public static RequestParams doSqlTow(String sql) {
+
+    public static RequestParams getContectList(String name,int id) {
         RequestParams params = new RequestParams();
-        params.add("sql",sql);
+        params.add("name",name);
+        params.add("id",String.valueOf(id));
+        return params;
+    }
+    public static RequestParams sendContactInfo(String name, String text, long time, int id) {
+        RequestParams params = new RequestParams();
+        params.add("name",name);
+        params.add("text",text);
+        params.add("time",String.valueOf(time));
+        params.add("doctorId",String.valueOf(id));
+        return params;
+    }
+    public static RequestParams creatContactTable(String name) {
+        RequestParams params = new RequestParams();
+        params.add("name",name);
         return params;
     }
 
@@ -171,6 +188,30 @@ public class DiabetesClient {
         params.put("uploadfile", new File(path));
         return params;
 
+    }
+    public static RequestParams sign(String name, String pwd, String sex, String years, String img) {
+        RequestParams params = new RequestParams();
+        params.put("name", name);
+        params.put("pwd", pwd);
+        params.put("sex", sex);
+        params.put("year", years);
+        params.put("img", img);
+        return params;
+    }
+
+    public static RequestParams doSqlTow(String aql) {
+        RequestParams params = new RequestParams();
+        params.put("aql", aql);
+        return params;
+    }
+
+    public static RequestParams sendAthlitec(String name, String text, String img, long time) {
+        RequestParams params = new RequestParams();
+        params.put("name", name);
+        params.put("text", text);
+        params.put("img", img);
+        params.put("time", time);
+        return params;
     }
     /****************************************************************
      * 来自云服务器的end

@@ -93,9 +93,8 @@ public class AthleticListActivity extends BaseActivity {
     private void getAthleticList() {
         if (LOADING != loadPageSuccess) {
             loadPageSuccess = LOADING;
-            String sql = "SELECT `athletic`.* , `users`.`img` FROM `athletic` , `users` WHERE `athletic`.`user` = `users`.`name` ORDER BY `athletic`.time DESC ";
-            DiabetesClient.get(DiabetesClient.getAbsoluteUrl("doSql")
-                    , DiabetesClient.doSql(sql)
+           DiabetesClient.get(DiabetesClient.getAbsoluteUrl("getAthlitec")
+                    , null
                     , new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

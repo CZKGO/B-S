@@ -136,21 +136,13 @@ public class ContactFragment extends Fragment {
                     final String name = MyApplication.getInstance()
                             .getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
                             .getString(SharedPreferencesUtils.USER_NAME, "");
-                    String sql = "create table if not exists `" + name + "` (" +
-                            "  `type` int(1) NOT NULL," +
-                            "  `text` text NOT NULL," +
-                            "  `time` varchar(13) NOT NULL," +
-                            "  `doctor` int(5) NOT NULL" +
-                            ") ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-                    final String sqlInsert = "INSERT INTO `" + name + "` (`type`, `text`, `time`, `doctor`) VALUES" +
-                            "(1, '" + etContent.getText() + "', '" + System.currentTimeMillis() + "', " + ID + ")";
-                    DiabetesClient.get(DiabetesClient.getAbsoluteUrl("doSqlTow")
-                            , DiabetesClient.doSqlTow(sql)
+                    DiabetesClient.get(DiabetesClient.getAbsoluteUrl("creatContactTable")
+                            , DiabetesClient.creatContactTable(name)
                             , new AsyncHttpResponseHandler() {
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                    DiabetesClient.get(DiabetesClient.getAbsoluteUrl("doSqlTow")
-                                            , DiabetesClient.doSqlTow(sqlInsert)
+                                    DiabetesClient.get(DiabetesClient.getAbsoluteUrl("sendContactInfo")
+                                            , DiabetesClient.sendContactInfo(name, etContent.getText().toString(), System.currentTimeMillis(), ID)
                                             , new AsyncHttpResponseHandler() {
                                                 @Override
                                                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -275,12 +267,8 @@ public class ContactFragment extends Fragment {
         final String name = MyApplication.getInstance()
                 .getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
                 .getString(SharedPreferencesUtils.USER_NAME, "");
-        String sql = "SELECT `" + name + "`.* , `users`.`img` AS `ui` , `doctor`.`img` AS `di` , `doctor`.`name` " +
-                "FROM `" + name + "`, `users`, `doctor` " +
-                "WHERE '" + name + "' = `users`.`name` AND `doctor`=" + ID + " AND `" + name + "`.`doctor`=`doctor`.`id` " +
-                " ORDER BY `time` ASC ";
-        DiabetesClient.get(DiabetesClient.getAbsoluteUrl("doSql")
-                , DiabetesClient.doSql(sql)
+        DiabetesClient.get(DiabetesClient.getAbsoluteUrl("getContectList")
+                , DiabetesClient.getContectList(name, ID)
                 , new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

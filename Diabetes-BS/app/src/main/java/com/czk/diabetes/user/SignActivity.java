@@ -117,8 +117,8 @@ public class SignActivity extends BaseActivity {
                     try {
                         DiabetesClient.post(DiabetesClient.getAbsoluteUrl("saveFile")
                                 , DiabetesClient.saveFile(SignActivity.this.getFilesDir() + File.separator + FileUtil.CACHEPATH + File.separator + TEM_IMG_NAMW
-                                        ,"./img/users/"
-                                        ,etName.getText()+".jpg")
+                                        , "./img/users/"
+                                        , etName.getText() + ".jpg")
                                 , new AsyncHttpResponseHandler() {
                                     @Override
                                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -207,7 +207,7 @@ public class SignActivity extends BaseActivity {
         iconWoman.setTextColor(getResources().getColor(R.color.txt_light_color));
         ivWoman.setImageDrawable(iconWoman);
 
-        loadingDialog = new LoadingDialog(SignActivity.this,getResources().getString(R.string.signing));
+        loadingDialog = new LoadingDialog(SignActivity.this, getResources().getString(R.string.signing));
     }
 
 
@@ -279,10 +279,12 @@ public class SignActivity extends BaseActivity {
                 loadingDialog.show();
                 loadingStartTime = System.currentTimeMillis();
             }
-            String sql = "INSERT INTO `users` (`name`, `pwd`, `sex`, `year`, `img`) " +
-                    "VALUES ('" + etName.getText() + "','" + etPwd.getText() + "'," + sex + "," + etAge.getText() + ",'" + DiabetesClient.getUserImgUrl(etName.getText() + ".jpg") + "')";
-            DiabetesClient.get(DiabetesClient.getAbsoluteUrl("doSqlTow")
-                    , DiabetesClient.doSqlTow(sql)
+            DiabetesClient.get(DiabetesClient.getAbsoluteUrl("sign")
+                    , DiabetesClient.sign(etName.getText().toString()
+                            , etPwd.getText().toString()
+                            , String.valueOf(sex)
+                            , etAge.getText().toString()
+                            , DiabetesClient.getUserImgUrl(etName.getText() + ".jpg"))
                     , new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

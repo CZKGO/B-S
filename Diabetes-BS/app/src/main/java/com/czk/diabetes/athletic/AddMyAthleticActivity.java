@@ -233,15 +233,10 @@ public class AddMyAthleticActivity extends BaseActivity {
                     .getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
                     .getString(SharedPreferencesUtils.USER_NAME, "null");
             time = System.currentTimeMillis();
-            String sql = "INSERT INTO `athletic`(`user`, `text`, `imgUrl`, `likeNum`, `likeUsers`, `time`) " +
-                    "VALUES ('" + name + "'," +
-                    "'" + etDescribe.getText() + "'," +
-                    "'" + DiabetesClient.getAthleticImgUrl(name + "_" + time + ".jpg") + "'," +
-                    "'" + 0 + "'," +
-                    "'" + "'," +
-                    "'" + time + "')";
-            DiabetesClient.get(DiabetesClient.getAbsoluteUrl("doSqlTow")
-                    , DiabetesClient.doSqlTow(sql)
+            DiabetesClient.get(DiabetesClient.getAbsoluteUrl("sendAthlitec")
+                    , DiabetesClient.sendAthlitec(name
+                                              ,etDescribe.getText().toString()
+                                              ,DiabetesClient.getAthleticImgUrl(name + "_" + time + ".jpg"),time)
                     , new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

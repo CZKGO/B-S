@@ -120,11 +120,10 @@ public class MainFragment extends Fragment {
         newsThread.start();
         if (!MyApplication.getInstance().getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
                 .contains(SharedPreferencesUtils.USER_INFO)) {
-            String sql = "SELECT * FROM `users` WHERE name='" + MyApplication.getInstance()
-                    .getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
-                    .getString(SharedPreferencesUtils.USER_NAME, "") + "'";
-            DiabetesClient.get(DiabetesClient.getAbsoluteUrl("doSql")
-                    , DiabetesClient.doSql(sql)
+            DiabetesClient.get(DiabetesClient.getAbsoluteUrl("getUserInfo")
+                    , DiabetesClient.getUserInfo( MyApplication.getInstance()
+                            .getSharedPreferences(SharedPreferencesUtils.PREFERENCE_FILE, Context.MODE_PRIVATE)
+                            .getString(SharedPreferencesUtils.USER_NAME, ""))
                     , new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
