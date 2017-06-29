@@ -1,2 +1,2 @@
-# B-S
-毕业设计
+# diabetes management
+糖尿病管理app
