@@ -122,12 +122,12 @@ public class SignActivity extends BaseActivity {
                                 , new AsyncHttpResponseHandler() {
                                     @Override
                                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                        LogUtil.d("sdfsafsadf", new String(responseBody));
+                                        LogUtil.d("upload", new String(responseBody));
                                     }
 
                                     @Override
                                     public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                                        LogUtil.d("sdfsafsadf", new String(responseBody));
+                                        LogUtil.d("upload", new String(responseBody));
                                     }
 
                                 });
